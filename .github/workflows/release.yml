@@ -28,7 +28,7 @@ jobs:
         run: nci
 
       - name: Prepare
-        run: nx nuxi prepare playground
+        run: nr dev:prepare
 
       - name: Build
         run: nr prepack
