@@ -1,6 +1,6 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
-import { computed, isRef } from 'vue'
+import { computed, unref } from 'vue'
 import type { KqlQueryRequest, KqlQueryResponse } from '../types'
 import type { AsyncData, UseFetchOptions } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
@@ -16,7 +16,7 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
     if (typeof q === 'function')
       q = (q as (() => ReqT))()
 
-    return (isRef(q) ? q.value : q) as ReqT
+    return unref(q)
   })
 
   const [headers, headersEntries] = getAuthHeaders()
