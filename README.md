@@ -11,6 +11,7 @@ This module provides a `useKql` composable, which under the hood uses [`useFetch
 - 🤹 Handles authentication
 - 🪢 Supports token-based authentication with [headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
 - 🍱 Built upon [`useFetch` composable](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch)
+- 🗃 Cached query responses
 - 🦾 Strongly typed
 
 > ℹ️ For the time being, the module will be available on the server and client. Thus, your username/password pair for the API authentication will be exposed. Please keep that in mind.
@@ -83,7 +84,7 @@ Use the globally available `useKql` composable to fetch queries:
 
 ```vue
 <script setup lang="ts">
-const { data } = await useKql({
+const { data, pending, refresh, error } = await useKql({
   query: 'site',
   select: {
     title: 'site.title',
