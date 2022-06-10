@@ -73,6 +73,28 @@ KIRBY_API_URL=https://kirby.example.com
 KIRBY_API_TOKEN=your-token
 ```
 
+### Data Fetching
+
+Use the globally available `useKql` composable to fetch queries:
+
+```vue
+<script setup lang="ts">
+const { data } = await useKql({
+  query: 'site',
+  select: {
+    title: 'site.title',
+  },
+})
+</script>
+
+<template>
+  <div>
+    <h1>{{ data?.result?.title }}</h1>
+    <pre>{{ JSON.stringify(data?.result, undefined, 2) }}</pre>
+  </div>
+</template>
+```
+
 ## Playground
 
 Checkout [the playground example](./playground).
