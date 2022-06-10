@@ -1,20 +1,29 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
-import type { KeyOfRes, KqlQueryRequest, KqlQueryResponse, PickFrom } from '../types'
+import { isRef } from 'vue'
+import type { KqlQueryRequest, KqlQueryResponse } from '../types'
 import type { AsyncData } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
 
 export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
-  body: Ref<ReqT> | ReqT | (() => ReqT),
-): AsyncData<PickFrom<ResT, KeyOfRes<(res: ResT) => ResT>>, true | Error> {
+  query: Ref<ReqT> | ReqT | (() => ReqT),
+) {
   const { public: { kql: { url, endpoint } } } = useRuntimeConfig()
+
+  const _query = computed(() => {
+    let q = query
+    if (typeof q === 'function')
+      q = (q as (() => ReqT))()
+
+    return (isRef(q) ? q.value : q) as ReqT
+  })
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(endpoint, {
     baseURL: url,
     method: 'POST',
-    body,
+    body: _query,
     headers: getAuthHeader(),
-  })
+  }) as AsyncData<ResT, true | Error>
 }
 
 function getAuthHeader() {
