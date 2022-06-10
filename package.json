@@ -38,8 +38,7 @@
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "lint": "eslint .",
-    "release": "bumpp --commit --push --tag --execute \"pnpm run changelog\"",
-    "changelog": "npx conventional-changelog-cli -p angular -i CHANGELOG.md -s && npx prettier --write CHANGELOG.md"
+    "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
     "@nuxt/kit": "^3.0.0-rc.3"
