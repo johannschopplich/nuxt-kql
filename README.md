@@ -4,7 +4,7 @@
 
 > Kirby [KQL](https://github.com/getkirby/kql) module for Nuxt 3.
 
-This module provides a `useKql` composable, which under the hood re-uses [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch). Thus, KQL query fetching in your Nuxt 3 application will behave similar to Nuxt.js internal data fetching method.
+This module provides a `useKql` composable, which under the hood uses [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch). Thus, KQL query fetching in your Nuxt 3 application will behave the same as Nuxt' internal data fetching and also infers its request caching!
 
 ## Features
 
@@ -20,6 +20,7 @@ This module provides a `useKql` composable, which under the hood re-uses [`useFe
 ```bash
 # pnpm
 pnpm add -D nuxt-kql
+
 # npm
 npm i -D nuxt-kql
 ```
@@ -42,7 +43,7 @@ export default defineNuxtConfig({
 Create a `.env` file in your project and add the following environment variables:
 
 ```env
-KIRBY_API_URL=https://kirby.example.com
+KIRBY_API_URL=https://kirby.example.com/api
 KIRBY_API_USERNAME=your-username
 KIRBY_API_PASSWORD=your-password
 ```
@@ -69,10 +70,10 @@ export default defineNuxtConfig({
 })
 ```
 
-Create a `.env` file in your project and add the following environment variables:
+Set the following environment variables in your project's `.env` file:
 
 ```env
-KIRBY_API_URL=https://kirby.example.com
+KIRBY_API_URL=https://kirby.example.com/api
 KIRBY_API_TOKEN=your-token
 ```
 
