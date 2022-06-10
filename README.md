@@ -4,10 +4,13 @@
 
 > Kirby [KQL](https://github.com/getkirby/kql) module for Nuxt 3.
 
+This module provides a `useKql` composable, which under the hood re-uses [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch). Thus, KQL query fetching in your Nuxt 3 application will behave similar to Nuxt.js internal data fetching method.
+
 ## Features
 
 - 🤹 Handles authentication
 - 🪢 Supports token-based authentication with [headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
+- 🍱 Built upon [`useFetch` composable](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch)
 - 🦾 Strongly typed
 
 > ℹ️ For the time being, the module will be available on the server and client. Thus, your username/password pair for the API authentication will be exposed. Please keep that in mind.
