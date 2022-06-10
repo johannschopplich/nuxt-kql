@@ -47,13 +47,13 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    url: process.env.KIRBY_API_URL as string,
+    url: process.env.KIRBY_API_URL,
     endpoint: 'query',
     auth: 'basic',
-    token: process.env.KIRBY_API_TOKEN as string,
+    token: process.env.KIRBY_API_TOKEN,
     credentials: {
-      username: process.env.KIRBY_API_USERNAME as string,
-      password: process.env.KIRBY_API_PASSWORD as string,
+      username: process.env.KIRBY_API_USERNAME,
+      password: process.env.KIRBY_API_PASSWORD,
     },
   },
   async setup(options, nuxt) {
