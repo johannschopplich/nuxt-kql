@@ -99,6 +99,46 @@ const { data } = await useKql({
 </template>
 ```
 
+## Options
+
+```ts
+export interface ModuleOptions {
+  /**
+   * Kirby API base URL, like `https://kirby.example.com/api`
+   * @default 'process.env.KIRBY_API_URL'
+   */
+  url?: string
+
+  /**
+   * Kirby KQL API route path
+   * @default 'query'
+   */
+  endpoint?: string
+
+  /**
+   * Authentication method
+   * Set to `none` to disable authentication
+   * @default 'basic'
+   */
+  auth?: 'basic' | 'bearer' | 'none'
+
+  /**
+   * Token for bearer authentication
+   * @default 'process.env.KIRBY_API_TOKEN'
+   */
+  token?: string
+
+  /**
+   * Username/password pair for basic authentication
+   * @default { username: process.env.KIRBY_API_USERNAME, password: process.env.KIRBY_API_PASSWORD }
+   */
+  credentials?: {
+    username: string
+    password: string
+  }
+}
+```
+
 ## Playground
 
 Checkout [the playground example](./playground).

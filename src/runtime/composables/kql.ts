@@ -2,11 +2,12 @@ import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
 import { isRef } from 'vue'
 import type { KqlQueryRequest, KqlQueryResponse } from '../types'
-import type { AsyncData } from '#app'
+import type { AsyncData, UseFetchOptions } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
 
 export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
   query: Ref<ReqT> | ReqT | (() => ReqT),
+  opts: Omit<UseFetchOptions<ResT>, 'baseURL' | 'method' | 'body' > = {},
 ) {
   const { public: { kql: { url, endpoint } } } = useRuntimeConfig()
 
@@ -18,15 +19,20 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
     return (isRef(q) ? q.value : q) as ReqT
   })
 
+  const [headers, headersEntries] = getAuthHeaders()
+
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(endpoint, {
+    ...opts,
     baseURL: url,
     method: 'POST',
-    body: _query,
-    headers: getAuthHeader(),
+    body: _query.value,
+    headers: Array.isArray(opts.headers)
+      ? [...opts.headers, ...headersEntries]
+      : { ...opts.headers, ...headers },
   }) as AsyncData<ResT, true | Error>
 }
 
-function getAuthHeader() {
+function getAuthHeaders(): [Record<string, string>, string[][]] {
   const { public: { kql: { auth, credentials, token } } } = useRuntimeConfig()
   const headers: HeadersInit = {}
 
@@ -46,5 +52,8 @@ function getAuthHeader() {
     headers.Authorization = `Bearer ${token}`
   }
 
-  return headers
+  return [
+    headers,
+    Object.entries(headers),
+  ]
 }

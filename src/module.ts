@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url'
-import defu from 'defu'
+import { defu } from 'defu'
 import { createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
