@@ -19,7 +19,7 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
     return unref(q)
   })
 
-  const [headers, headersEntries] = getAuthHeaders()
+  const headers = getAuthHeaders()
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(endpoint, {
     ...opts,
@@ -27,12 +27,12 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
     method: 'POST',
     body: _query.value,
     headers: Array.isArray(opts.headers)
-      ? [...opts.headers, ...headersEntries]
+      ? [...opts.headers, ...Object.entries(headers)]
       : { ...opts.headers, ...headers },
   }) as AsyncData<ResT, true | Error>
 }
 
-function getAuthHeaders(): [Record<string, string>, string[][]] {
+function getAuthHeaders() {
   const { public: { kql: { auth, credentials, token } } } = useRuntimeConfig()
   const headers: HeadersInit = {}
 
@@ -52,8 +52,5 @@ function getAuthHeaders(): [Record<string, string>, string[][]] {
     headers.Authorization = `Bearer ${token}`
   }
 
-  return [
-    headers,
-    Object.entries(headers),
-  ]
+  return headers
 }
