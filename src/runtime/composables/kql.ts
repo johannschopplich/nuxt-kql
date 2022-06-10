@@ -1,6 +1,6 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
-import { isRef } from 'vue'
+import { computed, isRef } from 'vue'
 import type { KqlQueryRequest, KqlQueryResponse } from '../types'
 import type { AsyncData, UseFetchOptions } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
