@@ -8,12 +8,14 @@ importers:
       '@nuxt/kit': ^3.0.0-rc.3
       '@nuxt/module-builder': ^0.1.7
       bumpp: ^7.1.1
+      defu: ^6.0.0
       eslint: ^8.17.0
       nuxt: ^3.0.0-rc.3
       nuxt-kql: workspace:*
       typescript: ^4.7.3
     dependencies:
       '@nuxt/kit': 3.0.0-rc.3
+      defu: 6.0.0
     devDependencies:
       '@antfu/eslint-config': 0.25.1_ud6rd4xtew5bv4yhvkvu24pzm4
       '@nuxt/module-builder': 0.1.7

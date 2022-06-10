@@ -41,7 +41,8 @@
     "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.3"
+    "@nuxt/kit": "^3.0.0-rc.3",
+    "defu": "^6.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
