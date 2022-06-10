@@ -58,7 +58,7 @@ import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
   modules: [
-    nuxtKql,
+    'nuxt-kql',
   ],
 
   kql: {
