@@ -1,11 +1,12 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
-import type { KqlQueryRequest, KqlQueryResponse } from '../types'
+import type { KeyOfRes, KqlQueryRequest, KqlQueryResponse, PickFrom } from '../types'
+import type { AsyncData } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
 
 export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
   body: Ref<ReqT> | ReqT | (() => ReqT),
-) {
+): AsyncData<PickFrom<ResT, KeyOfRes<(res: ResT) => ResT>>, true | Error> {
   const { public: { kql: { url, endpoint } } } = useRuntimeConfig()
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(endpoint, {
