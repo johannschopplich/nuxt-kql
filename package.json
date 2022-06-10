@@ -1,0 +1,56 @@
+{
+  "name": "nuxt-kql",
+  "type": "module",
+  "version": "0.1.0",
+  "packageManager": "pnpm@7.1.9",
+  "author": "Johann Schopplich <pkg@johannschopplich.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/johannschopplich/nuxt-kql#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johannschopplich/nuxt-kql.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johannschopplich/nuxt-kql/issues"
+  },
+  "keywords": [
+    "nuxt",
+    "nuxt3",
+    "kirby",
+    "kql",
+    "query"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "require": "./dist/module.cjs",
+      "import": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "lint": "eslint .",
+    "release": "bumpp --commit --push --tag && pnpm publish",
+    "prepublishOnly": "pnpm run prepack"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.0.0-rc.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.25.1",
+    "@nuxt/module-builder": "^0.1.7",
+    "bumpp": "^7.1.1",
+    "eslint": "^8.17.0",
+    "nuxt": "^3.0.0-rc.3",
+    "nuxt-kql": "workspace:*",
+    "typescript": "^4.7.3"
+  }
+}
