@@ -28,7 +28,7 @@ jobs:
         run: nci
 
       - name: Build
-        run: nr build
+        run: nr prepack
 
       - name: Publish to npm
         run: npm publish --access public
