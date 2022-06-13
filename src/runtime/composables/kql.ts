@@ -1,7 +1,9 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
 import { computed, unref } from 'vue'
+import type { FetchOptions } from 'ohmyfetch'
 import type { KqlQueryRequest, KqlQueryResponse } from '../types'
+import { getAuthHeaders, normalizeHeaders } from '../utils/headers'
 import type { AsyncData, UseFetchOptions } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
 
@@ -11,6 +13,9 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
 ) {
   const { public: { kql: { url, endpoint } } } = useRuntimeConfig()
 
+  if (!endpoint)
+    throw new Error('KQL endpoint is not configured')
+
   const _query = computed(() => {
     let q = query
     if (typeof q === 'function')
@@ -19,38 +24,29 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
     return unref(q)
   })
 
-  const headers = getAuthHeaders()
-
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(endpoint, {
     ...opts,
     baseURL: url,
     method: 'POST',
     body: _query.value,
-    headers: Array.isArray(opts.headers)
-      ? [...opts.headers, ...Object.entries(headers)]
-      : { ...opts.headers, ...headers },
+    headers: { ...normalizeHeaders(opts.headers), ...getAuthHeaders() },
   }) as AsyncData<ResT, true | Error>
 }
 
-function getAuthHeaders() {
-  const { public: { kql: { auth, credentials, token } } } = useRuntimeConfig()
-  const headers: HeadersInit = {}
+export function $kql<T = KqlQueryResponse>(
+  query: T,
+  opts: Omit<FetchOptions, 'baseURL' | 'method' | 'body' > = {},
+) {
+  const { public: { kql: { url, endpoint } } } = useRuntimeConfig()
 
-  if (auth === 'basic') {
-    if (!credentials.username || !credentials.password)
-      throw new Error('Missing KQL credentials for basic auth')
+  if (!endpoint)
+    throw new Error('KQL endpoint is not configured')
 
-    const { username, password } = credentials
-
-    headers.Authorization = Buffer.from(`${username}:${password}`).toString('base64')
-  }
-
-  if (auth === 'bearer') {
-    if (!token)
-      throw new Error('Missing KQL token for bearer auth')
-
-    headers.Authorization = `Bearer ${token}`
-  }
-
-  return headers
+  return $fetch<T>(endpoint, {
+    ...opts,
+    baseURL: url,
+    method: 'POST',
+    body: query,
+    headers: { ...normalizeHeaders(opts.headers), ...getAuthHeaders() },
+  })
 }

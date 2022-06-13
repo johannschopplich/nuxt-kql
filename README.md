@@ -9,7 +9,7 @@ This module provides a `useKql` composable, which under the hood uses [`useFetch
 ## Features
 
 - 🤹 Handles authentication
-- 🪢 Supports token-based authentication with [headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
+- 🪢 Supports token-based authentication with [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
 - 🍱 Built upon [`useFetch` composable](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch)
 - 🗃 Cached query responses
 - 🦾 Strongly typed
