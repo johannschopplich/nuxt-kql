@@ -1,6 +1,6 @@
 # nuxt-kql
 
-[![npm version][npm-version-src]][npm-version-href]
+[![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
 > Kirby [KQL](https://github.com/getkirby/kql) module for Nuxt 3.
 
@@ -154,6 +154,3 @@ Checkout [the playground example](./playground).
 ## License
 
 [MIT](./LICENSE) License © 2022 [Johann Schopplich](https://github.com/johannschopplich)
-
-[npm-version-src]: https://img.shields.io/npm/v/nuxt-kql/latest.svg
-[npm-version-href]: https://npmjs.com/package/nuxt-kql
