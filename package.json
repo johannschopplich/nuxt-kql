@@ -38,20 +38,24 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "docs": "pnpm -C docs run dev",
+    "docs:build": "pnpm -C docs run build",
+    "docs:serve": "pnpm -C docs run serve",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.3",
-    "defu": "^6.0.0"
+    "@nuxt/kit": "^3.0.0-rc.4",
+    "defu": "^6.0.0",
+    "pathe": "^0.3.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
     "@nuxt/module-builder": "^0.1.7",
     "bumpp": "^7.1.1",
     "eslint": "^8.17.0",
-    "nuxt": "^3.0.0-rc.3",
+    "nuxt": "^3.0.0-rc.4",
     "nuxt-kql": "workspace:*",
     "typescript": "^4.7.3"
   }

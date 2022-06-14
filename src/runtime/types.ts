@@ -14,8 +14,6 @@ export interface KqlQueryResponse {
   result?: any
 }
 
-export type KqlPublicFetchOptions = Pick<FetchOptions, 'headers' | 'retry' | 'signal' | 'onRequest' | 'onRequestError' | 'onResponse' | 'onResponseError'>
-
 export interface KqlPrivateFetchOptions {
   /**
    * Cache result with same query for hydration
@@ -25,6 +23,6 @@ export interface KqlPrivateFetchOptions {
   cache?: boolean
 }
 
-// export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'method' | 'body'>
-export type UseKqlOptions<T> = Pick<UseFetchOptions<T>, 'onRequest' | 'onRequestError' | 'onResponse' | 'onResponseError'>
+export type KqlPublicFetchOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
+export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>

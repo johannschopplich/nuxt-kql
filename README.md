@@ -2,21 +2,23 @@
 
 [![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
-> Kirby [KQL](https://github.com/getkirby/kql) module for Nuxt 3.
+> Kirby [KQL](https://github.com/getkirby/kql) module for [Nuxt 3](https://v3.nuxtjs.org).
 
-This module provides a `useKql` composable, which under the hood uses [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch). Thus, KQL query fetching in your Nuxt 3 application will behave the same as Nuxt' internal data fetching and also infers its request caching!
+- [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
+- [📖 &nbsp;Read the documentation](https://nuxt-kql.netlify.app)
 
 ## Features
 
-- 🤹 Handles authentication
+- 🔒 Protect your Kirby credentials when fetching queries
 - 🪢 Supports token-based authentication with [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
-- 🍱 Built upon [`useFetch` composable](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch)
+- 🤹 No CORS issues!
+- 🍱 Handle request just like with the [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch) composable
 - 🗃 Cached query responses
 - 🦾 Strongly typed
 
-> ℹ️ For the time being, the module will be available on the server and client. Thus, your username/password pair for the API authentication will be exposed. Please keep that in mind.
-
 ## Setup
+
+> [📖 Read the documentation](https://nuxt-kql.netlify.app)
 
 ```bash
 # pnpm
@@ -26,7 +28,9 @@ pnpm add -D nuxt-kql
 npm i -D nuxt-kql
 ```
 
-## Usage
+## Basic Usage
+
+> [📖 Read the documentation](https://nuxt-kql.netlify.app)
 
 Add `nuxt-kql` to your Nuxt config:
 
@@ -35,121 +39,17 @@ Add `nuxt-kql` to your Nuxt config:
 import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
-  modules: [
-    'nuxt-kql',
-  ],
+  modules: ['nuxt-kql'],
 })
 ```
 
-Create a `.env` file in your project and add the following environment variables:
-
-```env
-KIRBY_API_URL=https://kirby.example.com/api
-KIRBY_API_USERNAME=your-username
-KIRBY_API_PASSWORD=your-password
-```
-
-### Token-Based Authentication
-
-In combination with the [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter), you can use a bearer token for authentication.
-
-```ts
-// `nuxt.config.ts`
-import { defineNuxtConfig } from 'nuxt'
-
-export default defineNuxtConfig({
-  modules: [
-    'nuxt-kql',
-  ],
-
-  kql: {
-    // Enable the token-based authentication
-    auth: 'bearer',
-    // Needed for the kirby-headless-starter custom KQL endpoint
-    endpoint: 'kql',
-  },
-})
-```
-
-Set the following environment variables in your project's `.env` file:
-
-```env
-KIRBY_API_URL=https://kirby.example.com/api
-KIRBY_API_TOKEN=your-token
-```
-
-### Data Fetching
-
-Use the globally available `useKql` composable to fetch queries:
-
-```vue
-<script setup lang="ts">
-const { data, pending, refresh, error } = await useKql({
-  query: 'site',
-  select: {
-    title: 'site.title',
-  },
-})
-</script>
-
-<template>
-  <div>
-    <h1>{{ data?.result?.title }}</h1>
-    <pre>{{ JSON.stringify(data?.result, undefined, 2) }}</pre>
-  </div>
-</template>
-```
-
-## Options
-
-```ts
-export interface ModuleOptions {
-  /**
-   * Kirby API base URL, like `https://kirby.example.com/api`
-   * @default 'process.env.KIRBY_API_URL'
-   */
-  url?: string
-
-  /**
-   * Kirby KQL API route path
-   * @default 'query'
-   */
-  endpoint?: string
-
-  /**
-   * Authentication method
-   * Set to `none` to disable authentication
-   * @default 'basic'
-   */
-  auth?: 'basic' | 'bearer' | 'none'
-
-  /**
-   * Token for bearer authentication
-   * @default 'process.env.KIRBY_API_TOKEN'
-   */
-  token?: string
-
-  /**
-   * Username/password pair for basic authentication
-   * @default { username: process.env.KIRBY_API_USERNAME, password: process.env.KIRBY_API_PASSWORD }
-   */
-  credentials?: {
-    username: string
-    password: string
-  }
-}
-```
-
-## Playground
-
-Checkout [the playground example](./playground).
-
-## Development
+## 💻 Development
 
 1. Clone this repository
-2. Install dependencies using `pnpm install`
-3. Run `pnpm run dev:prepare`
-4. Start development server using `pnpm run dev`
+2. Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable` (use `npm i -g corepack` for Node.js < 16.10)
+3. Install dependencies using `pnpm install`
+4. Run `pnpm run dev:prepare`
+5. Start development server using `pnpm run dev`
 
 ## License
 
