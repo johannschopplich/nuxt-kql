@@ -12,7 +12,6 @@ importers:
       eslint: ^8.17.0
       nuxt: ^3.0.0-rc.4
       nuxt-kql: workspace:*
-      nuxt-tsconfig-stub: ^0.0.2
       pathe: ^0.3.0
       pnpm: ^7.2.1
       typescript: ^4.7.3
@@ -27,7 +26,6 @@ importers:
       eslint: 8.17.0
       nuxt: 3.0.0-rc.4
       nuxt-kql: 'link:'
-      nuxt-tsconfig-stub: 0.0.2
       pnpm: 7.2.1
       typescript: 4.7.3
 
@@ -4714,13 +4712,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
-
-  /nuxt-tsconfig-stub/0.0.2:
-    resolution: {integrity: sha512-5HC34SQqC0yB1mL+vy6K8UoUk+sGq/J0/2qd0yWMN1JXuXfpzmXEimX7Dh4m6v1l8WJ/zSM2MkU6XJvb6sZpSg==}
-    requiresBuild: true
-    dependencies:
-      fast-glob: 3.2.11
     dev: true
 
   /nuxt/3.0.0-rc.4:
