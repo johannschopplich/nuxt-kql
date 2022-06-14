@@ -1,26 +1,27 @@
 import { fileURLToPath } from 'url'
+import { join } from 'pathe'
 import { defu } from 'defu'
-import { createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
   /**
-   * Kirby API base URL, like `https://kirby.example.com/api`
-   * @default 'process.env.KIRBY_API_URL'
+   * Kirby base URL, like `https://kirby.example.com`
+   * @default 'process.env.KIRBY_BASE_URL'
    */
-  url?: string
+  kirbyUrl?: string
 
   /**
    * Kirby KQL API route path
-   * @default 'query'
+   * @default 'api/query'
    */
-  endpoint?: string
+  kirbyEndpoint?: string
 
   /**
-   * Authentication method
+   * Kirby API authentication method
    * Set to `none` to disable authentication
    * @default 'basic'
    */
-  auth?: 'basic' | 'bearer' | 'none'
+  kirbyAuth?: 'basic' | 'bearer' | 'none'
 
   /**
    * Token for bearer authentication
@@ -36,6 +37,16 @@ export interface ModuleOptions {
     username: string
     password: string
   }
+
+  /**
+   * Enable client-side KQL request
+   * By default, KQL queries are fetched safely for client as well as server via
+   * an internal server API route
+   * If enabled, you can use `usePublicKql()` and `$publicKql()` to fetch data
+   * directly from the Kirby instance
+   * Note: This means your token or user credentials will be publicly visible
+   */
+  clientRequests?: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -47,35 +58,70 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    url: process.env.KIRBY_API_URL,
-    endpoint: 'query',
-    auth: 'basic',
+    kirbyUrl: process.env.KIRBY_BASE_URL,
+    kirbyEndpoint: 'api/query',
+    kirbyAuth: 'basic',
     token: process.env.KIRBY_API_TOKEN,
     credentials: {
       username: process.env.KIRBY_API_USERNAME,
       password: process.env.KIRBY_API_PASSWORD,
     },
+    clientRequests: false,
   },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+    const { kirbyUrl, kirbyEndpoint, kirbyAuth, token, credentials, clientRequests } = options
+    const apiRoute = '/api/__kql__' as const
 
-    // Public runtimeConfig
+    // Private runtime config
+    nuxt.options.runtimeConfig.kql = defu(
+      nuxt.options.runtimeConfig.kql,
+      {
+        kirbyUrl,
+        kirbyEndpoint,
+        kirbyAuth,
+        token,
+        credentials,
+        clientRequests,
+      },
+    )
+
+    // Public runtime config
     nuxt.options.runtimeConfig.public.kql = defu(
       nuxt.options.runtimeConfig.public.kql,
       {
-        url: options.url,
-        endpoint: options.endpoint,
-        auth: options.auth,
-        token: options.token,
-        credentials: options.credentials,
+        kirbyUrl,
+        kirbyEndpoint,
+        kirbyAuth,
+        token,
+        credentials,
+        clientRequests,
+
+        // Only used by the module
+        apiRoute,
       },
     )
+
+    // Protect authorization data if no public requests are used
+    if (!clientRequests) {
+      const { kql } = nuxt.options.runtimeConfig.public
+      kql.kirbyUrl = ''
+      kql.kirbyEndpoint = ''
+      kql.kirbyAuth = ''
+      kql.token = ''
+      kql.credentials = { username: '', password: '' }
+    }
 
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
 
     nuxt.hook('autoImports:dirs', (dirs) => {
       dirs.push(resolve(runtimeDir, 'composables'))
+    })
+
+    addServerHandler({
+      route: apiRoute,
+      handler: join(runtimeDir, 'server/api.ts'),
     })
   },
 })

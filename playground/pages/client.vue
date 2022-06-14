@@ -8,7 +8,7 @@ const query = ref({
   },
 })
 
-const { data, refresh } = await useKql(query)
+const { data, refresh } = await usePublicKql(query)
 
 function updateQuery() {
   query.value.select.title = 'site.title.upper'
@@ -18,8 +18,11 @@ function updateQuery() {
 
 <template>
   <div>
-    <h1>Fetch Data Safely</h1>
-    <p>Data is being fetched via a custom Nuxt server route for KQL queries.</p>
+    <h1>Fetch Data in Client</h1>
+    <p>
+      Data is being fetched in the client only. This is faster, since the content is<br>
+      fetched directly from your Kirby instance. But more unsafe depending on your usecase, because the authorization data is published in the frontend.
+    </p>
     <h2>{{ data?.result?.title }}</h2>
     <h3>Query</h3>
     <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>

@@ -7,7 +7,9 @@ export default defineNuxtConfig({
   ],
 
   kql: {
-    auth: 'bearer',
-    endpoint: 'kql',
+    kirbyEndpoint: 'api/kql',
+    kirbyAuth: 'bearer',
+    // Disable the following to prevent usage of `usePublicKql()` and `$publicKql()`
+    clientRequests: true,
   },
 })
