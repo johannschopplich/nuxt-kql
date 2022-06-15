@@ -3,7 +3,7 @@ export const packageName = 'nuxt-kql'
 export const packageShortName = 'nuxt-kql'
 export const packageDescription = 'A blazing fast unit test framework powered by Vite'
 
-/* vitepress head */
+/* VitePress head */
 export const ogUrl = 'https://nuxt-kql.jhnn.dev/'
 export const ogImage = `${ogUrl}og.png`
 
