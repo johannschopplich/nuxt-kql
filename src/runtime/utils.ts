@@ -1,13 +1,12 @@
 import type { ModuleOptions } from '../module'
 
-export function normalizeHeaders(headers?: HeadersInit) {
-  const normalized: Record<string, string> = {}
-
+export function headersToObject(headers?: HeadersInit): Record<string, string> {
   if (!headers)
-    return normalized
+    return {}
 
-  for (const [key, value] of Array.isArray(headers) ? headers : Object.entries(headers))
-    normalized[key] = value
+  return Object.fromEntries([
+    ...(Array.isArray(headers) ? headers : Object.entries(headers)),
+  ])
 }
 
 export function getAuthHeaders(config: ModuleOptions) {
