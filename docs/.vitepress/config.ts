@@ -82,6 +82,12 @@ function sidebarGuide() {
       ],
     },
     {
+      text: 'Examples',
+      items: [
+        { text: 'Playground', link: '/guide/playground' },
+      ],
+    },
+    {
       text: 'FAQ',
       collapsible: true,
       items: [
