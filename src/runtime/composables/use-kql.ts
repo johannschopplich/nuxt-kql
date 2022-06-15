@@ -8,18 +8,12 @@ import type { AsyncData } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
 
 export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
-  query: Ref<ReqT> | ReqT | (() => ReqT),
+  query: Ref<ReqT> | ReqT,
   opts: UseKqlOptions<ResT> = {},
 ) {
   const { public: { kql } } = useRuntimeConfig()
 
-  const _query = computed(() => {
-    let q = query
-    if (typeof q === 'function')
-      q = (q as (() => ReqT))()
-
-    return unref(q)
-  })
+  const _query = computed(() => unref(query))
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.apiRoute, {
     ...opts,
@@ -29,19 +23,13 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
 }
 
 export function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
-  query: Ref<ReqT> | ReqT | (() => ReqT),
+  query: Ref<ReqT> | ReqT,
   opts: UseKqlOptions<ResT> = {},
 ) {
   const { public: { kql } } = useRuntimeConfig()
   assertKqlPublicConfig(kql as ModuleOptions)
 
-  const _query = computed(() => {
-    let q = query
-    if (typeof q === 'function')
-      q = (q as (() => ReqT))()
-
-    return unref(q)
-  })
+  const _query = computed(() => unref(query))
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.kirbyEndpoint, {
     ...opts,

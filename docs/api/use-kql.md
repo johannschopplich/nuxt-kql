@@ -6,7 +6,7 @@ Returns KQL query data. Uses an internal server route to proxy requests.
 
 ```ts
 function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
-  query: Ref<ReqT> | ReqT | (() => ReqT),
+  query: Ref<ReqT> | ReqT,
   opts?: UseKqlOptions<ResT>
 ): AsyncData<ResT, true | Error>
 ```

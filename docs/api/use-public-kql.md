@@ -10,7 +10,7 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 
 ```ts
 function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
-  query: Ref<ReqT> | ReqT | (() => ReqT),
+  query: Ref<ReqT> | ReqT,
   opts?: UseKqlOptions<ResT>
 ): AsyncData<ResT, true | Error>
 ```
