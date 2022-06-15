@@ -1,11 +1,9 @@
 import { defineConfig } from 'vitepress'
-import { version } from '../../package.json'
+import { description, name, version } from '../../package.json'
 import {
   github,
   ogImage,
   ogUrl,
-  packageDescription,
-  packageName,
   releases,
 } from './meta'
 
@@ -16,12 +14,12 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#ffffff' }],
     ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
-    ['meta', { property: 'og:title', content: packageName }],
-    ['meta', { property: 'og:description', content: packageDescription }],
+    ['meta', { property: 'og:title', content: name }],
+    ['meta', { property: 'og:description', content: description }],
     ['meta', { property: 'og:url', content: ogUrl }],
     ['meta', { property: 'og:image', content: ogImage }],
-    ['meta', { name: 'twitter:title', content: packageName }],
-    ['meta', { name: 'twitter:description', content: packageDescription }],
+    ['meta', { name: 'twitter:title', content: name }],
+    ['meta', { name: 'twitter:description', content: description }],
     ['meta', { name: 'twitter:image', content: ogImage }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
   ],
