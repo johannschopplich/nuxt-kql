@@ -78,6 +78,13 @@ function sidebarGuide() {
       items: [
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'How It Works', link: '/guide/how-it-works' },
+      ],
+    },
+    {
+      text: 'Configuration',
+      collapsible: true,
+      items: [
         { text: 'Token-Based Authentication', link: '/guide/token-authentication' },
       ],
     },
