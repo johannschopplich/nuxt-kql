@@ -29,7 +29,7 @@ features:
   - title: Various Authentication Methods
     details: Basic, bearer or no authentication. Teams up best with kirby-headless-starter!
   - title: Familiar Data Handling
-    details: Handle query requests just like you would with Nuxt's useFetch composable. 
+    details: Handle query requests just like with Nuxt's useFetch composable. Caching included.
   - title: TypeScript
     details: Bring your own query response typings. Otherwise, nuxt-kql will provide defaults for you.
 ---
