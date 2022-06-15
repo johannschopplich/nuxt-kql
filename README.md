@@ -1,3 +1,5 @@
+[![nuxt-kql](./docs/public/og.png)](https://nuxt-kql.jhnn.dev)
+
 # nuxt-kql
 
 [![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
