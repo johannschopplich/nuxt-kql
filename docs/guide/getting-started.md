@@ -46,7 +46,7 @@ KIRBY_API_PASSWORD=your-password
 ```
 
 ::: info
-The default KQL endpoint `/api/query` [https://getkirby.com/docs/guide/api/authentication](requires authentication).
+The default KQL endpoint `/api/query` [requires authentication](https://getkirby.com/docs/guide/api/authentication).
 :::
 
 Now, you can fetch data with the [`useKql`](/api/) composable.

@@ -57,7 +57,7 @@ function nav() {
   return [
     { text: 'Guide', link: '/guide/what-is-nuxt-kql', activeMatch: '/guide/' },
     { text: 'Config', link: '/config/' },
-    { text: 'API', link: '/api/' },
+    { text: 'API', link: '/api/', activeMatch: '/api/' },
     {
       text: `v${version}`,
       items: [
@@ -105,9 +105,18 @@ function sidebarConfig() {
 function sidebarApi() {
   return [
     {
-      text: 'API',
+      text: 'API Reference',
       items: [
-        { text: 'API Reference', link: '/api/' },
+        { text: 'Overview', link: '/api/' },
+      ],
+    },
+    {
+      text: 'Composables',
+      items: [
+        { text: 'useKql', link: '/api/use-kql' },
+        { text: 'usePublicKql', link: '/api/use-public-kql' },
+        { text: '$kql', link: '/api/kql' },
+        { text: '$publicKql', link: '/api/public-kql' },
       ],
     },
   ]
