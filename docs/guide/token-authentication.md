@@ -24,3 +24,7 @@ Set the following environment variables in your project's `.env` file:
 KIRBY_BASE_URL=https://kirby.example.com
 KIRBY_API_TOKEN=your-token
 ```
+
+::: info
+Make sure to set the same token as the `KIRBY_HEADLESS_API_TOKEN` environment variable in your headless Kirby project's `.env` file.
+:::
