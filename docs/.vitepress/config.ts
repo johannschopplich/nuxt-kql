@@ -98,7 +98,7 @@ function sidebarGuide() {
       text: 'FAQ',
       collapsible: true,
       items: [
-        { text: 'Can I Have CORS Issues?', link: '/guide/faq-cors-issues' },
+        { text: 'Are CORS Issues Possible?', link: '/guide/faq-are-cors-issues-possible' },
       ],
     },
   ]

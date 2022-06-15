@@ -1,4 +1,4 @@
-# Can I Have CORS Issues?
+# Are CORS Issues Possible?
 
 ## tl;dr
 
