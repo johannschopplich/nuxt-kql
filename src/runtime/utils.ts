@@ -11,23 +11,23 @@ export function headersToObject(headers: HeadersInit = {}) {
   return headers as Record<string, string>
 }
 
-export function getAuthHeaders(config: ModuleOptions) {
-  const headers: HeadersInit = {}
+export function getAuthHeaders({ kirbyAuth, token, credentials }: ModuleOptions) {
+  const headers: Record<string, string> = {}
 
-  if (config.kirbyAuth === 'basic') {
-    if (!config.credentials?.username || !config.credentials?.password)
+  if (kirbyAuth === 'basic') {
+    if (!credentials?.username || !credentials?.password)
       throw new Error('Missing KQL credentials for basic auth')
 
-    const { username, password } = config.credentials
+    const { username, password } = credentials
 
     headers.Authorization = Buffer.from(`${username}:${password}`).toString('base64')
   }
 
-  if (config.kirbyAuth === 'bearer') {
-    if (!config.token)
+  if (kirbyAuth === 'bearer') {
+    if (!token)
       throw new Error('Missing KQL token for bearer auth')
 
-    headers.Authorization = `Bearer ${config.token}`
+    headers.Authorization = `Bearer ${token}`
   }
 
   return headers
