@@ -1,7 +1,6 @@
 import { fileURLToPath } from 'url'
-import { join } from 'pathe'
 import { defu } from 'defu'
-import { addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
   /**
@@ -70,36 +69,19 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
-    const { kirbyUrl, kirbyEndpoint, kirbyAuth, token, credentials, clientRequests } = options
+    const { clientRequests } = options
     const apiRoute = '/api/__kql__' as const
 
     // Private runtime config
     nuxt.options.runtimeConfig.kql = defu(
       nuxt.options.runtimeConfig.kql,
-      {
-        kirbyUrl,
-        kirbyEndpoint,
-        kirbyAuth,
-        token,
-        credentials,
-        clientRequests,
-      },
+      options,
     )
 
     // Public runtime config
     nuxt.options.runtimeConfig.public.kql = defu(
       nuxt.options.runtimeConfig.public.kql,
-      {
-        kirbyUrl,
-        kirbyEndpoint,
-        kirbyAuth,
-        token,
-        credentials,
-        clientRequests,
-
-        // Only used by the module
-        apiRoute,
-      },
+      options,
     )
 
     // Protect authorization data if no public requests are used
@@ -121,7 +103,17 @@ export default defineNuxtModule<ModuleOptions>({
 
     addServerHandler({
       route: apiRoute,
-      handler: join(runtimeDir, 'server/api.ts'),
+      handler: resolve(runtimeDir, 'server/api.ts'),
+    })
+
+    addTemplate({
+      filename: 'nuxt-kql-options.ts',
+      write: true,
+      getContents() {
+        return `
+export const apiRoute = '${apiRoute}'
+`.trimStart()
+      },
     })
   },
 })
