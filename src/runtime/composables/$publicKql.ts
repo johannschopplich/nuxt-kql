@@ -15,6 +15,9 @@ export function $publicKql<T = KqlQueryResponse>(
     baseURL: kql.kirbyUrl,
     method: 'POST',
     body: query,
-    headers: { ...headersToObject(opts.headers), ...getAuthHeaders(kql as ModuleOptions) },
+    headers: {
+      ...headersToObject(opts.headers),
+      ...getAuthHeaders(kql as ModuleOptions),
+    },
   })
 }

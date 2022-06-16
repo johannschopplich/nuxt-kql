@@ -1,12 +1,14 @@
 import type { ModuleOptions } from '../module'
 
-export function headersToObject(headers?: HeadersInit): Record<string, string> {
-  if (!headers)
-    return {}
+export function headersToObject(headers: HeadersInit = {}) {
+  // SSR compatibility for `Headers` prototype
+  if (typeof Headers !== 'undefined' && headers instanceof Headers)
+    return Object.fromEntries([...headers.entries()])
 
-  return Object.fromEntries([
-    ...(Array.isArray(headers) ? headers : Object.entries(headers)),
-  ])
+  if (Array.isArray(headers))
+    return Object.fromEntries(headers)
+
+  return headers as Record<string, string>
 }
 
 export function getAuthHeaders(config: ModuleOptions) {

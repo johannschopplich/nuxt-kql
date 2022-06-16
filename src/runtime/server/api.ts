@@ -10,7 +10,7 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   if (!kql.kirbyUrl || !kql.kirbyEndpoint)
     throw new Error('Kirby base URL or KQL API route path is not configured')
 
-  let kqlRequest: Partial<KqlQueryRequest>
+  let kqlRequest: Partial<KqlQueryRequest> = {}
 
   if (event.req.method === 'POST') {
     const body = await useBody(event)
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
     kqlRequest = JSON.parse((query.data as string) || '{}') || {}
   }
 
-  if (!kqlRequest || Object.keys(kqlRequest).length === 0) {
+  if (Object.keys(kqlRequest).length === 0) {
     event.res.statusCode = 404
     return {
       code: 404,
