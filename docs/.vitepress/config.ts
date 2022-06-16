@@ -10,7 +10,7 @@ import {
 
 export default defineConfig({
   lang: 'en-US',
-  title: 'nuxt-kql',
+  title: name,
   description: 'Nuxt 3 module for Kirby\'s Query Language API',
   head: [
     ['meta', { name: 'theme-color', content: '#ffffff' }],
