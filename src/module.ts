@@ -81,18 +81,15 @@ export default defineNuxtModule<ModuleOptions>({
     // Public runtime config
     nuxt.options.runtimeConfig.public.kql = defu(
       nuxt.options.runtimeConfig.public.kql,
-      options,
+      // Protect authorization data if no public requests are enabled
+      {
+        kirbyUrl: clientRequests ? options.kirbyUrl : undefined,
+        kirbyEndpoint: clientRequests ? options.kirbyEndpoint : undefined,
+        kirbyAuth: clientRequests ? options.kirbyAuth : undefined,
+        token: clientRequests ? options.token : undefined,
+        credentials: clientRequests ? options.credentials : undefined,
+      } as ModuleOptions,
     )
-
-    // Protect authorization data if no public requests are used
-    if (!clientRequests) {
-      const { kql } = nuxt.options.runtimeConfig.public
-      kql.kirbyUrl = ''
-      kql.kirbyEndpoint = ''
-      kql.kirbyAuth = ''
-      kql.token = ''
-      kql.credentials = { username: '', password: '' }
-    }
 
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)

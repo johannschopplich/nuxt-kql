@@ -13,7 +13,7 @@ export function getAuthHeaders(config: ModuleOptions) {
   const headers: HeadersInit = {}
 
   if (config.kirbyAuth === 'basic') {
-    if (!config.credentials.username || !config.credentials.password)
+    if (!config.credentials?.username || !config.credentials?.password)
       throw new Error('Missing KQL credentials for basic auth')
 
     const { username, password } = config.credentials
