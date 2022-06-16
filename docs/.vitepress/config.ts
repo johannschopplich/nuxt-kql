@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
 import { description, name, version } from '../../package.json'
 import {
   github,
@@ -53,7 +54,7 @@ export default defineConfig({
   },
 })
 
-function nav() {
+function nav(): DefaultTheme.NavItem[] {
   return [
     { text: 'Guide', link: '/guide/what-is-nuxt-kql', activeMatch: '/guide/' },
     { text: 'Config', link: '/config/' },
@@ -70,7 +71,7 @@ function nav() {
   ]
 }
 
-function sidebarGuide() {
+function sidebarGuide(): DefaultTheme.SidebarGroup[] {
   return [
     {
       text: 'Introduction',
@@ -104,7 +105,7 @@ function sidebarGuide() {
   ]
 }
 
-function sidebarConfig() {
+function sidebarConfig(): DefaultTheme.SidebarGroup[] {
   return [
     {
       text: 'Config',
@@ -115,7 +116,7 @@ function sidebarConfig() {
   ]
 }
 
-function sidebarApi() {
+function sidebarApi(): DefaultTheme.SidebarGroup[] {
   return [
     {
       text: 'API Reference',
