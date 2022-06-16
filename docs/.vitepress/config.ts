@@ -29,9 +29,7 @@ export default defineConfig({
     logo: '/logo.svg',
 
     editLink: {
-      repo: 'johannschopplich/nuxt-kql',
-      branch: 'main',
-      dir: 'docs',
+      pattern: 'https://github.com/johannschopplich/nuxt-kql/edit/main/docs/:path',
       text: 'Suggest changes to this page',
     },
 
