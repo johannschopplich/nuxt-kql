@@ -13,6 +13,8 @@ function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
   query: Ref<ReqT> | ReqT,
   opts?: UseKqlOptions<ResT>
 ): AsyncData<ResT, true | Error>
+
+type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 ```
 
 `usePublicKql` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).
