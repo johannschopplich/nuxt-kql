@@ -1,6 +1,6 @@
 import { hash as ohash } from 'ohash'
 import type { KqlPrivateFetchOptions, KqlQueryRequest, KqlQueryResponse } from '../types'
-import { useRuntimeConfig } from '#app'
+import { apiRoute } from '#build/nuxt-kql-options'
 
 interface InternalState<T> {
   promiseMap: Map<string, Promise<T>>
@@ -11,7 +11,6 @@ export function $kql<T = KqlQueryResponse>(
   options: KqlPrivateFetchOptions = {},
 ): Promise<T> {
   const { cache = true } = options
-  const { public: { kql } } = useRuntimeConfig()
 
   const nuxt = useNuxtApp()
   const queries: Record<string, T> = nuxt.payload.kqlQueries = (nuxt.payload.kqlQueries || {})
@@ -22,7 +21,7 @@ export function $kql<T = KqlQueryResponse>(
   const body = { data: query }
 
   if (!cache) {
-    return $fetch<T>(kql.apiRoute, {
+    return $fetch<T>(apiRoute, {
       method: 'POST',
       body,
     })
@@ -36,7 +35,7 @@ export function $kql<T = KqlQueryResponse>(
   if (state.promiseMap.has(key))
     return state.promiseMap.get(key)
 
-  const request = $fetch<T>(kql.apiRoute, { method: 'POST', body })
+  const request = $fetch<T>(apiRoute, { method: 'POST', body })
     .then((response) => {
       queries[key] = response
       state.promiseMap.delete(key)

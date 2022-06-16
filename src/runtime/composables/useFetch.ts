@@ -6,16 +6,15 @@ import { assertKqlPublicConfig, getAuthHeaders } from '../utils'
 import type { ModuleOptions } from '../../module'
 import type { AsyncData } from '#app'
 import { useFetch, useRuntimeConfig } from '#app'
+import { apiRoute } from '#build/nuxt-kql-options'
 
 export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
   query: Ref<ReqT> | ReqT,
   opts: UseKqlOptions<ResT> = {},
 ) {
-  const { public: { kql } } = useRuntimeConfig()
-
   const _query = computed(() => unref(query))
 
-  return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.apiRoute, {
+  return useFetch<ResT, Error, NitroFetchRequest, ResT>(apiRoute, {
     ...opts,
     method: 'POST',
     body: { data: _query.value },
