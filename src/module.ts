@@ -88,6 +88,7 @@ export default defineNuxtModule<ModuleOptions>({
         kirbyAuth: clientRequests ? options.kirbyAuth : undefined,
         token: clientRequests ? options.token : undefined,
         credentials: clientRequests ? options.credentials : undefined,
+        clientRequests,
       } as ModuleOptions,
     )
 
@@ -100,7 +101,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addServerHandler({
       route: apiRoute,
-      handler: resolve(runtimeDir, 'server/api.ts'),
+      handler: resolve(runtimeDir, 'server/api'),
     })
 
     addTemplate({
