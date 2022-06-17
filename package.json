@@ -43,8 +43,7 @@
     "docs:serve": "pnpm -C docs run serve",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "release": "bumpp --commit --push --tag",
-    "postinstall": "nuxi prepare playground"
+    "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
     "@nuxt/kit": "^3.0.0-rc.4",
