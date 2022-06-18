@@ -5,7 +5,7 @@ import type { KqlQueryRequest, KqlQueryResponse, UseKqlOptions } from '../types'
 import type { ModuleOptions } from '../../module'
 import { getAuthHeaders } from '../utils'
 import type { AsyncData } from '#app'
-import { useFetch, useRuntimeConfig } from '#app'
+import { useFetch, useRuntimeConfig } from '#imports'
 
 export function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
   query: Ref<ReqT> | ReqT,
