@@ -2,7 +2,6 @@ import { assertMethod, defineEventHandler, useBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
 import type { KqlQueryRequest, KqlQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
-import { useRuntimeConfig } from '#app'
 
 export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   assertMethod(event, 'POST')
