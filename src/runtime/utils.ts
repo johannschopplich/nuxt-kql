@@ -15,28 +15,12 @@ export function getAuthHeaders({ kirbyAuth, token, credentials }: ModuleOptions)
   const headers: Record<string, string> = {}
 
   if (kirbyAuth === 'basic') {
-    if (!credentials?.username || !credentials?.password)
-      throw new Error('Missing KQL credentials for basic auth')
-
-    const { username, password } = credentials
-
+    const { username, password } = credentials || {}
     headers.Authorization = Buffer.from(`${username}:${password}`).toString('base64')
   }
 
-  if (kirbyAuth === 'bearer') {
-    if (!token)
-      throw new Error('Missing KQL token for bearer auth')
-
+  if (kirbyAuth === 'bearer')
     headers.Authorization = `Bearer ${token}`
-  }
 
   return headers
-}
-
-export function assertKqlPublicConfig(config: ModuleOptions) {
-  if (!config.clientRequests)
-    throw new Error('Fetching from the KQL server directly on the client isn\'t allowed. Enable it by setting the nuxt-kql option "clientRequests" to "true" first.')
-
-  if (!config.kirbyUrl || !config.kirbyEndpoint)
-    throw new Error('Kirby base URL or KQL API route path is not configured')
 }

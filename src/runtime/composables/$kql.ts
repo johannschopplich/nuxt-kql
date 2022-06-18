@@ -1,6 +1,6 @@
 import { hash as ohash } from 'ohash'
 import type { KqlPrivateFetchOptions, KqlQueryRequest, KqlQueryResponse } from '../types'
-import { apiRoute } from '#build/nuxt-kql-options'
+import { apiRoute } from '#build/nuxt-kql/options'
 
 interface InternalState<T> {
   promiseMap: Map<string, Promise<T>>

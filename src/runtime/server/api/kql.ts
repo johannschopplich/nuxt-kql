@@ -1,14 +1,12 @@
 import { defineEventHandler, useBody } from 'h3'
 import { getQuery } from 'ufo'
-import type { ModuleOptions } from '../../module'
-import type { KqlQueryRequest, KqlQueryResponse } from '../types'
-import { getAuthHeaders } from '../utils'
+import type { ModuleOptions } from '../../../module'
+import type { KqlQueryRequest, KqlQueryResponse } from '../../types'
+import { getAuthHeaders } from '../../utils'
+import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   const { kql } = useRuntimeConfig()
-
-  if (!kql.kirbyUrl || !kql.kirbyEndpoint)
-    throw new Error('Kirby base URL or KQL API route path is not configured')
 
   let kqlRequest: Partial<KqlQueryRequest> = {}
 

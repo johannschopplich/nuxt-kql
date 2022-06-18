@@ -1,14 +1,15 @@
 import type { KqlPublicFetchOptions, KqlQueryRequest, KqlQueryResponse } from '../types'
-import { assertKqlPublicConfig, getAuthHeaders, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
-import { useRuntimeConfig } from '#app'
+import { getAuthHeaders, headersToObject } from '../utils'
+import { useRuntimeConfig } from '#imports'
 
 export function $publicKql<T = KqlQueryResponse>(
   query: KqlQueryRequest,
   opts: KqlPublicFetchOptions = {},
 ): Promise<T> {
-  const { public: { kql } } = useRuntimeConfig()
-  assertKqlPublicConfig(kql as ModuleOptions)
+  const { kql } = useRuntimeConfig().public
+  if (!kql.clientRequests)
+    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
 
   return $fetch<T>(kql.kirbyEndpoint, {
     ...opts,

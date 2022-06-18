@@ -57,20 +57,33 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    kirbyUrl: process.env.KIRBY_BASE_URL,
+    kirbyUrl: process.env.KIRBY_BASE_URL as string,
     kirbyEndpoint: 'api/query',
     kirbyAuth: 'basic',
-    token: process.env.KIRBY_API_TOKEN,
+    token: process.env.KIRBY_API_TOKEN as string,
     credentials: {
-      username: process.env.KIRBY_API_USERNAME,
-      password: process.env.KIRBY_API_PASSWORD,
+      username: process.env.KIRBY_API_USERNAME as string,
+      password: process.env.KIRBY_API_PASSWORD as string,
     },
     clientRequests: false,
   },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
-    const { clientRequests } = options
     const apiRoute = '/api/__kql__' as const
+
+    // Make sure Kirby URL and KQL endpoint are set
+    if (!options.kirbyUrl)
+      console.warn('Missing `KIRBY_BASE_URL` in `.env`')
+
+    if (!options.kirbyEndpoint)
+      console.warn('Missing `kql.kirbyEndpoint` option in Nuxt config')
+
+    // Make sure authentication credentials are set
+    if (options.kirbyAuth === 'basic' && (!options.credentials || !options.credentials.username || !options.credentials.password))
+      console.warn('Missing `KIRBY_API_USERNAME` and `KIRBY_API_PASSWORD` in `.env` for basic authentication')
+
+    if (options.kirbyAuth === 'bearer' && !options.token)
+      console.warn('Missing `KIRBY_API_TOKEN` in `.env` for bearer authentication')
 
     // Private runtime config
     nuxt.options.runtimeConfig.kql = defu(
@@ -83,35 +96,58 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.runtimeConfig.public.kql,
       // Protect authorization data if no public requests are enabled
       {
-        kirbyUrl: clientRequests ? options.kirbyUrl : undefined,
-        kirbyEndpoint: clientRequests ? options.kirbyEndpoint : undefined,
-        kirbyAuth: clientRequests ? options.kirbyAuth : undefined,
-        token: clientRequests ? options.token : undefined,
-        credentials: clientRequests ? options.credentials : undefined,
-        clientRequests,
+        kirbyUrl: options.clientRequests ? options.kirbyUrl : undefined,
+        kirbyEndpoint: options.clientRequests ? options.kirbyEndpoint : undefined,
+        kirbyAuth: options.clientRequests ? options.kirbyAuth : undefined,
+        token: options.clientRequests ? options.token : undefined,
+        credentials: options.clientRequests ? options.credentials : undefined,
+        clientRequests: options.clientRequests,
       } as ModuleOptions,
     )
 
+    // Transpile runtime
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
 
+    // Add KQL proxy endpoint to fetch queries on server-side
+    addServerHandler({
+      route: apiRoute,
+      handler: resolve(runtimeDir, 'server/api/kql'),
+    })
+
+    // Add KQL composables
     nuxt.hook('autoImports:dirs', (dirs) => {
       dirs.push(resolve(runtimeDir, 'composables'))
     })
 
-    addServerHandler({
-      route: apiRoute,
-      handler: resolve(runtimeDir, 'server/api'),
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      // Inline module runtime in Nitro bundle
+      nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
+        inline: [resolve('./runtime')],
+      })
     })
 
     addTemplate({
-      filename: 'nuxt-kql-options.ts',
+      filename: 'nuxt-kql/options.mjs',
       write: true,
       getContents() {
         return `
 export const apiRoute = '${apiRoute}'
 `.trimStart()
       },
+    })
+
+    addTemplate({
+      filename: 'types/nuxt-kql.d.ts',
+      getContents: () => [
+        'declare module \'#build/nuxt-kql/options\' {',
+        '  const apiRoute: string',
+        '}',
+      ].join('\n'),
+    })
+
+    nuxt.hook('prepare:types', (options) => {
+      options.references.push({ path: resolve(nuxt.options.buildDir, 'types/nuxt-kql.d.ts') })
     })
   },
 })
