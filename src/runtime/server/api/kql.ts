@@ -1,25 +1,18 @@
-import { defineEventHandler, useBody } from 'h3'
-import { getQuery } from 'ufo'
+import { assertMethod, defineEventHandler, useBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
 import type { KqlQueryRequest, KqlQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
+const { kql } = useRuntimeConfig()
+
 export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
-  const { kql } = useRuntimeConfig()
+  assertMethod(event, 'POST')
+  const body = await useBody<{ data: Partial<KqlQueryRequest> }>(event)
 
-  let kqlRequest: Partial<KqlQueryRequest> = {}
+  const { data = {} } = body
 
-  if (event.req.method === 'POST') {
-    const body = await useBody(event)
-    kqlRequest = body.data || {}
-  }
-  else {
-    const query = getQuery(event.req.url!)
-    kqlRequest = JSON.parse((query.data as string) || '{}') || {}
-  }
-
-  if (Object.keys(kqlRequest).length === 0) {
+  if (Object.keys(data).length === 0) {
     event.res.statusCode = 404
     return {
       code: 404,
@@ -31,7 +24,7 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
     return await $fetch<KqlQueryResponse>(kql.kirbyEndpoint, {
       baseURL: kql.kirbyUrl,
       method: 'POST',
-      body: kqlRequest,
+      body: data,
       headers: { ...getAuthHeaders(kql as ModuleOptions) },
     })
   }
