@@ -2,15 +2,15 @@ import { assertMethod, defineEventHandler, useBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
 import type { KqlQueryRequest, KqlQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
-import { useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#app'
 
 const { kql } = useRuntimeConfig()
 
 export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   assertMethod(event, 'POST')
-  const body = await useBody<{ data: Partial<KqlQueryRequest> }>(event)
+  const body = await useBody(event)
 
-  const { data = {} } = body
+  const data: Partial<KqlQueryRequest> = body.data || {}
 
   if (Object.keys(data).length === 0) {
     event.res.statusCode = 404

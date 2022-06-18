@@ -1,7 +1,7 @@
 import type { KqlPublicFetchOptions, KqlQueryRequest, KqlQueryResponse } from '../types'
 import type { ModuleOptions } from '../../module'
 import { getAuthHeaders, headersToObject } from '../utils'
-import { useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#app'
 
 export function $publicKql<T = KqlQueryResponse>(
   query: KqlQueryRequest,
