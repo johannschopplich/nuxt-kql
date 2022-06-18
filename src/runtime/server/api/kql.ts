@@ -4,8 +4,6 @@ import type { KqlQueryRequest, KqlQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
 import { useRuntimeConfig } from '#app'
 
-const { kql } = useRuntimeConfig()
-
 export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   assertMethod(event, 'POST')
   const body = await useBody(event)
@@ -19,6 +17,8 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
       status: 'Empty KQL query',
     }
   }
+
+  const { kql } = useRuntimeConfig()
 
   try {
     return await $fetch<KqlQueryResponse>(kql.kirbyEndpoint, {
