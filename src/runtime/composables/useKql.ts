@@ -6,7 +6,7 @@ import type { KqlQueryRequest, KqlQueryResponse, UseKqlOptions } from '../types'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
 
-export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
+export function useKql<ResT = KqlQueryResponse, ReqT extends KqlQueryRequest = KqlQueryRequest>(
   query: Ref<ReqT> | ReqT,
   opts: UseKqlOptions<ResT> = {},
 ) {

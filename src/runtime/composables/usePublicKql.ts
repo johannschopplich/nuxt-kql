@@ -7,7 +7,7 @@ import type { ModuleOptions } from '../../module'
 import { getAuthHeaders } from '../utils'
 import { useFetch, useRuntimeConfig } from '#imports'
 
-export function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
+export function usePublicKql<ResT = KqlQueryResponse, ReqT extends KqlQueryRequest = KqlQueryRequest>(
   query: Ref<ReqT> | ReqT,
   opts: UseKqlOptions<ResT> = {},
 ) {
