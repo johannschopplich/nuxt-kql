@@ -5,7 +5,7 @@
     </NuxtLink>
     /
     <NuxtLink to="/client">
-      <span>Client KQL</span>
+      <span>Client-side only</span>
     </NuxtLink>
   </header>
 

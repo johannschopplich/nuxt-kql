@@ -14,7 +14,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
     event.res.statusCode = 404
     return {
       code: 404,
-      status: 'Empty KQL query',
+      status: 'Empty Kirby query',
     }
   }
 
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
     event.res.statusCode = 500
     return {
       code: 500,
-      status: 'Couldn\'t execute KQL query',
+      status: 'Couldn\'t execute Kirby query',
       result: err.message,
     }
   }

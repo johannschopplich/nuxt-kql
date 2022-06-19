@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   kql: {
     kirbyEndpoint: 'api/kql',
     kirbyAuth: 'bearer',
-    // Enable client-side KQL requests with `usePublicQuery()` and `$publicQuery()`
+    // Enable client-side query requests with `usePublicQuery()` and `$publicQuery()`
     clientRequests: true,
   },
 })
