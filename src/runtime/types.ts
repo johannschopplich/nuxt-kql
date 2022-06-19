@@ -1,5 +1,6 @@
 import type { FetchOptions } from 'ohmyfetch'
-import type { UseFetchOptions } from '#app'
+// TODO: Import type from `#app` is not transpiled
+import type { UseFetchOptions } from 'nuxt/app'
 
 export type KqlQuery = `${'kirby' | 'site' | 'page'}${string}`
 

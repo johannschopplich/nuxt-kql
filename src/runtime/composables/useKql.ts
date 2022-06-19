@@ -1,8 +1,9 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
 import { computed, unref } from 'vue'
+// TODO: Import type from `#app` is not transpiled
+import type { AsyncData } from 'nuxt/app'
 import type { KqlQueryRequest, KqlQueryResponse, UseKqlOptions } from '../types'
-import type { AsyncData } from '#app'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
 
