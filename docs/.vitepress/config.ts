@@ -98,6 +98,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
       collapsible: true,
       items: [
         { text: 'Are CORS Issues Possible?', link: '/guide/faq-are-cors-issues-possible' },
+        { text: 'How to Track Errors?', link: '/guide/faq-how-to-track-errors' },
       ],
     },
   ]
