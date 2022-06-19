@@ -10,14 +10,15 @@ interface KqlQueryResponse {
 }
 ```
 
-If the request to the Kirby backend is unauthenticated or another error has been thrown, you can inspect the `code` and `status` property:
+If the request to the Kirby backend is unauthenticated or another error has been thrown from within the [Nuxt server API](/guide/how-it-works), you can inspect the `code` and `status` property:
 
 ```ts
 // `data` will always be of type `KqlQueryResponse`
 const { data } = await useKql({ query: 'site' })
 
-console.log('Status code', data.code)
-console.log('Status message', data.message)
-```
+console.log('Code', data.code)
+console.log('Status', data.status)
 
-When the internal server API fails, it will infer the same response type.
+// Will include the error response of the fetch request to the Kirby backend
+console.log('Message', data.message)
+```
