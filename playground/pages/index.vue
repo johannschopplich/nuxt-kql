@@ -20,6 +20,7 @@ function updateQuery() {
   <div>
     <h1>Fetch Data Safely</h1>
     <p>Data is being fetched via a custom Nuxt server route for KQL queries.</p>
+    <hr>
     <h2>{{ data?.result?.title }}</h2>
     <h3>Query</h3>
     <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>

@@ -23,6 +23,7 @@ function updateQuery() {
       Data is being fetched in the client only. This is faster, since the content is<br>
       fetched directly from your Kirby instance. But more unsafe depending on your usecase, because the authorization data is published in the frontend.
     </p>
+    <hr>
     <h2>{{ data?.result?.title }}</h2>
     <h3>Query</h3>
     <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>
