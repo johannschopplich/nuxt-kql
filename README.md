@@ -7,7 +7,7 @@
 > Kirby [KQL](https://github.com/getkirby/kql) module for [Nuxt 3](https://v3.nuxtjs.org).
 
 - [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
-- [📖 &nbsp;Read the documentation](https://nuxt-kql.netlify.app)
+- [📖 &nbsp;Read the documentation](https://nuxt-kql.jhnn.dev)
 
 ## Features
 
@@ -20,7 +20,7 @@
 
 ## Setup
 
-> [📖 Read the documentation](https://nuxt-kql.netlify.app)
+> [📖 Read the documentation](https://nuxt-kql.jhnn.dev)
 
 ```bash
 # pnpm
@@ -32,7 +32,7 @@ npm i -D nuxt-kql
 
 ## Basic Usage
 
-> [📖 Read the documentation](https://nuxt-kql.netlify.app)
+> [📖 Read the documentation](https://nuxt-kql.jhnn.dev)
 
 Add `nuxt-kql` to your Nuxt config:
 
