@@ -1,12 +1,11 @@
 import type { FetchOptions } from 'ohmyfetch'
-// TODO: Import type from `#app` is not transpiled
 import type { UseFetchOptions } from 'nuxt/app'
 
 export type KqlQuery = `${'kirby' | 'site' | 'page'}${string}`
 
 export interface KqlQueryRequest {
   query: KqlQuery
-  select?: Record<string, string | boolean> | string[]
+  select?: Record<string, any> | string[]
   pagination?: {
     /** @default 100 */
     limit?: number
