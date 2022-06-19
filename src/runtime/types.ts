@@ -1,10 +1,11 @@
-import type { FetchOptions } from 'ohmyfetch'
 import type { UseFetchOptions } from 'nuxt/app'
 
-export type KqlQuery = `${'kirby' | 'site' | 'page'}${string}`
-
-export interface KqlQueryRequest {
-  query: KqlQuery
+export interface KirbyQueryRequest {
+  /**
+   * @example
+   * kirby.page("about")
+   */
+  query: `${'kirby' | 'site' | 'page'}${string}`
   select?: Record<string, any> | string[]
   pagination?: {
     /** @default 100 */
@@ -13,21 +14,10 @@ export interface KqlQueryRequest {
   }
 }
 
-export interface KqlQueryResponse {
+export interface KirbyQueryResponse {
   code: number
   status: string
   result?: any
 }
 
-export interface KqlPrivateFetchOptions {
-  /**
-   * Cache result with same query for hydration
-   *
-   * @default true
-   */
-  cache?: boolean
-}
-
-export type KqlPublicFetchOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
-
-export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>

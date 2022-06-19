@@ -2,14 +2,14 @@ import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
 import { computed, unref } from 'vue'
 import type { AsyncData } from 'nuxt/app'
-import type { KqlQueryRequest, KqlQueryResponse, UseKqlOptions } from '../types'
+import type { KirbyQueryRequest, KirbyQueryResponse, UseQueryOptions } from '../types'
 import type { ModuleOptions } from '../../module'
 import { getAuthHeaders } from '../utils'
 import { useFetch, useRuntimeConfig } from '#imports'
 
-export function usePublicKql<ResT = KqlQueryResponse, ReqT extends KqlQueryRequest = KqlQueryRequest>(
+export function usePublicQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryRequest>(
   query: Ref<ReqT> | ReqT,
-  opts: UseKqlOptions<ResT> = {},
+  opts: UseQueryOptions<ResT> = {},
 ) {
   const { kql } = useRuntimeConfig().public
   if (!kql.clientRequests)

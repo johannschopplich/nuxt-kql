@@ -1,14 +1,23 @@
 import { hash as ohash } from 'ohash'
-import type { KqlPrivateFetchOptions, KqlQueryRequest, KqlQueryResponse } from '../types'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
 import { apiRoute } from '#build/nuxt-kql/options'
 
 interface InternalState<T> {
   promiseMap: Map<string, Promise<T>>
 }
 
-export function $kql<T = KqlQueryResponse>(
-  query: KqlQueryRequest,
-  options: KqlPrivateFetchOptions = {},
+export interface QueryOptions {
+  /**
+   * Cache result with same query for hydration
+   *
+   * @default true
+   */
+  cache?: boolean
+}
+
+export function $query<T = KirbyQueryResponse>(
+  query: KirbyQueryRequest,
+  options: QueryOptions = {},
 ): Promise<T> {
   const { cache = true } = options
 

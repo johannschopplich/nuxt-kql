@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { KirbyQueryRequest } from '#nuxt-kql'
+
 const refreshIndex = ref(0)
-const query = ref({
+const query = ref<KirbyQueryRequest>({
   query: 'site',
   select: {
     title: 'site.title',
@@ -8,7 +10,7 @@ const query = ref({
   },
 })
 
-const { data, refresh } = await usePublicKql(query)
+const { data, refresh } = await usePublicQuery(query)
 
 function updateQuery() {
   query.value.select.title = 'site.title.upper'

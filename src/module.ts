@@ -41,7 +41,7 @@ export interface ModuleOptions {
    * Enable client-side KQL request
    * By default, KQL queries are fetched safely for client as well as server via
    * an internal server API route
-   * If enabled, you can use `usePublicKql()` and `$publicKql()` to fetch data
+   * If enabled, you can use `usePublicQuery()` and `$publicQuery()` to fetch data
    * directly from the Kirby instance
    * Note: This means your token or user credentials will be publicly visible
    */
@@ -151,9 +151,8 @@ export declare const apiRoute = '${apiRoute}'
       filename: 'types/nuxt-kql.d.ts',
       getContents: () => [
         'declare module \'#nuxt-kql\' {',
-        `  type KqlQuery = import('${resolve('./runtime/types')}').KqlQuery`,
-        `  type KqlQueryRequest = import('${resolve('./runtime/types')}').KqlQueryRequest`,
-        `  type KqlQueryResponse = import('${resolve('./runtime/types')}').KqlQueryResponse`,
+        `  type KirbyQueryRequest = import('${resolve('./runtime/types')}').KirbyQueryRequest`,
+        `  type KirbyQueryResponse = import('${resolve('./runtime/types')}').KirbyQueryResponse`,
         '}',
       ].join('\n'),
     })

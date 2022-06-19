@@ -1,11 +1,14 @@
-import type { KqlPublicFetchOptions, KqlQueryRequest, KqlQueryResponse } from '../types'
+import type { FetchOptions } from 'ohmyfetch'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
 import type { ModuleOptions } from '../../module'
 import { getAuthHeaders, headersToObject } from '../utils'
 import { useRuntimeConfig } from '#imports'
 
-export function $publicKql<T = KqlQueryResponse>(
-  query: KqlQueryRequest,
-  opts: KqlPublicFetchOptions = {},
+export type PublicQueryOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+
+export function $publicQuery<T = KirbyQueryResponse>(
+  query: KirbyQueryRequest,
+  opts: PublicQueryOptions = {},
 ): Promise<T> {
   const { kql } = useRuntimeConfig().public
   if (!kql.clientRequests)

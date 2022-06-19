@@ -1,28 +1,28 @@
-# `$publicKql`
+# `$publicQuery`
 
 Returns raw KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
 
 ::: warning
-Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `$kql` if you're unsure what to do instead.
+Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `$query` if you're unsure what to do instead.
 :::
 
 ## Types
 
 ```ts
-function $publicKql<T = KqlQueryResponse>(
-  query: KqlQueryRequest,
-  options: KqlPublicFetchOptions = {},
+function $publicQuery<T = KirbyQueryResponse>(
+  query: KirbyQueryRequest,
+  options: PublicQueryOptions = {},
 ): Promise<T>
 
-// Infers `FetchOptions` from `ohmyfetch`
-type KqlPublicFetchOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+// `FetchOptions` imported from `ohmyfetch`
+type PublicQueryOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 ```
 
 ## Example
 
 ```vue
 <script setup lang="ts">
-const data = await $publicKql(
+const data = await $publicQuery(
   {
     query: 'site',
     select: {

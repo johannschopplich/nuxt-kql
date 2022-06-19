@@ -1,14 +1,14 @@
 import { assertMethod, defineEventHandler, useBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
-import type { KqlQueryRequest, KqlQueryResponse } from '../../types'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
-export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
+export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
   assertMethod(event, 'POST')
   const body = await useBody(event)
 
-  const query: Partial<KqlQueryRequest> = body.query || {}
+  const query: Partial<KirbyQueryRequest> = body.query || {}
 
   if (Object.keys(query).length === 0) {
     event.res.statusCode = 404
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   const { kql } = useRuntimeConfig()
 
   try {
-    return await $fetch<KqlQueryResponse>(kql.kirbyEndpoint, {
+    return await $fetch<KirbyQueryResponse>(kql.kirbyEndpoint, {
       baseURL: kql.kirbyUrl,
       method: 'POST',
       body: query,

@@ -1,23 +1,23 @@
-# `usePublicKql`
+# `usePublicQuery`
 
 Returns KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
 
 ::: warning
-Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `useKql` if you're unsure what to do instead.
+Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `useQuery` if you're unsure what to do instead.
 :::
 
 ## Types
 
 ```ts
-function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
+function usePublicQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryRequest>(
   query: Ref<ReqT> | ReqT,
-  opts?: UseKqlOptions<ResT>
+  opts?: UseQueryOptions<ResT>
 ): AsyncData<ResT, true | Error>
 
-type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 ```
 
-`usePublicKql` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).
+`usePublicQuery` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).
 
 ## Return Values
 
@@ -32,7 +32,7 @@ By default, Nuxt waits until a `refresh` is finished before it can be executed a
 
 ```vue
 <script setup lang="ts">
-const { data, pending, error, refresh } = await usePublicKql({
+const { data, pending, error, refresh } = await usePublicQuery({
   query: 'site',
   select: {
     title: 'site.title',

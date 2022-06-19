@@ -49,15 +49,15 @@ KIRBY_API_PASSWORD=your-password
 The default KQL endpoint `/api/query` [requires authentication](https://getkirby.com/docs/guide/api/authentication).
 :::
 
-Now, you can fetch data with the [`useKql`](/api/) composable.
+Now, you can fetch data with the [`useQuery`](/api/use-query) composable.
 
 ## Step. 4: Fetch Queries
 
-Use the globally available `useKql` composable to fetch queries:
+Use the globally available `useQuery` composable to fetch queries:
 
 ```vue
 <script setup lang="ts">
-const { data, pending, refresh, error } = await useKql({
+const { data, pending, refresh, error } = await useQuery({
   query: 'site',
   select: {
     title: 'site.title',
