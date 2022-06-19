@@ -138,10 +138,22 @@ export const apiRoute = '${apiRoute}'
     })
 
     addTemplate({
+      filename: 'nuxt-kql/options.d.ts',
+      write: true,
+      getContents() {
+        return `
+export declare const apiRoute = '${apiRoute}'
+`.trimStart()
+      },
+    })
+
+    addTemplate({
       filename: 'types/nuxt-kql.d.ts',
       getContents: () => [
-        'declare module \'#build/nuxt-kql/options\' {',
-        `  const apiRoute: '${apiRoute}'`,
+        'declare module \'#nuxt-kql\' {',
+        `  type KqlQuery = import('${resolve('./runtime/types')}').KqlQuery`,
+        `  type KqlQueryRequest = import('${resolve('./runtime/types')}').KqlQueryRequest`,
+        `  type KqlQueryResponse = import('${resolve('./runtime/types')}').KqlQueryResponse`,
         '}',
       ].join('\n'),
     })
