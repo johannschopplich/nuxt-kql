@@ -15,6 +15,6 @@ export function useKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(apiRoute, {
     ...opts,
     method: 'POST',
-    body: { data: _query.value },
+    body: { query: _query.value },
   }) as AsyncData<ResT, true | Error>
 }

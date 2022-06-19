@@ -141,7 +141,7 @@ export const apiRoute = '${apiRoute}'
       filename: 'types/nuxt-kql.d.ts',
       getContents: () => [
         'declare module \'#build/nuxt-kql/options\' {',
-        '  const apiRoute: string',
+        `  const apiRoute: '${apiRoute}'`,
         '}',
       ].join('\n'),
     })

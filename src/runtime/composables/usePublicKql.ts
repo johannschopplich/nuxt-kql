@@ -13,7 +13,7 @@ export function usePublicKql<ResT = KqlQueryResponse, ReqT = KqlQueryRequest>(
 ) {
   const { kql } = useRuntimeConfig().public
   if (!kql.clientRequests)
-    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
+    throw new Error('Fetching queries client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
 
   const _query = computed(() => unref(query))
 

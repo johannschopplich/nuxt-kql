@@ -8,9 +8,9 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
   assertMethod(event, 'POST')
   const body = await useBody(event)
 
-  const data: Partial<KqlQueryRequest> = body.data || {}
+  const query: Partial<KqlQueryRequest> = body.query || {}
 
-  if (Object.keys(data).length === 0) {
+  if (Object.keys(query).length === 0) {
     event.res.statusCode = 404
     return {
       code: 404,
@@ -24,16 +24,16 @@ export default defineEventHandler(async (event): Promise<KqlQueryResponse> => {
     return await $fetch<KqlQueryResponse>(kql.kirbyEndpoint, {
       baseURL: kql.kirbyUrl,
       method: 'POST',
-      body: data,
+      body: query,
       headers: { ...getAuthHeaders(kql as ModuleOptions) },
     })
   }
-  catch (e) {
+  catch (err) {
     event.res.statusCode = 500
     return {
       code: 500,
       status: 'Couldn\'t execute KQL query',
-      result: e.message,
+      result: err.message,
     }
   }
 })

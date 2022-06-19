@@ -18,12 +18,10 @@ export function $kql<T = KqlQueryResponse>(
   const state = (nuxt.__kql__ || {}) as InternalState<T>
   state.promiseMap = state.promiseMap || new Map()
 
-  const body = { data: query }
-
   if (!cache) {
     return $fetch<T>(apiRoute, {
       method: 'POST',
-      body,
+      body: { query },
     })
   }
 
@@ -35,7 +33,7 @@ export function $kql<T = KqlQueryResponse>(
   if (state.promiseMap.has(key))
     return state.promiseMap.get(key)
 
-  const request = $fetch<T>(apiRoute, { method: 'POST', body })
+  const request = $fetch<T>(apiRoute, { method: 'POST', body: { query } })
     .then((response) => {
       queries[key] = response
       state.promiseMap.delete(key)
