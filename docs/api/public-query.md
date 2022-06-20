@@ -1,6 +1,6 @@
 # `$publicQuery`
 
-Returns raw KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
+Returns raw Kirby query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
 
 ::: warning
 Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `$query` if you're unsure what to do instead.

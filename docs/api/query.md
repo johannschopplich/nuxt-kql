@@ -1,6 +1,6 @@
 # `$query`
 
-Returns raw KQL query data. Uses an internal server route to proxy requests.
+Returns raw Kirby query data. Uses an internal server route to proxy requests.
 
 Queries are cached by default.
 

@@ -1,6 +1,6 @@
 # Token-Based Authentication
 
-`nuxt-kql` also supports using a bearer token for authentication. For this to work, you may use the [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter), which supports KQL with token authentication out of the box.
+`nuxt-kql` also supports using a bearer token for authentication. For this to work, you will have to use the [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter), which supports KQL with token authentication out of the box.
 
 ```ts
 // `nuxt.config.ts`
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     // Enable the token-based authentication
     kirbyAuth: 'bearer',
     // Needed for the kirby-headless-starter custom KQL endpoint
-    kirbyEndpoint: 'kql',
+    kirbyEndpoint: 'api/kql',
   },
 })
 ```

@@ -1,6 +1,6 @@
 # `usePublicQuery`
 
-Returns KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
+Returns Kirby query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
 
 ::: warning
 Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `useQuery` if you're unsure what to do instead.
@@ -21,7 +21,7 @@ type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params'
 
 ## Return Values
 
-- **data**: the result of the KQL query
+- **data**: the result of the Kirby query
 - **pending**: a boolean indicating whether the data is still being fetched
 - **refresh**: a function that can be used to refresh the data returned by the handler function
 - **error**: an error object if the data fetching failed
