@@ -1,5 +1,22 @@
 # Module Config
 
+## Usage
+
+Adapt `nuxt-kql` to your needs by setting module options in your `nuxt.config.ts`:
+
+```ts
+import { defineNuxtConfig } from 'nuxt'
+
+export default defineNuxtConfig({
+  modules: ['nuxt-kql'],
+  kql: {
+    // ... your options
+  }
+})
+```
+
+## Types
+
 See the types below for a complete list of options.
 
 ```ts
