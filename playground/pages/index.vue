@@ -23,10 +23,9 @@ function updateQuery() {
     <h1>Fetch Data Safely</h1>
     <p>Data is being fetched via a custom Nuxt server route for Kirby queries.</p>
     <hr>
-    <h2>{{ data?.result?.title }}</h2>
-    <h3>Query</h3>
+    <h2>Query</h2>
     <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>
-    <h3>Response</h3>
+    <h2>Response</h2>
     <pre>{{ JSON.stringify(data?.result, undefined, 2) }}</pre>
     <p>Refreshed: {{ refreshIndex }} times</p>
     <button @click="refresh(), refreshIndex++">

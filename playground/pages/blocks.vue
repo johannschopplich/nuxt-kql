@@ -1,0 +1,39 @@
+<script setup lang="ts">
+import { KirbyBlock } from '#nuxt-kql'
+import type { KirbyQueryRequest } from '#nuxt-kql'
+
+const query = ref<KirbyQueryRequest>({
+  query: 'kirby.page("notes/across-the-ocean")',
+  select: {
+    id: 'page.id',
+    title: 'page.title',
+    text: 'page.text.toBlocks',
+  },
+})
+
+const { data } = await useQuery(query)
+const text = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
+</script>
+
+<template>
+  <div>
+    <h1>Parse Kirby Blocks</h1>
+    <hr>
+    <h2>
+      {{ data?.result?.title }}
+    </h2>
+    <div class="prose">
+      <template v-for="(block, index) in text" :key="index">
+        <component :is="block.content.level" v-if="block.type === 'heading'">
+          {{ (block as KirbyBlock<"heading">).content.text }}
+        </component>
+        <div v-else v-html="block.content.text" />
+      </template>
+    </div>
+    <hr>
+    <h2>Query</h2>
+    <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>
+    <h2>Response</h2>
+    <pre>{{ JSON.stringify(data?.result, undefined, 2) }}</pre>
+  </div>
+</template>

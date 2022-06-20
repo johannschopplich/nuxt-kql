@@ -3,9 +3,11 @@
     <NuxtLink to="/">
       Index
     </NuxtLink>
-    /
-    <NuxtLink to="/client">
-      <span>Client-side only</span>
+    <NuxtLink to="/client-query">
+      <span>Client-side Query</span>
+    </NuxtLink>
+    <NuxtLink to="/blocks">
+      <span>Kirby Blocks</span>
     </NuxtLink>
   </header>
 
@@ -13,3 +15,10 @@
     <slot />
   </main>
 </template>
+
+<style scoped>
+header {
+  display: flex;
+  gap: 1rem;
+}
+</style>

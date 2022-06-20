@@ -154,7 +154,7 @@ export declare const apiRoute = '${apiRoute}'
         `  type KirbyQueryRequest = import('${resolve('./runtime/types')}').KirbyQueryRequest`,
         `  type KirbyQueryResponse = import('${resolve('./runtime/types')}').KirbyQueryResponse`,
         `  type KirbyBlockType = import('${resolve('./runtime/types')}').KirbyBlockType`,
-        `  type KirbyBlock<T extends KirbyBlockType | string = string, U = Record<string, any>> = import('${resolve('./runtime/types')}').KirbyBlock`,
+        `  type KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> = import('${resolve('./runtime/types')}').KirbyBlock<T, U>`,
         '}',
       ].join('\n'),
     })

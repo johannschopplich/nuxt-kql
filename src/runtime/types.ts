@@ -24,7 +24,7 @@ export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | '
 
 export type KirbyBlockType = 'code' | 'gallery' | 'heading' | 'image' | 'line' | 'list' | 'markdown' | 'quote' | 'table' | 'text' | 'video'
 
-export interface KirbyBlock<T extends KirbyBlockType | string = string, U = Record<string, any>> {
+export interface KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> {
   content: T extends 'code'
     ? { code: string; language: string }
     : T extends 'gallery'
