@@ -26,12 +26,6 @@ jobs:
       - name: Install
         run: nci
 
-      - name: Prepare
-        run: nr dev:prepare
-
-      - name: Build
-        run: nr prepack
-
       - name: Publish to npm
         run: npm publish --access public
         env:
