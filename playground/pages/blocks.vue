@@ -25,7 +25,7 @@ const text = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? []
     <div class="prose">
       <template v-for="(block, index) in text" :key="index">
         <component :is="block.content.level" v-if="block.type === 'heading'">
-          {{ (block as KirbyBlock<"heading">).content.text }}
+          {{ (block as KirbyBlock<'heading'>).content.text }}
         </component>
         <div v-else v-html="block.content.text" />
       </template>
