@@ -23,7 +23,7 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/module.d.ts",
+      "types": "./dist/types.d.ts",
       "require": "./dist/module.cjs",
       "import": "./dist/module.mjs"
     }

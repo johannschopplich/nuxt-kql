@@ -48,5 +48,3 @@ export interface KirbyBlock<T extends KirbyBlockType | string = string, U = Reco
   isHidden: boolean
   type: T
 }
-
-export type KirbyBlocks = KirbyBlock[]
