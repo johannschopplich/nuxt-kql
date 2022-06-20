@@ -10,17 +10,20 @@ Typings are optional to use, but will improve your editor suggestions and reduce
 <script setup lang="ts">
 import { KirbyBlock } from '#nuxt-kql'
 
+// Fetch the page but select relevant content only
 const { data } = await useQuery({
   query: 'kirby.page("notes/across-the-ocean")',
   select: {
     id: 'page.id',
     title: 'page.title',
+    // That is where the magic happens
     text: 'page.text.toBlocks',
   },
 })
 
-// Tell the reactive variable that every block is possible
-const text = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
+// Shorthand getter for the nested `text` object key inside the quer result
+// We type the response, since we know its more than just `any`
+const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
 </script>
 
 <template>
@@ -28,12 +31,16 @@ const text = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? []
     <h1>{{ data?.result?.title }}</h1>
 
     <div class="prose">
-      <template v-for="(block, index) in text" :key="index">
+      <!-- Iterate over each block -->
+      <template v-for="(block, index) in blocks" :key="index">
+        <!-- Handle the heading block -->
         <component :is="block.content.level" v-if="block.type === 'heading'">
           <!-- Type cast the block as heading for the correct `content` typings -->
           {{ (block as KirbyBlock<'heading'>).content.text }}
         </component>
-        <div v-else v-html="block.content.text" />
+
+        <!-- Output text if it exists on any other block -->
+        <div v-else v-html="block.content?.text" />
       </template>
     </div>
   </div>

@@ -12,7 +12,7 @@ const query = ref<KirbyQueryRequest>({
 })
 
 const { data } = await useQuery(query)
-const text = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
+const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
 </script>
 
 <template>
@@ -23,11 +23,11 @@ const text = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? []
       {{ data?.result?.title }}
     </h2>
     <div class="prose">
-      <template v-for="(block, index) in text" :key="index">
+      <template v-for="(block, index) in blocks" :key="index">
         <component :is="block.content.level" v-if="block.type === 'heading'">
           {{ (block as KirbyBlock<'heading'>).content.text }}
         </component>
-        <div v-else v-html="block.content.text" />
+        <div v-else v-html="block.content?.text" />
       </template>
     </div>
     <hr>
