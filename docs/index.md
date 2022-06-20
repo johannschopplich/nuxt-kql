@@ -8,7 +8,7 @@ titleTemplate: Nuxt 3 module for Kirby's Query Language API
 hero:
   name: nuxt-kql
   text: Nuxt 3 module for Kirby's Query Language API
-  tagline: Fetch KQL queries safely from anywhere.
+  tagline: Retrieve data from Kirby CMS safely.
   image:
     src: /logo-shadow.svg
     alt: nuxt-kql

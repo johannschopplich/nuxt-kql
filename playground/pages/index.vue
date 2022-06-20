@@ -20,8 +20,8 @@ function updateQuery() {
 
 <template>
   <div>
-    <h1>Fetch Data Safely</h1>
-    <p>Data is being fetched via a custom Nuxt server route for Kirby queries.</p>
+    <h1>Retrieve KQL Data</h1>
+    <p>KQL Data is being fetched by a Nuxt server route.</p>
     <hr>
     <h2>Query</h2>
     <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>

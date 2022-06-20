@@ -1,10 +1,10 @@
 # What is nuxt-kql?
 
-`nuxt-kql` is a lightweight module for Nuxt 3 to reliably fetch data from your Kirby instance using the **Kirby Query Language API**. It works on the server and client-side.
+`nuxt-kql` is a lightweight module for Nuxt 3 to reliably fetch data from your Kirby instance using the **Kirby Query Language API**. It works on the server and client.
 
 ## Motivation
 
-Kirby suits well for a headless CMS. Setting up KQL is fairly easy, but fetching queries can be cumbersome at times. This module tries to solve this by providing simple to use composables consuming KQL queries as parameter.
+Kirby suits well for a headless CMS. Setting up [KQL](https://github.com/getkirby/kql) is fairly easy, but fetching queries can be cumbersome at times. This module tries to solve this by providing simple to use composables consuming KQL queries as parameter.
 
 With these composables, your KQL response are cached and authorization is handled for you ouf of the box.
 

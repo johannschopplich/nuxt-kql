@@ -1,6 +1,6 @@
 # `useQuery`
 
-Returns Kirby query data. Uses an internal server route to proxy requests.
+Returns KQL query data. Uses an internal server route to proxy requests.
 
 ## Types
 
@@ -17,7 +17,7 @@ type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params'
 
 ## Return Values
 
-- **data**: the result of the Kirby query
+- **data**: the result of the KQL query
 - **pending**: a boolean indicating whether the data is still being fetched
 - **refresh**: a function that can be used to refresh the data returned by the handler function
 - **error**: an error object if the data fetching failed

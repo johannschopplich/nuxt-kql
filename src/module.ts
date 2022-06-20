@@ -39,11 +39,11 @@ export interface ModuleOptions {
 
   /**
    * Enable client-side KQL request
-   * By default, KQL queries are fetched safely for client as well as server via
-   * an internal server API route
+   * By default, KQL data is fetched safely with a server-side proxy
    * If enabled, you can use `usePublicQuery()` and `$publicQuery()` to fetch data
    * directly from the Kirby instance
    * Note: This means your token or user credentials will be publicly visible
+   * @default false
    */
   clientRequests?: boolean
 }

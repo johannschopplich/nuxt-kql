@@ -100,6 +100,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
       items: [
         { text: 'Are CORS Issues Possible?', link: '/guide/faq-are-cors-issues-possible' },
         { text: 'How to Track Errors?', link: '/guide/faq-how-to-track-errors' },
+        { text: 'What Is KQL?', link: '/guide/faq-what-is-kql' },
       ],
     },
   ]

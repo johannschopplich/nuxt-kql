@@ -1,6 +1,6 @@
 # How It Works
 
-When passing a Kirby query to either [`useQuery`](/api/use-query) or [`$query`](/api/query) as a parameter, the corresponsing composable will initiate a POST request to the Nuxt server route `/api/__kql__` defined by this module. The KQL query will be encoded in the request body.
+When passing a KQL query to either [`useQuery`](/api/use-query) or [`$query`](/api/query) as a parameter, the corresponsing composable will initiate a POST request to the Nuxt server route `/api/__kql__` defined by this module. The KQL query will be encoded in the request body.
 
 The internal server-side API then fetches the actual query data from the Kirby instance and passes the response back to the client. Thus, no KQL requests to the Kirby instance are initiated on the client-side.
 
