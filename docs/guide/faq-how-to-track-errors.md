@@ -16,9 +16,11 @@ If the request to the Kirby backend is unauthenticated or another error has been
 // `data` will always be of type `KirbyQueryResponse`
 const { data } = await useQuery({ query: 'site' })
 
+// Log the code and status and get information on if the request was not authenticated
 console.log('Code', data.code)
 console.log('Status', data.status)
 
-// Will include the error response of the fetch request to the Kirby backend
-console.log('Message', data.message)
+// Log the error of the fetch call to the Kirby backend
+// This will show errors of the Nuxt server route `/api/__kql__`
+console.log('Message', data.result)
 ```
