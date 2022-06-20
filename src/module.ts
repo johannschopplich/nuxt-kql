@@ -2,6 +2,8 @@ import { fileURLToPath } from 'url'
 import { defu } from 'defu'
 import { addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 
+export * from './runtime/types'
+
 export interface ModuleOptions {
   /**
    * Kirby base URL, like `https://kirby.example.com`
@@ -153,9 +155,6 @@ export declare const apiRoute = '${apiRoute}'
         'declare module \'#nuxt-kql\' {',
         `  type KirbyQueryRequest = import('${resolve('./runtime/types')}').KirbyQueryRequest`,
         `  type KirbyQueryResponse = import('${resolve('./runtime/types')}').KirbyQueryResponse`,
-        `  type KirbyBlockType = import('${resolve('./runtime/types')}').KirbyBlockType`,
-        `  type KirbyBlock = import('${resolve('./runtime/types')}').KirbyBlock`,
-        `  type KirbyBlocks = import('${resolve('./runtime/types')}').KirbyBlocks`,
         '}',
       ].join('\n'),
     })
