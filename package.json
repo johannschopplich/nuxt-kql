@@ -1,7 +1,7 @@
 {
   "name": "nuxt-kql",
   "type": "module",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "packageManager": "pnpm@7.2.1",
   "description": "Nuxt 3 module for Kirby's Query Language API",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
