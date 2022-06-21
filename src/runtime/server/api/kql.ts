@@ -1,7 +1,7 @@
 import { assertMethod, defineEventHandler, useBody } from 'h3'
+import { getAuthHeaders } from '../../utils'
 import type { ModuleOptions } from '../../../module'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '../../types'
-import { getAuthHeaders } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
@@ -10,10 +10,10 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
 
   const query: Partial<KirbyQueryRequest> = body.query || {}
 
-  if (Object.keys(query).length === 0) {
-    event.res.statusCode = 404
+  if (Object.keys(query).length === 0 || !query?.query) {
+    event.res.statusCode = 400
     return {
-      code: 404,
+      code: 400,
       status: 'Empty KQL query',
     }
   }
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
     return {
       code: 500,
       status: 'Couldn\'t execute KQL query',
-      result: err.message,
+      result: err.data,
     }
   }
 })
