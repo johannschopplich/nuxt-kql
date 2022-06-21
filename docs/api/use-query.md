@@ -7,10 +7,10 @@ Query responses are cached.
 ## Types
 
 ```ts
-function useQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryRequest>(
-  query: Ref<ReqT> | ReqT,
-  opts?: UseQueryOptions<ResT>
-): AsyncData<ResT, true | Error>
+function useQuery<
+  ResT extends KirbyQueryResponse = KirbyQueryResponse,
+  ReqT extends KirbyQueryRequest = KirbyQueryRequest,
+>(query: Ref<ReqT> | ReqT, opts?: UseQueryOptions<ResT>): AsyncData<ResT, true | Error>
 
 type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 ```

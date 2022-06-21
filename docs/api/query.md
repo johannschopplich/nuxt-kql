@@ -7,7 +7,7 @@ Query responses are cached by default.
 ## Types
 
 ```ts
-function $query<T = KirbyQueryResponse>(
+function $query<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   options: QueryOptions = {},
 ): Promise<T>

@@ -9,7 +9,7 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 ## Types
 
 ```ts
-function $publicQuery<T = KirbyQueryResponse>(
+function $publicQuery<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   options: PublicQueryOptions = {},
 ): Promise<T>

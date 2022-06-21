@@ -11,10 +11,10 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 ## Types
 
 ```ts
-function usePublicQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryRequest>(
-  query: Ref<ReqT> | ReqT,
-  opts?: UseQueryOptions<ResT>
-): AsyncData<ResT, true | Error>
+function usePublicQuery<
+  ResT extends KirbyQueryResponse = KirbyQueryResponse,
+  ReqT extends KirbyQueryRequest = KirbyQueryRequest,
+>(query: Ref<ReqT> | ReqT, opts?: UseQueryOptions<ResT>): AsyncData<ResT, true | Error>
 
 type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 ```
