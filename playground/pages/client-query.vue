@@ -20,10 +20,9 @@ function updateQuery() {
 
 <template>
   <div>
-    <h1>Fetch Data in Client</h1>
+    <h1>Send KQL Queries Client-Side</h1>
     <p>
-      Data is being fetched in the client only. This is faster, since the content is<br>
-      fetched directly from your Kirby instance. But more unsafe depending on your usecase, because the authorization data is published in the frontend.
+      Data is being fetched in the client only. This is faster, since the content is fetched directly from your Kirby instance. But more unsafe depending on your usecase, because the authorization data is published in the frontend.
     </p>
     <hr>
     <h2>Query</h2>

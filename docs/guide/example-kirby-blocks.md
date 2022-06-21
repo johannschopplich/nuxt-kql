@@ -11,7 +11,7 @@ Typings are optional to use, but will improve your editor suggestions and reduce
 // `#nuxt-kql` may find a special place in your heart just for providing types
 import { KirbyBlock } from '#nuxt-kql'
 
-// Fetch the page but select relevant content only
+// Select page content needed for a simple page
 const { data } = await useQuery({
   query: 'kirby.page("notes/across-the-ocean")',
   select: {

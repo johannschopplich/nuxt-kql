@@ -1,16 +1,35 @@
 <script setup lang="ts">
-import type { KirbyQueryRequest } from '#nuxt-kql'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
+
+// Typed response
+interface KirbySite extends KirbyQueryResponse {
+  result?: {
+    title: string
+    children: {
+      id: string
+      title: string
+      isListed: boolean
+    }[]
+  }
+}
 
 const refreshIndex = ref(0)
 const query = ref<KirbyQueryRequest>({
   query: 'site',
   select: {
     title: 'site.title',
-    children: 'site.children',
+    children: {
+      query: 'site.children',
+      select: {
+        id: true,
+        title: true,
+        isListed: 'page.isListed',
+      },
+    },
   },
 })
 
-const { data, refresh } = await useQuery(query)
+const { data, refresh } = await useQuery<KirbySite>(query)
 
 function updateQuery() {
   (query.value.select as Record<string, any>).title = 'site.title.upper'
@@ -20,8 +39,8 @@ function updateQuery() {
 
 <template>
   <div>
-    <h1>Retrieve KQL Data</h1>
-    <p>KQL Data is being fetched by a Nuxt server route.</p>
+    <h1>Send KQL Queries</h1>
+    <p>KQL Data is being proxied by a Nuxt server route and passed back to the client.</p>
     <hr>
     <h2>Query</h2>
     <pre>{{ JSON.stringify(query, undefined, 2) }}</pre>

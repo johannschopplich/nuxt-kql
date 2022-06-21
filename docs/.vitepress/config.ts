@@ -91,6 +91,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
       text: 'Examples',
       items: [
         { text: 'Playground', link: '/guide/playground' },
+        { text: 'Typed Responses', link: '/guide/example-typed-responses' },
         { text: 'Kirby Blocks', link: '/guide/example-kirby-blocks' },
       ],
     },
