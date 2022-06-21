@@ -11,7 +11,7 @@
 
 ## Features
 
-- 🔒 Protect your Kirby credentials when fetching queries
+- 🔒 Protect your Kirby credentials when sending queries
 - 🪢 Supports token-based authentication with [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
 - 🤹 No CORS issues!
 - 🍱 Handle request just like with the [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch) composable
@@ -46,7 +46,7 @@ export default defineNuxtConfig({
 
 ```
 
-And fetch queries in your template:
+And send queries in your template:
 
 ```vue
 <script setup lang="ts">

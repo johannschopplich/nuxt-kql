@@ -51,9 +51,9 @@ The default KQL endpoint `/api/query` [requires authentication](https://getkirby
 
 Now, you can fetch data with the [`useQuery`](/api/use-query) composable.
 
-## Step. 4: Fetch Queries
+## Step. 4: Send Queries
 
-Use the globally available `useQuery` composable to fetch queries:
+Use the globally available `useQuery` composable to send queries:
 
 ```vue
 <script setup lang="ts">

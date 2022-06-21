@@ -109,7 +109,7 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
 
-    // Add KQL proxy endpoint to fetch queries on server-side
+    // Add KQL proxy endpoint to send queries on server-side
     addServerHandler({
       route: apiRoute,
       handler: resolve(runtimeDir, 'server/api/kql'),
