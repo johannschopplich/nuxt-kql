@@ -14,10 +14,19 @@ export interface KirbyQueryRequest {
   }
 }
 
-export interface KirbyQueryResponse {
+export interface KirbyQueryResponse<Pagination extends boolean = false> {
   code: number
   status: string
-  result?: any
+  result?: Pagination extends true ? {
+    data: any
+    pagination: {
+      page: number
+      pages: number
+      offset: number
+      limit: number
+      total: number
+    }
+  } : any
 }
 
 export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
