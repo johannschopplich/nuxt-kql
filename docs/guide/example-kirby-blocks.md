@@ -8,6 +8,7 @@ Typings are optional to use, but will improve your editor suggestions and reduce
 
 ```vue
 <script setup lang="ts">
+// `#nuxt-kql` may find a special place in your heart just for providing types
 import { KirbyBlock } from '#nuxt-kql'
 
 // Fetch the page but select relevant content only
@@ -21,7 +22,7 @@ const { data } = await useQuery({
   },
 })
 
-// Shorthand getter for the nested `text` object key inside the quer result
+// Shorthand getter for the nested `text` object key inside the query result
 // We type the response, since we know its more than just `any`
 const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
 </script>
