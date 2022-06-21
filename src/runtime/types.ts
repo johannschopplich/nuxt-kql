@@ -1,5 +1,3 @@
-import type { UseFetchOptions } from 'nuxt/app'
-
 export interface KirbyQueryRequest {
   /**
    * @example
@@ -28,8 +26,6 @@ export interface KirbyQueryResponse<Pagination extends boolean = false> {
     }
   } : any
 }
-
-export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
 export type KirbyBlockType = 'code' | 'gallery' | 'heading' | 'image' | 'line' | 'list' | 'markdown' | 'quote' | 'table' | 'text' | 'video'
 

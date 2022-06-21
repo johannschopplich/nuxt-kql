@@ -1,11 +1,13 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
 import { computed, unref } from 'vue'
-import type { AsyncData } from 'nuxt/app'
-import type { KirbyQueryRequest, KirbyQueryResponse, UseQueryOptions } from '../types'
+import type { AsyncData, UseFetchOptions } from 'nuxt/app'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
 import type { ModuleOptions } from '../../module'
 import { getAuthHeaders } from '../utils'
 import { useFetch, useRuntimeConfig } from '#imports'
+
+export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
 export function usePublicQuery<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,

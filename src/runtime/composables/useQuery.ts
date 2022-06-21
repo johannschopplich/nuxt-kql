@@ -1,10 +1,12 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { Ref } from 'vue'
 import { computed, unref } from 'vue'
-import type { AsyncData } from 'nuxt/app'
-import type { KirbyQueryRequest, KirbyQueryResponse, UseQueryOptions } from '../types'
+import type { AsyncData, UseFetchOptions } from 'nuxt/app'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
+
+export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
 export function useQuery<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
