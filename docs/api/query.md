@@ -30,6 +30,7 @@ const data = await $query({
   query: 'site',
   select: {
     title: 'site.title',
+    children: 'site.children',
   },
 })
 </script>

@@ -38,6 +38,7 @@ const { data, pending, error, refresh } = await usePublicQuery({
   query: 'site',
   select: {
     title: 'site.title',
+    children: 'site.children',
   },
 })
 </script>

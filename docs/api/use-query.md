@@ -34,6 +34,7 @@ const { data, pending, error, refresh } = await useQuery({
   query: 'site',
   select: {
     title: 'site.title',
+    children: 'site.children',
   },
 })
 </script>

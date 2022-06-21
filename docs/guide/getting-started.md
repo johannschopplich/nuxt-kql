@@ -61,6 +61,7 @@ const { data, pending, refresh, error } = await useQuery({
   query: 'site',
   select: {
     title: 'site.title',
+    children: 'site.children',
   },
 })
 </script>
