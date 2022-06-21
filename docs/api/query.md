@@ -2,7 +2,7 @@
 
 Returns raw KQL query data. Uses an internal server route to proxy requests.
 
-Queries are cached by default.
+Query responses are cached by default.
 
 ## Types
 

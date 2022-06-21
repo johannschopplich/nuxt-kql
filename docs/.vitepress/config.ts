@@ -134,5 +134,12 @@ function sidebarApi(): DefaultTheme.SidebarGroup[] {
         { text: '$publicQuery', link: '/api/public-query' },
       ],
     },
+    {
+      text: 'Types',
+      items: [
+        { text: 'KirbyQueryRequest', link: '/api/types-query-request' },
+        { text: 'KirbyQueryResponse', link: '/api/types-query-response' },
+      ],
+    },
   ]
 }

@@ -2,6 +2,8 @@
 
 Returns KQL query data. Uses an internal server route to proxy requests.
 
+Query responses are cached.
+
 ## Types
 
 ```ts
