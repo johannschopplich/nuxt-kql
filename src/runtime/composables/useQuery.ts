@@ -12,6 +12,9 @@ export function useQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryRequest>(
 ) {
   const _query = computed(() => unref(query))
 
+  if (Object.keys(_query.value).length === 0)
+    console.error('[useQuery] Empty KQL query')
+
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(apiRoute, {
     ...opts,
     method: 'POST',

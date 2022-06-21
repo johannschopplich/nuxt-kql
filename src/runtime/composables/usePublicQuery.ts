@@ -12,16 +12,20 @@ export function usePublicQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryReque
   opts: UseQueryOptions<ResT> = {},
 ) {
   const { kql } = useRuntimeConfig().public
+
   if (!kql.clientRequests)
     throw new Error('Fetching queries client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
 
   const _query = computed(() => unref(query))
+
+  if (Object.keys(_query.value).length === 0)
+    console.error('[usePublicQuery] Empty KQL query')
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.kirbyEndpoint, {
     ...opts,
     baseURL: kql.kirbyUrl,
     method: 'POST',
     body: _query.value,
-    headers: { ...getAuthHeaders(kql as ModuleOptions) },
+    headers: getAuthHeaders(kql as ModuleOptions),
   }) as AsyncData<ResT, true | Error>
 }

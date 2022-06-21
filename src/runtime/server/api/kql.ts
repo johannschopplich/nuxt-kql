@@ -25,7 +25,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
       baseURL: kql.kirbyUrl,
       method: 'POST',
       body: query,
-      headers: { ...getAuthHeaders(kql as ModuleOptions) },
+      headers: getAuthHeaders(kql as ModuleOptions),
     })
   }
   catch (err) {
