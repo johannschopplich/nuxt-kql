@@ -66,4 +66,3 @@ interface ModuleOptions {
   clientRequests?: boolean
 }
 ```
-
