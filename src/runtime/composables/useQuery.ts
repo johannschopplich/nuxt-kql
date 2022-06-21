@@ -6,13 +6,13 @@ import type { KirbyQueryRequest, KirbyQueryResponse, UseQueryOptions } from '../
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
 
-export function useQuery<ResT = KirbyQueryResponse, ReqT = KirbyQueryRequest>(
-  query: Ref<ReqT> | ReqT,
-  opts: UseQueryOptions<ResT> = {},
-) {
+export function useQuery<
+  ResT extends KirbyQueryResponse = KirbyQueryResponse,
+  ReqT extends KirbyQueryRequest = KirbyQueryRequest,
+>(query: Ref<ReqT> | ReqT, opts: UseQueryOptions<ResT> = {}) {
   const _query = computed(() => unref(query))
 
-  if (Object.keys(_query.value).length === 0)
+  if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useQuery] Empty KQL query')
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(apiRoute, {

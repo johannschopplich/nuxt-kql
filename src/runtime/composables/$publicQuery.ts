@@ -6,11 +6,12 @@ import { useRuntimeConfig } from '#imports'
 
 export type PublicQueryOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
-export function $publicQuery<T = KirbyQueryResponse>(
+export function $publicQuery<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   opts: PublicQueryOptions = {},
 ): Promise<T> {
   const { kql } = useRuntimeConfig().public
+
   if (!kql.clientRequests)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
 

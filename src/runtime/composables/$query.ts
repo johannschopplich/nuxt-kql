@@ -15,7 +15,7 @@ export interface QueryOptions {
   cache?: boolean
 }
 
-export function $query<T = KirbyQueryResponse>(
+export function $query<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   options: QueryOptions = {},
 ): Promise<T> {
