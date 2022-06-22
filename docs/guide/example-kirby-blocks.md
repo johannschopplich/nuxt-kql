@@ -15,8 +15,8 @@ import { KirbyBlock } from '#nuxt-kql'
 const { data } = await useQuery({
   query: 'kirby.page("notes/across-the-ocean")',
   select: {
-    id: 'page.id',
-    title: 'page.title',
+    id: true,
+    title: true,
     // That is where the magic happens
     text: 'page.text.toBlocks',
   },

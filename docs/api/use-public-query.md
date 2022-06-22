@@ -37,8 +37,8 @@ By default, Nuxt waits until a `refresh` is finished before it can be executed a
 const { data, pending, error, refresh } = await usePublicQuery({
   query: 'site',
   select: {
-    title: 'site.title',
-    children: 'site.children',
+    title: true,
+    children: true,
   },
 })
 </script>

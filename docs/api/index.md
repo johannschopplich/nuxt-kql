@@ -22,8 +22,8 @@ Example use-case would be a reactive query using a typed [ref()](https://vuejs.o
 const query = ref<KirbyQueryRequest>({
   query: 'site',
   select: {
-    title: 'site.title',
-    children: 'site.children',
+    title: true,
+    children: true,
   },
 })
 ```

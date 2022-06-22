@@ -17,13 +17,13 @@ const refreshIndex = ref(0)
 const query = ref<KirbyQueryRequest>({
   query: 'site',
   select: {
-    title: 'site.title',
+    title: true,
     children: {
       query: 'site.children',
       select: {
         id: true,
         title: true,
-        isListed: 'page.isListed',
+        isListed: true,
       },
     },
   },

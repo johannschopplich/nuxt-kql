@@ -60,8 +60,8 @@ Use the globally available `useQuery` composable to send queries:
 const { data, pending, refresh, error } = await useQuery({
   query: 'site',
   select: {
-    title: 'site.title',
-    children: 'site.children',
+    title: true,
+    children: true,
   },
 })
 </script>

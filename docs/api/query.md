@@ -29,8 +29,8 @@ interface QueryOptions {
 const data = await $query({
   query: 'site',
   select: {
-    title: 'site.title',
-    children: 'site.children',
+    title: true,
+    children: true,
   },
 })
 </script>

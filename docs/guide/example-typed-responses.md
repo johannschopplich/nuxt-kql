@@ -50,13 +50,13 @@ import type { KirbySite } from './types'
 const { data } = await useQuery<KirbySite>({
   query: 'site',
   select: {
-    title: 'site.title',
+    title: true,
     children: {
       query: 'site.children',
       select: {
         id: true,
         title: true,
-        isListed: 'page.isListed',
+        isListed: true,
       },
     },
   },

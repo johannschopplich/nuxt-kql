@@ -5,8 +5,8 @@ const refreshIndex = ref(0)
 const query = ref<KirbyQueryRequest>({
   query: 'site',
   select: {
-    title: 'site.title',
-    children: 'site.children',
+    title: true,
+    children: true,
   },
 })
 

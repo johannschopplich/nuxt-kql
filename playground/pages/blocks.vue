@@ -5,8 +5,8 @@ import type { KirbyQueryRequest } from '#nuxt-kql'
 const query = ref<KirbyQueryRequest>({
   query: 'kirby.page("notes/across-the-ocean")',
   select: {
-    id: 'page.id',
-    title: 'page.title',
+    id: true,
+    title: true,
     text: 'page.text.toBlocks',
   },
 })

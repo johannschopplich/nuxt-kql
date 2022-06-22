@@ -26,8 +26,8 @@ const data = await $publicQuery(
   {
     query: 'site',
     select: {
-      title: 'site.title',
-      children: 'site.children',
+      title: true,
+      children: true,
     },
   },
   {
