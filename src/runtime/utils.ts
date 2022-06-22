@@ -11,15 +11,15 @@ export function headersToObject(headers: HeadersInit = {}) {
   return headers as Record<string, string>
 }
 
-export function getAuthHeaders({ kirbyAuth, token, credentials }: ModuleOptions) {
+export function getAuthHeaders({ auth, token, credentials }: ModuleOptions) {
   const headers: Record<string, string> = {}
 
-  if (kirbyAuth === 'basic' && credentials) {
+  if (auth === 'basic' && credentials) {
     const { username, password } = credentials
     headers.Authorization = Buffer.from(`${username}:${password}`).toString('base64')
   }
 
-  if (kirbyAuth === 'bearer')
+  if (auth === 'bearer')
     headers.Authorization = `Bearer ${token}`
 
   return headers

@@ -25,20 +25,20 @@ interface ModuleOptions {
    * Kirby base URL, like `https://kirby.example.com`
    * @default 'process.env.KIRBY_BASE_URL'
    */
-  kirbyUrl?: string
+  url?: string
 
   /**
    * Kirby KQL API route path
    * @default 'api/query'
    */
-  kirbyEndpoint?: string
+  prefix?: string
 
   /**
    * Kirby API authentication method
    * Set to `none` to disable authentication
    * @default 'basic'
    */
-  kirbyAuth?: 'basic' | 'bearer' | 'none'
+  auth?: 'basic' | 'bearer' | 'none'
 
   /**
    * Token for bearer authentication

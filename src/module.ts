@@ -7,20 +7,20 @@ export interface ModuleOptions {
    * Kirby base URL, like `https://kirby.example.com`
    * @default 'process.env.KIRBY_BASE_URL'
    */
-  kirbyUrl?: string
+  url?: string
 
   /**
    * Kirby KQL API route path
    * @default 'api/query'
    */
-  kirbyEndpoint?: string
+  prefix?: string
 
   /**
    * Kirby API authentication method
    * Set to `none` to disable authentication
    * @default 'basic'
    */
-  kirbyAuth?: 'basic' | 'bearer' | 'none'
+  auth?: 'basic' | 'bearer' | 'none'
 
   /**
    * Token for bearer authentication
@@ -57,9 +57,9 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    kirbyUrl: process.env.KIRBY_BASE_URL as string,
-    kirbyEndpoint: 'api/query',
-    kirbyAuth: 'basic',
+    url: process.env.KIRBY_BASE_URL as string,
+    prefix: 'api/query',
+    auth: 'basic',
     token: process.env.KIRBY_API_TOKEN as string,
     credentials: {
       username: process.env.KIRBY_API_USERNAME as string,
@@ -72,17 +72,17 @@ export default defineNuxtModule<ModuleOptions>({
     const apiRoute = '/api/__kql__' as const
 
     // Make sure Kirby URL and KQL endpoint are set
-    if (!options.kirbyUrl)
+    if (!options.url)
       console.warn('Missing `KIRBY_BASE_URL` in `.env`')
 
-    if (!options.kirbyEndpoint)
-      console.warn('Missing `kql.kirbyEndpoint` option in Nuxt config')
+    if (!options.prefix)
+      console.warn('Missing `kql.prefix` option in Nuxt config')
 
     // Make sure authentication credentials are set
-    if (options.kirbyAuth === 'basic' && (!options.credentials || !options.credentials.username || !options.credentials.password))
+    if (options.auth === 'basic' && (!options.credentials || !options.credentials.username || !options.credentials.password))
       console.warn('Missing `KIRBY_API_USERNAME` and `KIRBY_API_PASSWORD` in `.env` for basic authentication')
 
-    if (options.kirbyAuth === 'bearer' && !options.token)
+    if (options.auth === 'bearer' && !options.token)
       console.warn('Missing `KIRBY_API_TOKEN` in `.env` for bearer authentication')
 
     // Private runtime config

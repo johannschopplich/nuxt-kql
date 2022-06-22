@@ -20,8 +20,8 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse | H3
   const { kql } = useRuntimeConfig()
 
   try {
-    return await $fetch<KirbyQueryResponse>(kql.kirbyEndpoint, {
-      baseURL: kql.kirbyUrl,
+    return await $fetch<KirbyQueryResponse>(kql.prefix, {
+      baseURL: kql.url,
       method: 'POST',
       body: query,
       headers: getAuthHeaders(kql as ModuleOptions),

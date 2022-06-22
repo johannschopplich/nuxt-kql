@@ -15,9 +15,9 @@ export function $publicQuery<T extends KirbyQueryResponse = KirbyQueryResponse>(
   if (!kql?.clientRequests)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
 
-  return $fetch<T>(kql.kirbyEndpoint, {
+  return $fetch<T>(kql.prefix, {
     ...opts,
-    baseURL: kql.kirbyUrl,
+    baseURL: kql.url,
     method: 'POST',
     body: query,
     headers: {

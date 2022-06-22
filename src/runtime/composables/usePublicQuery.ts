@@ -23,9 +23,9 @@ export function usePublicQuery<
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[usePublicQuery] Empty KQL query')
 
-  return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.kirbyEndpoint, {
+  return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.prefix, {
     ...opts,
-    baseURL: kql.kirbyUrl,
+    baseURL: kql.url,
     method: 'POST',
     body: _query.value,
     headers: getAuthHeaders(kql as ModuleOptions),
