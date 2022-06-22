@@ -15,7 +15,7 @@ export function usePublicQuery<
 >(query: Ref<ReqT> | ReqT, opts: UseQueryOptions<ResT> = {}) {
   const { kql } = useRuntimeConfig().public
 
-  if (!kql.clientRequests)
+  if (!kql?.clientRequests)
     throw new Error('Fetching queries client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
 
   const _query = computed(() => unref(query))

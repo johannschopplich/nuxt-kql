@@ -1,18 +1,37 @@
 # How to Track Errors?
 
-Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, which equals the response schema from [KQL](https://github.com/getkirby/kql).
+Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, if the request to Kirby succeeded. Even if your request is not authenticatd, the connection to the Kirby instance could be established.
 
-If the request to the Kirby backend is unauthenticated or another error has been thrown from within the [Nuxt server API](/guide/how-it-works), you can inspect the `code` and `status` property:
+If the request to the Kirby backend has failed or another another has occured, the [Nuxt server route to proxy KQL requests](/guide/how-it-works) used by [`useQuery`](/api/use-query) and [`$query`](/api/query) will return a `H3Error` (from the [h3](https://github.com/unjs/h3) package).
 
 ```ts
-// `data` will be of type `KirbyQueryResponse` by default
+// See https://github.com/unjs/h3 for details
+class H3Error extends Error {
+  statusCode: number
+  statusMessage: string
+  data?: any
+}
+```
+
+To find the error in your setup, you can inspect the `code` and `status` property of your query response first:
+
+```ts
+// `data` will be of type `KirbyQueryResponse` if the request to Kirby itself succeeded
 const { data } = await useQuery({ query: 'site' })
 
 // Log the code and status and get information on if the request was not authenticated
-console.log('Code', data.code)
-console.log('Status', data.status)
+console.log('Status Code', data.code)
+console.log('Status Message', data.status)
+```
 
-// Log the error of the fetch call to the Kirby backend
-// This will show errors of the Nuxt server route `/api/__kql__`
-console.log('Message', data.result)
+If that won't give you relevant insights, your request was probably faulty. To inspect the error thrown inside the KQL proxy, log the `error` reactive variable:
+
+```ts
+// `error` will be of type `H3Error` if the request to Kirby failed
+const { data, error } = await useQuery({ query: 'site' })
+
+// Log the code and status and get information on if the request was not authenticated
+console.log('Status Code', error.statusCode)
+console.log('Status Message', error.statusMessage)
+console.log('Data', error.data)
 ```
