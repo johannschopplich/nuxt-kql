@@ -91,20 +91,6 @@ export default defineNuxtModule<ModuleOptions>({
       options,
     )
 
-    // Public runtime config
-    nuxt.options.runtimeConfig.public.kql = defu(
-      nuxt.options.runtimeConfig.public.kql,
-      // Protect authorization data if no public requests are enabled
-      {
-        kirbyUrl: options.clientRequests ? options.kirbyUrl : undefined,
-        kirbyEndpoint: options.clientRequests ? options.kirbyEndpoint : undefined,
-        kirbyAuth: options.clientRequests ? options.kirbyAuth : undefined,
-        token: options.clientRequests ? options.token : undefined,
-        credentials: options.clientRequests ? options.credentials : undefined,
-        clientRequests: options.clientRequests,
-      } as ModuleOptions,
-    )
-
     // Transpile runtime
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
@@ -112,6 +98,7 @@ export default defineNuxtModule<ModuleOptions>({
     // Add KQL proxy endpoint to send queries on server-side
     addServerHandler({
       route: apiRoute,
+      method: 'post',
       handler: resolve(runtimeDir, 'server/api/kql'),
     })
 
@@ -129,7 +116,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     addTemplate({
       filename: 'nuxt-kql/options.mjs',
-      write: true,
       getContents() {
         return `
 export const apiRoute = '${apiRoute}'
@@ -139,7 +125,6 @@ export const apiRoute = '${apiRoute}'
 
     addTemplate({
       filename: 'nuxt-kql/options.d.ts',
-      write: true,
       getContents() {
         return `
 export declare const apiRoute = '${apiRoute}'
@@ -162,5 +147,15 @@ declare module '#nuxt-kql' {
     nuxt.hook('prepare:types', (options) => {
       options.references.push({ path: resolve(nuxt.options.buildDir, 'types/nuxt-kql.d.ts') })
     })
+
+    // Protect authorization data if public requests are disabled
+    if (!options.clientRequests)
+      return
+
+    // Public runtime config
+    nuxt.options.runtimeConfig.public.kql = defu(
+      nuxt.options.runtimeConfig.public.kql,
+      options,
+    )
   },
 })
