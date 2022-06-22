@@ -1,8 +1,8 @@
 # How to Track Errors?
 
-Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, if the request to Kirby succeeded. Even if your request is not authenticatd, the connection to the Kirby instance could be established.
+Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, if the request to Kirby succeeded. Even if your request is not authenticatd, a connection to the Kirby instance could be established.
 
-Inspect the `code` and `status` property of your query response first to make sure the Kirby instance at least returns something. For example it might give you a hint if the request was unauthenticated.
+Inspect the `code` and `status` property of your query response first to make sure the Kirby instance at least returns something:
 
 ```ts
 // `data` will be of type `KirbyQueryResponse` if the request to Kirby itself succeeded
