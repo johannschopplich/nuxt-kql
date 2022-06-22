@@ -31,9 +31,9 @@ importers:
 
   docs:
     specifiers:
-      vitepress: 1.0.0-alpha.2
+      vitepress: 1.0.0-alpha.4
     devDependencies:
-      vitepress: 1.0.0-alpha.2
+      vitepress: 1.0.0-alpha.4
 
   playground:
     specifiers: {}
@@ -6718,8 +6718,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress/1.0.0-alpha.2:
-    resolution: {integrity: sha512-twSsmx2DI/3XgZZ8KLyRAH8RgK2Zj4kJx/kwhZhimwndYqQDrtcIaAcuV+P3FKukZ+cYtm9yt9qohz631jKx4A==}
+  /vitepress/1.0.0-alpha.4:
+    resolution: {integrity: sha512-bOAA4KW6vYGlkbcrPLZLTKWTgXVroObU+o9xj9EENyEl6yg26WWvfN7DGA4BftjdM5O8nR93Z5khPQ3W/tFE7Q==}
     engines: {node: '>=14.6.0'}
     hasBin: true
     dependencies:
