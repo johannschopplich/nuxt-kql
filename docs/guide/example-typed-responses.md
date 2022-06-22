@@ -14,7 +14,7 @@ Given the following query:
       "select": {
         "id": true,
         "title": true,
-        "isListed": "page.isListed"
+        "isListed": true
       }
     }
   }
