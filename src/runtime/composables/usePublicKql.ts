@@ -1,6 +1,6 @@
-import type { NitroFetchRequest } from 'nitropack'
 import { computed, unref } from 'vue'
 import type { Ref } from 'vue'
+import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
 import type { ModuleOptions } from '../../module'

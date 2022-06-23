@@ -1,8 +1,7 @@
 import { defineEventHandler, useBody } from 'h3'
-import type { H3Error } from 'h3'
-import { getAuthHeaders } from '../../utils'
 import type { ModuleOptions } from '../../../module'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '../../types'
+import { getAuthHeaders } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
