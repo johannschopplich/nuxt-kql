@@ -136,10 +136,10 @@ export declare const apiRoute = '${apiRoute}'
       filename: 'types/nuxt-kql.d.ts',
       getContents: () => `
 declare module '#nuxt-kql' {
-  type KirbyQueryRequest = import('${resolve('./runtime/types')}').KirbyQueryRequest
-  type KirbyQueryResponse<Pagination extends boolean = false> = import('${resolve('./runtime/types')}').KirbyQueryResponse<Pagination>
-  type KirbyBlockType = import('${resolve('./runtime/types')}').KirbyBlockType
-  type KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> = import('${resolve('./runtime/types')}').KirbyBlock<T, U>
+  type KirbyQueryRequest = import('${resolve(runtimeDir, 'types')}').KirbyQueryRequest
+  type KirbyQueryResponse<Pagination extends boolean = false> = import('${resolve(runtimeDir, 'types')}').KirbyQueryResponse<Pagination>
+  type KirbyBlockType = import('${resolve(runtimeDir, 'types')}').KirbyBlockType
+  type KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> = import('${resolve(runtimeDir, 'types')}').KirbyBlock<T, U>
 }
 `.trimStart(),
     })
