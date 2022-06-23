@@ -29,7 +29,7 @@ const query = ref<KirbyQueryRequest>({
   },
 })
 
-const { data, refresh } = await useQuery<KirbySite>(query)
+const { data, refresh } = await useKql<KirbySite>(query)
 
 function updateQuery() {
   (query.value.select as Record<string, any>).title = 'site.title.upper'

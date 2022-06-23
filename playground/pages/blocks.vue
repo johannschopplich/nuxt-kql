@@ -11,7 +11,7 @@ const query = ref<KirbyQueryRequest>({
   },
 })
 
-const { data } = await useQuery(query)
+const { data } = await useKql(query)
 const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? [])
 </script>
 

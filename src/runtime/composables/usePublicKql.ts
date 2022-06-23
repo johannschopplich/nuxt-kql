@@ -7,12 +7,12 @@ import type { ModuleOptions } from '../../module'
 import { getAuthHeaders } from '../utils'
 import { useFetch, useRuntimeConfig } from '#imports'
 
-export type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
-export function usePublicQuery<
+export function usePublicKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: Ref<ReqT> | ReqT, opts: UseQueryOptions<ResT> = {}) {
+>(query: Ref<ReqT> | ReqT, opts: UseKqlOptions<ResT> = {}) {
   const { kql } = useRuntimeConfig().public
 
   if (!kql?.clientRequests)
@@ -21,7 +21,7 @@ export function usePublicQuery<
   const _query = computed(() => unref(query))
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
-    console.error('[usePublicQuery] Empty KQL query')
+    console.error('[usePublicKql] Empty KQL query')
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.prefix, {
     ...opts,

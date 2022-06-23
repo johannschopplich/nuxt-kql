@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   kql: {
     prefix: 'api/kql',
     auth: 'bearer',
-    // Enable client-side query requests with `usePublicQuery()` and `$publicQuery()`
+    // Enable client-side query requests with `usePublicKql()` and `$publicKql()`
     clientRequests: true,
   },
 })

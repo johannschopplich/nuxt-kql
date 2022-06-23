@@ -47,7 +47,7 @@ export interface KirbySite extends KirbyQueryResponse {
 import type { KirbySite } from './types'
 
 // `data` will now be of `KirbySite` type
-const { data } = await useQuery<KirbySite>({
+const { data } = await useKql<KirbySite>({
   query: 'site',
   select: {
     title: true,

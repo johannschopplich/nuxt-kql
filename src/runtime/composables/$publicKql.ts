@@ -4,11 +4,11 @@ import type { ModuleOptions } from '../../module'
 import { getAuthHeaders, headersToObject } from '../utils'
 import { useRuntimeConfig } from '#imports'
 
-export type PublicQueryOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type PublicKqlOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 
-export function $publicQuery<T extends KirbyQueryResponse = KirbyQueryResponse>(
+export function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
-  opts: PublicQueryOptions = {},
+  opts: PublicKqlOptions = {},
 ): Promise<T> {
   const { kql } = useRuntimeConfig().public
 

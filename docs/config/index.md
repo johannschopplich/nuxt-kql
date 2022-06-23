@@ -58,7 +58,7 @@ interface ModuleOptions {
   /**
    * Enable client-side KQL request
    * By default, KQL data is fetched safely with a server-side proxy
-   * If enabled, you can use `usePublicQuery()` and `$publicQuery()` to fetch data
+   * If enabled, you can use `usePublicKql()` and `$publicKql()` to fetch data
    * directly from the Kirby instance
    * Note: This means your token or user credentials will be publicly visible
    * @default false

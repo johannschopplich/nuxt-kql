@@ -12,7 +12,7 @@ Typings are optional to use, but will improve your editor suggestions and reduce
 import { KirbyBlock } from '#nuxt-kql'
 
 // Select page content needed for a simple page
-const { data } = await useQuery({
+const { data } = await useKql({
   query: 'kirby.page("notes/across-the-ocean")',
   select: {
     id: true,

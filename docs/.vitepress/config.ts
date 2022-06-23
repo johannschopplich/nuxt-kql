@@ -129,10 +129,10 @@ function sidebarApi(): DefaultTheme.SidebarGroup[] {
     {
       text: 'Composables',
       items: [
-        { text: 'useQuery', link: '/api/use-query' },
-        { text: 'usePublicQuery', link: '/api/use-public-query' },
-        { text: '$query', link: '/api/query' },
-        { text: '$publicQuery', link: '/api/public-query' },
+        { text: 'useKql', link: '/api/use-kql' },
+        { text: 'usePublicKql', link: '/api/use-public-kql' },
+        { text: '$kql', link: '/api/kql' },
+        { text: '$publicKql', link: '/api/public-kql' },
       ],
     },
     {

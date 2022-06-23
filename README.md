@@ -50,7 +50,7 @@ And send queries in your template:
 
 ```vue
 <script setup lang="ts">
-const { data, pending, refresh, error } = await useQuery({
+const { data, pending, refresh, error } = await useKql({
   query: 'site',
 })
 </script>

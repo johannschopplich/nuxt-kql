@@ -1,4 +1,4 @@
-# `useQuery`
+# `useKql`
 
 Returns KQL query data. Uses an internal server route to proxy requests.
 
@@ -7,15 +7,15 @@ Query responses are cached.
 ## Types
 
 ```ts
-function useQuery<
+function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: Ref<ReqT> | ReqT, opts?: UseQueryOptions<ResT>): AsyncData<ResT, true | Error>
+>(query: Ref<ReqT> | ReqT, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
 
-type UseQueryOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
 ```
 
-`useQuery` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).
+`useKql` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).
 
 ## Return Values
 
@@ -30,7 +30,7 @@ By default, Nuxt waits until a `refresh` is finished before it can be executed a
 
 ```vue
 <script setup lang="ts">
-const { data, pending, error, refresh } = await useQuery({
+const { data, pending, error, refresh } = await useKql({
   query: 'site',
   select: {
     title: true,

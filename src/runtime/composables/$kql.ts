@@ -6,7 +6,7 @@ interface InternalState<T> {
   promiseMap: Map<string, Promise<T>>
 }
 
-export interface QueryOptions {
+export interface KqlOptions {
   /**
    * Cache result with same query for hydration
    *
@@ -15,9 +15,9 @@ export interface QueryOptions {
   cache?: boolean
 }
 
-export function $query<T extends KirbyQueryResponse = KirbyQueryResponse>(
+export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
-  options: QueryOptions = {},
+  options: KqlOptions = {},
 ): Promise<T> {
   const { cache = true } = options
 

@@ -1,4 +1,4 @@
-# `$query`
+# `$kql`
 
 Returns raw KQL query data. Uses an internal server route to proxy requests.
 
@@ -7,12 +7,12 @@ Query responses are cached by default.
 ## Types
 
 ```ts
-function $query<T extends KirbyQueryResponse = KirbyQueryResponse>(
+function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
-  options: QueryOptions = {},
+  options: KqlOptions = {},
 ): Promise<T>
 
-interface QueryOptions {
+interface KqlOptions {
   /**
    * Cache result with same query for hydration
    *
@@ -26,7 +26,7 @@ interface QueryOptions {
 
 ```vue
 <script setup lang="ts">
-const data = await $query({
+const data = await $kql({
   query: 'site',
   select: {
     title: true,
