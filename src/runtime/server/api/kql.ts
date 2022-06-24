@@ -1,4 +1,4 @@
-import { defineEventHandler, useBody } from 'h3'
+import { createError, defineEventHandler, useBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
