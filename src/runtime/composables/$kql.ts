@@ -1,5 +1,6 @@
 import { hash as ohash } from 'ohash'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
+import { useNuxtApp } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
 
 interface InternalState<T> {
