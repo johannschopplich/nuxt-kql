@@ -22,18 +22,17 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 ): Promise<T> {
   const { cache = true } = options
 
-  const nuxt = useNuxtApp()
-  const queries: Record<string, T> = nuxt.payload.kqlQueries = (nuxt.payload.kqlQueries || {})
-
-  const state = (nuxt.__kql__ || {}) as InternalState<T>
-  state.promiseMap = state.promiseMap || new Map()
-
   if (!cache) {
     return $fetch<T>(apiRoute, {
       method: 'POST',
       body: { query },
     })
   }
+
+  const nuxt = useNuxtApp()
+  const queries: Record<string, T> = nuxt.payload.kqlQueries = (nuxt.payload.kqlQueries || {})
+  const state = (nuxt.__kql__ || {}) as InternalState<T>
+  state.promiseMap = state.promiseMap || new Map()
 
   const key = ohash(query)
 
