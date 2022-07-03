@@ -38,17 +38,19 @@ export interface KirbyBlock<T extends string = KirbyBlockType, U = Record<string
         ? { level: string; text: string }
         : T extends 'image'
           ? { location: string; image: string[]; src: string; alt: string; caption: string; link: string; ratio: string; crop: boolean }
-          : T extends 'list'
-            ? { text: string }
-            : T extends 'markdown'
+          : T extends 'line'
+            ? { }
+            : T extends 'list'
               ? { text: string }
-              : T extends 'quote'
-                ? { text: string; citation: string }
-                : T extends 'text'
-                  ? { text: string }
-                  : T extends 'video'
-                    ? { url: string; caption: string }
-                    : U
+              : T extends 'markdown'
+                ? { text: string }
+                : T extends 'quote'
+                  ? { text: string; citation: string }
+                  : T extends 'text'
+                    ? { text: string }
+                    : T extends 'video'
+                      ? { url: string; caption: string }
+                      : U
   id: string
   isHidden: boolean
   type: T
