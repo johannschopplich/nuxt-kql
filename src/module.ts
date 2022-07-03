@@ -140,6 +140,8 @@ declare module '#nuxt-kql' {
   type KirbyQueryResponse<Pagination extends boolean = false> = import('${resolve(runtimeDir, 'types')}').KirbyQueryResponse<Pagination>
   type KirbyBlockType = import('${resolve(runtimeDir, 'types')}').KirbyBlockType
   type KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> = import('${resolve(runtimeDir, 'types')}').KirbyBlock<T, U>
+  type KirbyLayoutColumn = import('${resolve(runtimeDir, 'types')}').KirbyLayoutColumn
+  type KirbyLayout = import('${resolve(runtimeDir, 'types')}').KirbyLayout
 }
 `.trimStart(),
     })
