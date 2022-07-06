@@ -57,6 +57,7 @@ function nav(): DefaultTheme.NavItem[] {
     { text: 'Guide', link: '/guide/what-is-nuxt-kql', activeMatch: '/guide/' },
     { text: 'Config', link: '/config/' },
     { text: 'API', link: '/api/', activeMatch: '/api/' },
+    { text: 'Starter Kit', link: 'https://github.com/johannschopplich/kirby-nuxt-starterkit' },
     {
       text: `v${version}`,
       items: [

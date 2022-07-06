@@ -73,3 +73,11 @@ const { data, pending, refresh, error } = await useKql({
   </div>
 </template>
 ```
+
+## Step. 5: Your Turn
+
+Create something awesome! I'm eager to find out what you have built. [Drop me a line](mailto:mail@johannschopplich.com), if you want.
+
+::: tip
+If you want to take a look at a complete solution with this module, you may check out the [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-starterkit), which is a rewrite of the official Kirby Starter Kit with this module.
+:::
