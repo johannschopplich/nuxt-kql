@@ -12,6 +12,7 @@ importers:
       eslint: ^8.19.0
       nuxt: ^3.0.0-rc.4
       nuxt-kql: workspace:*
+      pnpm: ^7.5.0
       typescript: ^4.7.4
     dependencies:
       '@nuxt/kit': 3.0.0-rc.4
@@ -23,6 +24,7 @@ importers:
       eslint: 8.19.0
       nuxt: 3.0.0-rc.4
       nuxt-kql: 'link:'
+      pnpm: 7.5.0
       typescript: 4.7.4
 
   docs:
@@ -4898,6 +4900,12 @@ packages:
   /pluralize/8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
+    dev: true
+
+  /pnpm/7.5.0:
+    resolution: {integrity: sha512-sb9wJNyx/d8l3Gze2jI1y8BGNbb/ga+JT3SrGNiH+C5KbtZ4wmgePBWGjaiGugcpT9+vQ5MO//+QlVWhMCpedQ==}
+    engines: {node: '>=14.6'}
+    hasBin: true
     dev: true
 
   /postcss-calc/8.2.4_postcss@8.4.14:
