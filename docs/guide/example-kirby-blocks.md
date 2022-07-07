@@ -2,7 +2,11 @@
 
 The following Nuxt page shows how to query [Kirby Blocks](https://getkirby.com/docs/reference/panel/fields/blocks).
 
-For demonstration purposes, only `heading` blocks are parsed. Using a `v-for` directive we iterate over each block and read out its `content` property – like `content.level` and `content.text` of a heading. For every other block, existence of the `text` content key is assumed.
+::: tip
+The [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-starterkit) provides a `<KirbyBlocks />` component for you with a [set of blocks](https://github.com/johannschopplich/kirby-nuxt-starterkit/tree/main/components/Kirby/Block) which you can use as well.
+:::
+
+For demonstration purposes, only `heading` and `image` blocks are parsed. Using a `v-for` directive we iterate over each block and read out its `content` property – like `content.level` and `content.text` of a heading. For every other block, existence of the `text` content key is assumed.
 
 Typings are optional to use, but will improve your editor suggestions and reduce type errors.
 
@@ -39,6 +43,12 @@ const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? 
           <!-- Type cast the block as heading for the correct `content` typings -->
           {{ (block as KirbyBlock<'heading'>).content.text }}
         </component>
+
+        <!-- Handle the image block -->
+        <img
+          v-else-if="block.type === 'image'"
+          :src="(block as KirbyBlock<'image'>).content.url"
+        >
 
         <!-- Output text if it exists on any other block -->
         <div v-else v-html="block.content?.text" />
