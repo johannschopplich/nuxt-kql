@@ -1,8 +1,9 @@
 import { computed, unref } from 'vue'
+import { hash } from 'ohash'
 import type { Ref } from 'vue'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
 
@@ -19,6 +20,7 @@ export function useKql<
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(apiRoute, {
     ...opts,
+    key: hash(_query.value),
     method: 'POST',
     body: { query: _query.value },
   }) as AsyncData<ResT, true | Error>

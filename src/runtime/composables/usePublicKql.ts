@@ -1,10 +1,11 @@
 import { computed, unref } from 'vue'
+import { hash } from 'ohash'
 import type { Ref } from 'vue'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '../types'
 import type { ModuleOptions } from '../../module'
 import { getAuthHeaders } from '../utils'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useFetch, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
@@ -16,7 +17,7 @@ export function usePublicKql<
   const { kql } = useRuntimeConfig().public
 
   if (!kql?.clientRequests)
-    throw new Error('Fetching queries client-side isn\'t allowed. Enable it by setting `clientRequests` to `true`.')
+    throw new Error('Fetching queries client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
 
   const _query = computed(() => unref(query))
 
@@ -25,6 +26,7 @@ export function usePublicKql<
 
   return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.prefix, {
     ...opts,
+    key: hash(_query.value),
     baseURL: kql.url,
     method: 'POST',
     body: _query.value,

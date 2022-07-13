@@ -1,7 +1,7 @@
 import { createError, defineEventHandler, useBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '../../types'
 import { getAuthHeaders } from '../../utils'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
