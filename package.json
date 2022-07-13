@@ -2,7 +2,7 @@
   "name": "nuxt-kql",
   "type": "module",
   "version": "0.9.5",
-  "packageManager": "pnpm@7.5.0",
+  "packageManager": "pnpm@7.5.1",
   "description": "Nuxt 3 module for Kirby's Query Language API",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
   "license": "MIT",
@@ -47,7 +47,7 @@
     "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.4",
+    "@nuxt/kit": "^3.0.0-rc.5",
     "defu": "^6.0.0"
   },
   "devDependencies": {
@@ -55,9 +55,9 @@
     "@nuxt/module-builder": "^0.1.7",
     "bumpp": "^8.2.1",
     "eslint": "^8.19.0",
-    "nuxt": "^3.0.0-rc.4",
+    "nuxt": "^3.0.0-rc.5",
     "nuxt-kql": "workspace:*",
-    "pnpm": "^7.5.0",
+    "pnpm": "^7.5.1",
     "typescript": "^4.7.4"
   }
 }
