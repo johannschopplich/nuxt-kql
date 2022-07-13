@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'url'
+import { readFile } from 'fs/promises'
 import { defu } from 'defu'
-import { addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
   /**
@@ -95,23 +96,25 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
 
-    // Add KQL proxy endpoint to send queries on server-side
-    addServerHandler({
-      route: apiRoute,
-      method: 'post',
-      handler: resolve(runtimeDir, 'server/api/kql'),
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.handlers = nitroConfig.handlers || []
+
+      // Add KQL proxy endpoint to send queries on server-side
+      nitroConfig.handlers.push({
+        route: apiRoute,
+        method: 'post',
+        handler: resolve(runtimeDir, 'server/api/kql'),
+      })
+
+      // Inline module runtime in Nitro bundle
+      nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
+        inline: [resolve('./runtime')],
+      })
     })
 
     // Add KQL composables
     nuxt.hook('autoImports:dirs', (dirs) => {
       dirs.push(resolve(runtimeDir, 'composables'))
-    })
-
-    nuxt.hook('nitro:config', (nitroConfig) => {
-      // Inline module runtime in Nitro bundle
-      nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
-        inline: [resolve('./runtime')],
-      })
     })
 
     addTemplate({
@@ -134,20 +137,19 @@ export declare const apiRoute = '${apiRoute}'
 
     addTemplate({
       filename: 'types/nuxt-kql.d.ts',
-      getContents: () => `
+      getContents: async () => `
 declare module '#nuxt-kql' {
-  type KirbyQueryRequest = import('${resolve(runtimeDir, 'types')}').KirbyQueryRequest
-  type KirbyQueryResponse<Pagination extends boolean = false> = import('${resolve(runtimeDir, 'types')}').KirbyQueryResponse<Pagination>
-  type KirbyBlockType = import('${resolve(runtimeDir, 'types')}').KirbyBlockType
-  type KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> = import('${resolve(runtimeDir, 'types')}').KirbyBlock<T, U>
-  type KirbyLayoutColumn = import('${resolve(runtimeDir, 'types')}').KirbyLayoutColumn
-  type KirbyLayout = import('${resolve(runtimeDir, 'types')}').KirbyLayout
+${(await readFile(resolve(runtimeDir, 'types.d.ts'), 'utf-8'))
+  .replace(/^export\s+/gm, '')
+  .split('\n')
+  .map(i => `  ${i}`)
+  .join('\n')}
 }
 `.trimStart(),
     })
 
     nuxt.hook('prepare:types', (options) => {
-      options.references.push({ path: resolve(nuxt.options.buildDir, 'types/nuxt-kql.d.ts') })
+      options.references.push({ path: `${nuxt.options.buildDir}/types/nuxt-kql.d.ts` })
     })
 
     // Protect authorization data if public requests are disabled
