@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url'
 import { readFile } from 'fs/promises'
 import { defu } from 'defu'
-import { addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
   /**
@@ -97,19 +97,17 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(runtimeDir)
 
     nuxt.hook('nitro:config', (nitroConfig) => {
-      nitroConfig.handlers = nitroConfig.handlers || []
-
-      // Add KQL proxy endpoint to send queries on server-side
-      nitroConfig.handlers.push({
-        route: apiRoute,
-        method: 'post',
-        handler: resolve(runtimeDir, 'server/api/kql'),
-      })
-
       // Inline module runtime in Nitro bundle
       nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
         inline: [resolve('./runtime')],
       })
+    })
+
+    // Add KQL proxy endpoint to send queries on server-side
+    addServerHandler({
+      route: apiRoute,
+      method: 'post',
+      handler: resolve(runtimeDir, 'server/api/kql'),
     })
 
     // Add KQL composables
