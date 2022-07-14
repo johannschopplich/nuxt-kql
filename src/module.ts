@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'url'
 import { readFile } from 'fs/promises'
 import { defu } from 'defu'
 import { addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
@@ -69,7 +68,6 @@ export default defineNuxtModule<ModuleOptions>({
     clientRequests: false,
   },
   async setup(options, nuxt) {
-    const { resolve } = createResolver(import.meta.url)
     const apiRoute = '/api/__kql__' as const
 
     // Make sure Kirby URL and KQL endpoint are set
@@ -93,13 +91,13 @@ export default defineNuxtModule<ModuleOptions>({
     )
 
     // Transpile runtime
-    const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
-    nuxt.options.build.transpile.push(runtimeDir)
+    const { resolve } = createResolver(import.meta.url)
+    nuxt.options.build.transpile.push(resolve('runtime'))
 
     nuxt.hook('nitro:config', (nitroConfig) => {
       // Inline module runtime in Nitro bundle
       nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
-        inline: [resolve('./runtime')],
+        inline: [resolve('runtime')],
       })
     })
 
@@ -107,12 +105,12 @@ export default defineNuxtModule<ModuleOptions>({
     addServerHandler({
       route: apiRoute,
       method: 'post',
-      handler: resolve(runtimeDir, 'server/api/kql'),
+      handler: resolve('runtime/server/api/kql'),
     })
 
     // Add KQL composables
     nuxt.hook('autoImports:dirs', (dirs) => {
-      dirs.push(resolve(runtimeDir, 'composables'))
+      dirs.push(resolve('runtime/composables'))
     })
 
     addTemplate({
@@ -137,7 +135,7 @@ export declare const apiRoute = '${apiRoute}'
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
 declare module '#nuxt-kql' {
-${(await readFile(resolve(runtimeDir, 'types.d.ts'), 'utf-8'))
+${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
   .replace(/^export\s+/gm, '')
   .split('\n')
   .map(i => `  ${i}`)
