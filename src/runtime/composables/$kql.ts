@@ -1,11 +1,7 @@
-import { hash as ohash } from 'ohash'
+import { hash } from 'ohash'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useNuxtApp } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
-
-interface InternalState<T> {
-  promiseMap: Map<string, Promise<T>>
-}
 
 export interface KqlOptions {
   /**
@@ -20,10 +16,9 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   options: KqlOptions = {},
 ): Promise<T> {
-  const { cache = true } = options
   const body = { query }
 
-  if (!cache) {
+  if (options.cache === false) {
     return $fetch<T>(apiRoute, {
       method: 'POST',
       body,
@@ -31,26 +26,23 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   }
 
   const nuxt = useNuxtApp()
-  const payloadCache: Record<string, T> = nuxt.payload.kql = nuxt.payload.kql || {}
-  const state = (nuxt.__kql__ || {}) as InternalState<T>
-  state.promiseMap = state.promiseMap || new Map()
+  nuxt._kqlPromises = nuxt._kqlPromises || {}
+  const key = `$kql${hash(query)}`
 
-  const key = ohash(query)
+  if (key in nuxt.payload.data)
+    return Promise.resolve(nuxt.payload.data[key])
 
-  if (key in payloadCache)
-    return Promise.resolve(payloadCache[key])
-
-  if (state.promiseMap.has(key))
-    return state.promiseMap.get(key)
+  if (key in nuxt._kqlPromises)
+    return nuxt._kqlPromises[key]
 
   const request = $fetch<T>(apiRoute, { method: 'POST', body })
     .then((response) => {
-      payloadCache[key] = response
-      state.promiseMap.delete(key)
+      nuxt.payload.data[key] = response
+      delete nuxt._kqlPromises[key]
       return response
     })
 
-  state.promiseMap.set(key, request)
+  nuxt._kqlPromises[key] = request
 
   return request
 }
