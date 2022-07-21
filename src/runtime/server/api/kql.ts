@@ -8,6 +8,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
   const body = await useBody(event)
 
   const query: Partial<KirbyQueryRequest> = body.query || {}
+  const headers: Record<string, string> = body.headers || {}
 
   if (Object.keys(query).length === 0 || !query?.query) {
     throw createError({
@@ -23,7 +24,10 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
       baseURL: kql.url,
       method: 'POST',
       body: query,
-      headers: getAuthHeaders(kql as ModuleOptions),
+      headers: {
+        ...headers,
+        ...getAuthHeaders(kql as ModuleOptions),
+      },
     })
   }
   catch (err) {

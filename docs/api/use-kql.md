@@ -12,7 +12,17 @@ function useKql<
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
 >(query: Ref<ReqT> | ReqT, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
 
-type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type UseKqlOptions<T> = Omit<
+  UseFetchOptions<T>,
+  | 'baseURL'
+  | 'params'
+  | 'parseResponse'
+  | 'pick'
+  | 'responseType'
+  | 'response'
+  | 'transform'
+  | keyof Omit<globalThis.RequestInit, 'headers'>
+>
 ```
 
 `useKql` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).

@@ -4,11 +4,21 @@ import type { Ref } from 'vue'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { ModuleOptions } from '../../module'
-import { getAuthHeaders } from '../utils'
+import { getAuthHeaders, headersToObject } from '../utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useFetch, useRuntimeConfig } from '#imports'
 
-export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type UseKqlOptions<T> = Omit<
+  UseFetchOptions<T>,
+  | 'baseURL'
+  | 'params'
+  | 'parseResponse'
+  | 'pick'
+  | 'responseType'
+  | 'response'
+  | 'transform'
+  | keyof Omit<globalThis.RequestInit, 'headers'>
+>
 
 export function usePublicKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
@@ -30,6 +40,9 @@ export function usePublicKql<
     baseURL: kql.url,
     method: 'POST',
     body: _query.value,
-    headers: getAuthHeaders(kql as ModuleOptions),
+    headers: {
+      ...headersToObject(opts.headers),
+      ...getAuthHeaders(kql as ModuleOptions),
+    },
   }) as AsyncData<ResT, true | Error>
 }

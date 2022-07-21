@@ -7,7 +7,17 @@ import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
 
-export type UseKqlOptions<T> = Omit<UseFetchOptions<T>, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type UseKqlOptions<T> = Omit<
+  UseFetchOptions<T>,
+  | 'baseURL'
+  | 'params'
+  | 'parseResponse'
+  | 'pick'
+  | 'responseType'
+  | 'response'
+  | 'transform'
+  | keyof Omit<globalThis.RequestInit, 'headers'>
+>
 
 export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
@@ -22,6 +32,9 @@ export function useKql<
     ...opts,
     key: hash(_query.value),
     method: 'POST',
-    body: { query: _query.value },
+    body: {
+      query: _query.value,
+      headers: opts.headers,
+    },
   }) as AsyncData<ResT, true | Error>
 }
