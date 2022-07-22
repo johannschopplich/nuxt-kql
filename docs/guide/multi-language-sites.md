@@ -9,7 +9,7 @@ Take the following example to fetch data from the about page, where `en` is the 
 ```ts
 // Since `en` is the default language, the `language` option isn't needed
 const { data } = await useKql({
-  query: 'kirby.page("home")'
+  query: 'kirby.page("about")'
 })
 
 // For the `de` slug to be found, add the `language` option
