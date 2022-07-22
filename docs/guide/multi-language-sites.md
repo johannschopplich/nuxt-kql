@@ -31,12 +31,12 @@ You will probably use some kind of dynamic routes in your Nuxt application. To m
 // `/composables/language.ts`
 
 // Extract language code and slug from path
-export function useLocaleSlug(path: string) {
-  const segments = path.split('/').filter(i => i !== '')
+export function useLocaleSlug(path: string, homePageId = 'home') {
+  const [language, ...rest] = path.split('/').filter(i => i !== '')
 
   return {
-    language: segments[0],
-    slug: segments.slice(1).join('/'),
+    language,
+    slug: rest.join('/') || homePageId,
   }
 }
 ```
