@@ -3,6 +3,7 @@ import { hash } from 'ohash'
 import type { Ref } from 'vue'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
+import { headersToObject } from '../utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
@@ -17,7 +18,12 @@ export type UseKqlOptions<T> = Omit<
   | 'response'
   | 'transform'
   | keyof Omit<globalThis.RequestInit, 'headers'>
->
+> & {
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+}
 
 export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
@@ -34,7 +40,10 @@ export function useKql<
     method: 'POST',
     body: {
       query: _query.value,
-      headers: opts.headers,
+      headers: {
+        ...headersToObject(opts.headers),
+        ...(opts.language ? { 'X-Language': opts.language } : {}),
+      },
     },
   }) as AsyncData<ResT, true | Error>
 }

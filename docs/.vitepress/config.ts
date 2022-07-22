@@ -86,6 +86,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
       collapsible: true,
       items: [
         { text: 'Token-Based Authentication', link: '/guide/token-authentication' },
+        { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
       ],
     },
     {

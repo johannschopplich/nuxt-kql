@@ -1,4 +1,5 @@
 import { hash } from 'ohash'
+import { headersToObject } from '../utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useNuxtApp } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
@@ -10,15 +11,29 @@ export interface KqlOptions {
    * @default true
    */
   cache?: boolean
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+  /**
+   * Custom headers to send with the request
+   */
+  headers?: HeadersInit
 }
 
 export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
-  options: KqlOptions = {},
+  opts: KqlOptions = {},
 ): Promise<T> {
-  const body = { query }
+  const body = {
+    query,
+    headers: {
+      ...headersToObject(opts.headers),
+      ...(opts.language ? { 'X-Language': opts.language } : {}),
+    },
+  }
 
-  if (options.cache === false) {
+  if (opts.cache === false) {
     return $fetch<T>(apiRoute, {
       method: 'POST',
       body,

@@ -16,7 +16,7 @@ function usePublicKql<
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
 >(query: Ref<ReqT> | ReqT, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
 
-export type UseKqlOptions<T> = Omit<
+type UseKqlOptions<T> = Omit<
   UseFetchOptions<T>,
   | 'baseURL'
   | 'params'
@@ -26,7 +26,12 @@ export type UseKqlOptions<T> = Omit<
   | 'response'
   | 'transform'
   | keyof Omit<globalThis.RequestInit, 'headers'>
->
+> & {
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+}
 ```
 
 `usePublicKql` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).

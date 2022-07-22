@@ -4,7 +4,15 @@ import { getAuthHeaders, headersToObject } from '../utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useRuntimeConfig } from '#imports'
 
-export type PublicKqlOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+export type PublicKqlOptions = Omit<
+  FetchOptions,
+  'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'
+> & {
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+}
 
 export function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
@@ -23,6 +31,7 @@ export function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     headers: {
       ...headersToObject(opts.headers),
       ...getAuthHeaders(kql as ModuleOptions),
+      ...(opts.language ? { 'X-Language': opts.language } : {}),
     },
   })
 }

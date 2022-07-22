@@ -18,7 +18,12 @@ export type UseKqlOptions<T> = Omit<
   | 'response'
   | 'transform'
   | keyof Omit<globalThis.RequestInit, 'headers'>
->
+> & {
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+}
 
 export function usePublicKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
@@ -43,6 +48,8 @@ export function usePublicKql<
     headers: {
       ...headersToObject(opts.headers),
       ...getAuthHeaders(kql as ModuleOptions),
+      ...(opts.language ? { 'X-Language': opts.language } : {}),
+
     },
   }) as AsyncData<ResT, true | Error>
 }

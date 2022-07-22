@@ -15,7 +15,15 @@ function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 ): Promise<T>
 
 // `FetchOptions` imported from `ohmyfetch`
-type PublicKqlOptions = Omit<FetchOptions, 'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'>
+type PublicKqlOptions = Omit<
+  FetchOptions,
+  'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'
+> & {
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+}
 ```
 
 ## Example

@@ -9,7 +9,7 @@ Query responses are cached by default.
 ```ts
 function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   query: KirbyQueryRequest,
-  options: KqlOptions = {},
+  opts: KqlOptions = {},
 ): Promise<T>
 
 interface KqlOptions {
@@ -19,6 +19,14 @@ interface KqlOptions {
    * @default true
    */
   cache?: boolean
+  /**
+   * Language code to fetch data for in multilang Kirby setups
+   */
+  language?: string
+  /**
+   * Custom headers to send with the request
+   */
+  headers?: HeadersInit
 }
 ```
 
