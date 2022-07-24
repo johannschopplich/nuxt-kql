@@ -41,7 +41,8 @@ You will probably use some kind of dynamic routes in your Nuxt application. To m
 
 // Extract language code and slug from path
 export function useLocaleSlug(path: string, homePageId = 'home') {
-  const [language, ...rest] = path.split('/').filter(i => i !== '')
+  // Split path into segments and remove empty strings
+  const [language, ...rest] = path.split('/').filter(Boolean)
 
   return {
     language,
