@@ -12,4 +12,8 @@ export default defineNuxtConfig({
     // Enable client-side query requests with `usePublicKql()` and `$publicKql()`
     clientRequests: true,
   },
+
+  typescript: {
+    shim: false,
+  },
 })
