@@ -28,8 +28,10 @@ export type UseKqlOptions<T> = Omit<
 export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: Ref<ReqT> | ReqT, opts: UseKqlOptions<ResT> = {}) {
-  const _query = computed(() => unref(query))
+>(query: (() => ReqT) | ReqT | Ref<ReqT>, opts: UseKqlOptions<ResT> = {}) {
+  const _query = computed(() => typeof query === 'function'
+    ? (query as () => ReqT)()
+    : unref(query))
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')

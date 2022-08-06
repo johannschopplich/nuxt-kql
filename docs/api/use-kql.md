@@ -10,7 +10,7 @@ Query responses are cached.
 function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: Ref<ReqT> | ReqT, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
+>(query: (() => ReqT) | ReqT | Ref<ReqT>, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
 
 type UseKqlOptions<T> = Omit<
   UseFetchOptions<T>,
