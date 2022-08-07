@@ -1,3 +1,4 @@
+import { unref } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
 import type { ModuleOptions } from '../module'
 
