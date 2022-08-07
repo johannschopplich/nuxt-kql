@@ -1,9 +1,9 @@
-import { computed, unref } from 'vue'
+import { computed } from 'vue'
 import { hash } from 'ohash'
-import type { Ref } from 'vue'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
-import { headersToObject } from '../utils'
+import type { MaybeComputedRef } from '../utils'
+import { headersToObject, resolveUnref } from '../utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
@@ -28,10 +28,8 @@ export type UseKqlOptions<T> = Omit<
 export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: (() => ReqT) | ReqT | Ref<ReqT>, opts: UseKqlOptions<ResT> = {}) {
-  const _query = computed(() => typeof query === 'function'
-    ? (query as () => ReqT)()
-    : unref(query))
+>(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
+  const _query = computed(() => resolveUnref(query))
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')

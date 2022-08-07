@@ -14,7 +14,7 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 function usePublicKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: (() => ReqT) | ReqT | Ref<ReqT>, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
+>(query: MaybeComputedRef<ReqT>, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
 
 type UseKqlOptions<T> = Omit<
   UseFetchOptions<T>,
