@@ -1,4 +1,5 @@
 import { createError, defineEventHandler, useBody } from 'h3'
+import type { FetchError } from 'ohmyfetch'
 import type { ModuleOptions } from '../../../module'
 import { getAuthHeaders } from '../../utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
@@ -34,8 +35,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
     throw createError({
       statusCode: 500,
       statusMessage: 'Couldn\'t execute KQL query',
-      // `err.message` is the error message from `$fetch`
-      data: err.message,
+      data: (err as FetchError).message,
     })
   }
 })
