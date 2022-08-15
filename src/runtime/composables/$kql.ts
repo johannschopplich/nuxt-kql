@@ -50,12 +50,12 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   if (key in nuxt._kqlPromises)
     return nuxt._kqlPromises[key]
 
-  const request = $fetch<T>(apiRoute, { method: 'POST', body })
+  const request = $fetch(apiRoute, { method: 'POST', body })
     .then((response) => {
       nuxt.payload.data![key] = response
       delete nuxt._kqlPromises[key]
       return response
-    })
+    }) as Promise<T>
 
   nuxt._kqlPromises[key] = request
 

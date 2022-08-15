@@ -1,4 +1,4 @@
-import { createError, defineEventHandler, useBody } from 'h3'
+import { createError, defineEventHandler, readBody } from 'h3'
 import type { FetchError } from 'ohmyfetch'
 import type { ModuleOptions } from '../../../module'
 import { getAuthHeaders } from '../../utils'
@@ -6,7 +6,7 @@ import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
-  const body = await useBody(event)
+  const body = await readBody(event)
 
   const query: Partial<KirbyQueryRequest> = body.query || {}
   const headers: Record<string, string> = body.headers || {}
