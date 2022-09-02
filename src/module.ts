@@ -94,11 +94,11 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('runtime'))
 
-    nuxt.hook('nitro:config', (nitroConfig) => {
+    nuxt.hook('nitro:config', (config) => {
       // Inline module runtime in Nitro bundle
-      nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
-        inline: [resolve('runtime')],
-      })
+      config.externals = config.externals || {}
+      config.externals.inline = config.externals.inline || []
+      config.externals?.inline!.push(resolve('runtime'))
     })
 
     // Add KQL proxy endpoint to send queries on server-side
