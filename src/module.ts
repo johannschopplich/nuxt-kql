@@ -53,7 +53,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-kql',
     configKey: 'kql',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '^3',
     },
   },
   defaults: {
@@ -98,7 +98,7 @@ export default defineNuxtModule<ModuleOptions>({
       // Inline module runtime in Nitro bundle
       config.externals = config.externals || {}
       config.externals.inline = config.externals.inline || []
-      config.externals?.inline!.push(resolve('runtime'))
+      config.externals.inline.push(resolve('runtime'))
     })
 
     // Add KQL proxy endpoint to send queries on server-side
