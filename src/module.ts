@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises'
 import { defu } from 'defu'
-import { addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
 
 export interface ModuleOptions {
   /**
@@ -68,21 +68,22 @@ export default defineNuxtModule<ModuleOptions>({
     clientRequests: false,
   },
   async setup(options, nuxt) {
+    const logger = useLogger()
     const apiRoute = '/api/__kql__' as const
 
     // Make sure Kirby URL and KQL endpoint are set
     if (!options.url)
-      console.warn('Missing `KIRBY_BASE_URL` in `.env`')
+      logger.warn('Missing `KIRBY_BASE_URL` in `.env`')
 
     if (!options.prefix)
-      console.warn('Missing `kql.prefix` option in Nuxt config')
+      logger.warn('Missing `kql.prefix` option in Nuxt config')
 
     // Make sure authentication credentials are set
     if (options.auth === 'basic' && (!options.credentials || !options.credentials.username || !options.credentials.password))
-      console.warn('Missing `KIRBY_API_USERNAME` and `KIRBY_API_PASSWORD` in `.env` for basic authentication')
+      logger.warn('Missing `KIRBY_API_USERNAME` and `KIRBY_API_PASSWORD` in `.env` for basic authentication')
 
     if (options.auth === 'bearer' && !options.token)
-      console.warn('Missing `KIRBY_API_TOKEN` in `.env` for bearer authentication')
+      logger.warn('Missing `KIRBY_API_TOKEN` in `.env` for bearer authentication')
 
     // Private runtime config
     nuxt.options.runtimeConfig.kql = defu(
