@@ -15,21 +15,37 @@ export interface KirbyQueryRequest {
 export interface KirbyQueryResponse<Pagination extends boolean = false> {
   code: number
   status: string
-  result?: Pagination extends true ? {
-    data: any
-    pagination: {
-      page: number
-      pages: number
-      offset: number
-      limit: number
-      total: number
-    }
-  } : any
+  result?: Pagination extends true
+    ? {
+        data: any
+        pagination: {
+          page: number
+          pages: number
+          offset: number
+          limit: number
+          total: number
+        }
+      }
+    : any
 }
 
-export type KirbyBlockType = 'code' | 'gallery' | 'heading' | 'image' | 'line' | 'list' | 'markdown' | 'quote' | 'table' | 'text' | 'video'
+export type KirbyBlockType =
+  | 'code'
+  | 'gallery'
+  | 'heading'
+  | 'image'
+  | 'line'
+  | 'list'
+  | 'markdown'
+  | 'quote'
+  | 'table'
+  | 'text'
+  | 'video'
 
-export interface KirbyBlock<T extends string = KirbyBlockType, U = Record<string, any>> {
+export interface KirbyBlock<
+  T extends string = KirbyBlockType,
+  U = Record<string, any>,
+> {
   content: T extends 'code'
     ? { code: string; language: string }
     : T extends 'gallery'
@@ -39,7 +55,7 @@ export interface KirbyBlock<T extends string = KirbyBlockType, U = Record<string
         : T extends 'image'
           ? { location: string; image: string[]; src: string; alt: string; caption: string; link: string; ratio: string; crop: boolean }
           : T extends 'line'
-            ? { }
+            ? Record<string, never>
             : T extends 'list'
               ? { text: string }
               : T extends 'markdown'

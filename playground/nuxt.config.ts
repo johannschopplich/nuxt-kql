@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
-  modules: ['nuxt-kql'],
+  modules: ['../src/module'],
 
   kql: {
     prefix: 'api/kql',
