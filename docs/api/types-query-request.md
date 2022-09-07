@@ -1,5 +1,13 @@
 # `KirbyQueryRequest`
 
+Importable from `#nuxt-kql`.
+
+```ts
+import type { KirbyQueryRequest } from '#nuxt-kql'
+```
+
+## Types
+
 ```ts
 interface KirbyQueryRequest {
   /**

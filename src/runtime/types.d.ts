@@ -12,12 +12,12 @@ export interface KirbyQueryRequest {
   }
 }
 
-export interface KirbyQueryResponse<Pagination extends boolean = false> {
+export interface KirbyQueryResponse<T = any, Pagination extends boolean = false> {
   code: number
   status: string
   result?: Pagination extends true
     ? {
-        data: any
+        data: T
         pagination: {
           page: number
           pages: number
@@ -26,21 +26,10 @@ export interface KirbyQueryResponse<Pagination extends boolean = false> {
           total: number
         }
       }
-    : any
+    : T
 }
 
-export type KirbyBlockType =
-  | 'code'
-  | 'gallery'
-  | 'heading'
-  | 'image'
-  | 'line'
-  | 'list'
-  | 'markdown'
-  | 'quote'
-  | 'table'
-  | 'text'
-  | 'video'
+export type KirbyBlockType = 'code' | 'gallery' | 'heading' | 'image' | 'line' | 'list' | 'markdown' | 'quote' | 'table' | 'text' | 'video'
 
 export interface KirbyBlock<
   T extends string = KirbyBlockType,

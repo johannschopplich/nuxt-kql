@@ -1,53 +1,36 @@
 # Typed Responses
 
-For the best TypeScript experience, you may want to define your own response types, which will help catch errors in your template.
+For the best TypeScript experience, you may want to define your own response types for [`useKql`](/api/use-kql), which will help catch errors in your template.
 
-Given the following query:
-
-```json
-{
-  "query": "site",
-  "select": {
-    "title": "site.title",
-    "children": {
-      "query": "site.children",
-      "select": {
-        "id": true,
-        "title": true,
-        "isListed": true
-      }
-    }
-  }
-}
-```
-
-You can create a response interface by extending the `KirbyQueryResponse`, for example in your `types.ts`:
+The [`KirbyQueryResponse<T = any, Pagination extends boolean = false>`](/api/types-query-response) accepts the generic type parameter `T` used for the query result type.
 
 ```ts
-// `#nuxt-kql` may find a special place in your heart just for providing types
-import type { KirbyQueryResponse } from '#nuxt-kql'
-
 // Extend the default response type with the result we expect from the query response
-export interface KirbySite extends KirbyQueryResponse {
-  result?: {
-    title: string
-    children: {
-      id: string
-      title: string
-      isListed: boolean
-    }[]
-  }
-}
+await useKql<KirbyQueryResponse<{ title: string }>>({
+  // Your query
+})
 ```
 
 ## Example
 
+By creating a custom `KirbySite` type for the expected response result and passed to the `KirbyQueryResponse` as its first type parameter, the `data` reactive variable will be provided with typings:
+
 ```vue
 <script setup lang="ts">
-import type { KirbySite } from './types'
+import type { KirbyQueryResponse } from '#nuxt-kql'
 
-// `data` will now be of `KirbySite` type
-const { data } = await useKql<KirbySite>({
+// Create an interface for the query result, respectively the data returned by the API
+export interface KirbySite {
+  title: string
+  children: {
+    id: string
+    title: string
+    isListed: boolean
+  }[]
+}
+
+// `data` will be of type `KirbyQueryResponse<KirbySite>`
+const { data } = await useKql<KirbyQueryResponse<KirbySite>>({
   query: 'site',
   select: {
     title: true,

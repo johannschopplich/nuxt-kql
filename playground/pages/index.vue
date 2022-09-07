@@ -2,15 +2,13 @@
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 // Typed response
-interface KirbySite extends KirbyQueryResponse {
-  result?: {
+interface KirbySite {
+  title: string
+  children: {
+    id: string
     title: string
-    children: {
-      id: string
-      title: string
-      isListed: boolean
-    }[]
-  }
+    isListed: boolean
+  }[]
 }
 
 const refreshIndex = ref(0)
@@ -29,7 +27,7 @@ const query = ref<KirbyQueryRequest>({
   },
 })
 
-const { data, refresh } = await useKql<KirbySite>(query)
+const { data, refresh } = await useKql<KirbyQueryResponse<KirbySite>>(query)
 
 function updateQuery() {
   (query.value.select as Record<string, any>).title = 'site.title.upper'

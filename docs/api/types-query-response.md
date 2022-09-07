@@ -1,18 +1,28 @@
 # `KirbyQueryResponse`
 
+Importable from `#nuxt-kql`.
+
 ```ts
-interface KirbyQueryResponse<Pagination extends boolean = false> {
+import type { KirbyQueryRequest } from '#nuxt-kql'
+```
+
+## Types
+
+```ts
+interface KirbyQueryResponse<T = any, Pagination extends boolean = false> {
   code: number
   status: string
-  result?: Pagination extends true ? {
-    data: any
-    pagination: {
-      page: number
-      pages: number
-      offset: number
-      limit: number
-      total: number
-    }
-  } : any
+  result?: Pagination extends true
+    ? {
+        data: T
+        pagination: {
+          page: number
+          pages: number
+          offset: number
+          limit: number
+          total: number
+        }
+      }
+    : T
 }
 ```
