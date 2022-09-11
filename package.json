@@ -51,7 +51,9 @@
   "dependencies": {
     "@nuxt/kit": "^3.0.0-rc.9",
     "defu": "^6.1.0",
-    "ohash": "^0.1.5"
+    "ohash": "^0.1.5",
+    "ohmyfetch": "^0.4.18",
+    "scule": "^0.3.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.26.3",
@@ -62,8 +64,8 @@
     "nuxt": "^3.0.0-rc.9",
     "nuxt-kql": "workspace:*",
     "pnpm": "^7.11.0",
-    "typescript": "^4.8.2",
-    "vitest": "^0.23.1",
-    "vue-tsc": "^0.40.7"
+    "typescript": "^4.8.3",
+    "vitest": "^0.23.2",
+    "vue-tsc": "^0.40.13"
   }
 }

@@ -8,8 +8,14 @@ describe('nuxt-kql', async () => {
     rootDir: fileURLToPath(new URL('../playground', import.meta.url)),
   })
 
-  it('fetches KQL data', async () => {
-    const html = await $fetch('/test')
+  it('fetches KQL data with composables', async () => {
+    const html = await $fetch('/test/composables')
+    const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
+    expect(content).toMatchSnapshot()
+  })
+
+  it('can prefetch KQL queries', async () => {
+    const html = await $fetch('/test/prefetch')
     const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
     expect(content).toMatchSnapshot()
   })

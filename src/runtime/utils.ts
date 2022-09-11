@@ -8,7 +8,7 @@ import type { ModuleOptions } from '../module'
 export type MaybeComputedRef<T> = (() => T) | ComputedRef<T> | T | Ref<T>
 
 /**
- * Normalize value/ref/getter to `ref` or `computed`.
+ * Normalize value/ref/getter to `ref` or `computed`
  */
 export function resolveUnref<T>(r: MaybeComputedRef<T>): T {
   return typeof r === 'function'

@@ -16,8 +16,6 @@ const { data } = await useKql({
 </script>
 
 <template>
-  <div>
-    <pre>{{ JSON.stringify(data) }}</pre>
-  </div>
+  <pre>{{ JSON.stringify(data) }}</pre>
 </template>
 

@@ -1,6 +1,10 @@
 import { readFile } from 'fs/promises'
 import { defu } from 'defu'
+import { $fetch } from 'ohmyfetch'
+import { pascalCase } from 'scule'
 import { addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
+import { getAuthHeaders } from './runtime/utils'
+import type { KirbyQueryRequest, KirbyQueryResponse } from './runtime/types'
 
 export interface ModuleOptions {
   /**
@@ -46,6 +50,13 @@ export interface ModuleOptions {
    * @default false
    */
   clientRequests?: boolean
+
+  /**
+   * Prefetch queries on Nuxt build
+   * The queries will be fully typed and importable from `#build/kql`
+   * @default {}
+   */
+  prefetch?: Record<string, KirbyQueryRequest>
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -66,10 +77,21 @@ export default defineNuxtModule<ModuleOptions>({
       password: process.env.KIRBY_API_PASSWORD as string,
     },
     clientRequests: false,
+    prefetch: {},
   },
   async setup(options, nuxt) {
     const logger = useLogger()
     const apiRoute = '/api/__kql__' as const
+    const prefetchResults: Record<string, KirbyQueryResponse> = {}
+
+    function kql(query: KirbyQueryRequest) {
+      return $fetch<KirbyQueryResponse>(options.prefix!, {
+        baseURL: options.url,
+        method: 'POST',
+        body: query,
+        headers: getAuthHeaders(options),
+      })
+    }
 
     // Make sure Kirby URL and KQL endpoint are set
     if (!options.url)
@@ -95,8 +117,10 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('runtime'))
 
+    // Inline module runtime in Nitro bundle
+    // Needed to circumvent "cannot find module error" in `server/api/kql.ts`
+    // for the `util` import
     nuxt.hook('nitro:config', (config) => {
-      // Inline module runtime in Nitro bundle
       config.externals = config.externals || {}
       config.externals.inline = config.externals.inline || []
       config.externals.inline.push(resolve('runtime'))
@@ -114,6 +138,7 @@ export default defineNuxtModule<ModuleOptions>({
       dirs.push(resolve('runtime/composables'))
     })
 
+    // Add module options
     addTemplate({
       filename: 'nuxt-kql/options.mjs',
       getContents() {
@@ -123,6 +148,7 @@ export const apiRoute = '${apiRoute}'
       },
     })
 
+    // Add module options types
     addTemplate({
       filename: 'nuxt-kql/options.d.ts',
       getContents() {
@@ -132,6 +158,7 @@ export declare const apiRoute = '${apiRoute}'
       },
     })
 
+    // Copy global KQL type helpers to Nuxt types dir
     addTemplate({
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
@@ -145,8 +172,39 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
 `.trimStart(),
     })
 
+    // Add global `#nuxt-kql` type import path
     nuxt.hook('prepare:types', (options) => {
       options.references.push({ path: `${nuxt.options.buildDir}/types/nuxt-kql.d.ts` })
+    })
+
+    // Prefetch global data on build
+    if (options.prefetch && Object.keys(options.prefetch).length !== 0) {
+      const start = Date.now()
+
+      for (const [key, query] of Object.entries(options.prefetch)) {
+        try {
+          const result = await kql(query)
+          prefetchResults[key] = result
+        }
+        catch (e) {
+          logger.error(`Couldn't prefetch "${key}" KQL query`)
+        }
+      }
+
+      // Get length of options.prefetch object
+      logger.info(`Prefetched ${Object.keys(prefetchResults).length} KQL queries in ${Date.now() - start}ms`)
+    }
+
+    // Add template for prefetched query data
+    addTemplate({
+      filename: 'kql.ts',
+      write: true,
+      getContents() {
+        return Object.entries(prefetchResults).map(([key, response]) => [
+          `export const ${key} = ${response?.result ? JSON.stringify(response.result) : '{} as Record<string, any>'}`,
+          `export type Kirby${pascalCase(key)} = typeof ${key}`,
+        ].join('\n')).join('\n')
+      },
     })
 
     // Protect authorization data if public requests are disabled
