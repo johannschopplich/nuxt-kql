@@ -191,8 +191,15 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
         }
       }
 
-      // Get length of options.prefetch object
-      logger.info(`Prefetched ${Object.keys(prefetchResults).length} KQL queries in ${Date.now() - start}ms`)
+      const prefetchCount = Object.keys(options.prefetch).length
+      if (prefetchCount > 0) {
+        const firstQueryResult = Object.keys(options.prefetch)[0]
+        logger.info(
+          `Prefetched ${prefetchCount === 1 ? firstQueryResult : prefetchCount} KQL ${
+            prefetchCount === 1 ? 'query' : 'queries'
+          } in ${Date.now() - start}ms`,
+        )
+      }
     }
 
     // Add template for prefetched query data
