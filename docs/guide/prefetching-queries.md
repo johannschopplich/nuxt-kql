@@ -37,9 +37,9 @@ Finally, the query result will be importable from `#build/kql`:
 import { site } from '#build/kql'
 
 // Import the type for the query result above
-import type { KirbySite } from '#build/kql'
+import type { Site } from '#build/kql'
 ```
 
 ::: info
-The actual **type** for the key will be pascal cased and prefixed by `Kirby`, e. g. the key `somePageKey` will result in the type name `KirbySomePageKey`.
+The actual **type** for the key will be pascal cased, e. g. the key `somePageKey` will result in the type `SomePageKey`.
 :::

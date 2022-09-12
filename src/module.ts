@@ -207,10 +207,16 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
       filename: 'kql.ts',
       write: true,
       getContents() {
-        return Object.entries(prefetchResults).map(([key, response]) => [
-          `export const ${key} = ${response?.result ? JSON.stringify(response.result) : '{} as Record<string, any>'}`,
-          `export type Kirby${pascalCase(key)} = typeof ${key}`,
-        ].join('\n')).join('\n')
+        return Object.entries(prefetchResults)
+          .map(
+            ([key, response]) =>
+            `export const ${key} = ${
+              response?.result
+                ? JSON.stringify(response.result, undefined, 2)
+                : '{} as Record<string, any>'
+            }\n` + `export type ${pascalCase(key)} = typeof ${key}\n`,
+          )
+          .join('\n')
       },
     })
 
