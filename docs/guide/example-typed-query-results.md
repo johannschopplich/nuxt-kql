@@ -1,4 +1,4 @@
-# Typed Responses
+# Typed Query Results
 
 For the best TypeScript experience, you may want to define your own response types for [`useKql`](/api/use-kql), which will help catch errors in your template.
 
@@ -7,7 +7,8 @@ The [`KirbyQueryResponse<T = any, Pagination extends boolean = false>`](/api/typ
 ```ts
 // Extend the default response type with the result we expect from the query response
 await useKql<KirbyQueryResponse<{ title: string }>>({
-  // Your query
+  query: 'site',
+  select: ['title']
 })
 ```
 

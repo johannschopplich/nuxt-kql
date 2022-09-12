@@ -1,10 +1,10 @@
 # Kirby Blocks
 
-The following Nuxt page shows how to query [Kirby Blocks](https://getkirby.com/docs/reference/panel/fields/blocks).
-
 ::: tip
 The [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-starterkit) provides a `<KirbyBlocks />` component for you with a [set of blocks](https://github.com/johannschopplich/kirby-nuxt-starterkit/tree/main/components/Kirby/Block) which you can use as well.
 :::
+
+Consider the following Nuxt page below, illustrating how to query [Kirby Blocks](https://getkirby.com/docs/reference/panel/fields/blocks).
 
 For demonstration purposes, only `heading` and `image` blocks are parsed. Using a `v-for` directive we iterate over each block and read out its `content` property – like `content.level` and `content.text` of a heading. For every other block, existence of the `text` content key is assumed.
 

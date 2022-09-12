@@ -64,5 +64,12 @@ interface ModuleOptions {
    * @default false
    */
   clientRequests?: boolean
+
+  /**
+   * Prefetch custom queries at build-time
+   * The queries will be fully typed and importable from `#build/kql`
+   * @default {}
+   */
+  prefetch?: Record<string, KirbyQueryRequest>
 }
 ```

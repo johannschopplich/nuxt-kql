@@ -79,6 +79,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'How It Works', link: '/guide/how-it-works' },
+        { text: 'Playground', link: '/guide/playground' },
       ],
     },
     {
@@ -86,14 +87,14 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
       collapsible: true,
       items: [
         { text: 'Token-Based Authentication', link: '/guide/token-authentication' },
-        { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
+        { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
       ],
     },
     {
       text: 'Examples',
       items: [
-        { text: 'Playground', link: '/guide/playground' },
-        { text: 'Typed Responses', link: '/guide/example-typed-responses' },
+        { text: 'Multi-Language Sites', link: '/guide/example-multi-language-sites' },
+        { text: 'Typed Responses', link: '/guide/example-typed-query-results' },
         { text: 'Kirby Blocks', link: '/guide/example-kirby-blocks' },
       ],
     },
