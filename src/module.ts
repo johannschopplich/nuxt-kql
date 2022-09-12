@@ -52,7 +52,7 @@ export interface ModuleOptions {
   clientRequests?: boolean
 
   /**
-   * Prefetch queries on Nuxt build
+   * Prefetch custom queries at build-time
    * The queries will be fully typed and importable from `#build/kql`
    * @default {}
    */
@@ -177,7 +177,7 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
       options.references.push({ path: `${nuxt.options.buildDir}/types/nuxt-kql.d.ts` })
     })
 
-    // Prefetch global data on build
+    // Prefetch custom queries at build-time
     if (options.prefetch && Object.keys(options.prefetch).length !== 0) {
       const start = Date.now()
 
@@ -187,13 +187,13 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
           prefetchResults[key] = result
         }
         catch (e) {
-          logger.error(`Couldn't prefetch "${key}" KQL query`)
+          logger.error(`Couldn't prefetch ${key} KQL query`)
         }
       }
 
-      const prefetchCount = Object.keys(options.prefetch).length
+      const prefetchCount = Object.keys(prefetchResults).length
       if (prefetchCount > 0) {
-        const firstQueryResult = Object.keys(options.prefetch)[0]
+        const firstQueryResult = Object.keys(prefetchResults)[0]
         logger.info(
           `Prefetched ${prefetchCount === 1 ? firstQueryResult : prefetchCount} KQL ${
             prefetchCount === 1 ? 'query' : 'queries'
