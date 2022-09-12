@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
+import type { FetchError } from 'ohmyfetch'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { MaybeComputedRef } from '../utils'
@@ -34,7 +35,7 @@ export function useKql<
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
 
-  return useFetch<ResT, Error, NitroFetchRequest, ResT>(apiRoute, {
+  return useFetch<ResT, FetchError, NitroFetchRequest, ResT>(apiRoute, {
     ...opts,
     key: hash(_query.value),
     method: 'POST',
@@ -45,5 +46,5 @@ export function useKql<
         ...(opts.language ? { 'X-Language': opts.language } : {}),
       },
     },
-  }) as AsyncData<ResT, true | Error>
+  }) as AsyncData<ResT, true | FetchError>
 }

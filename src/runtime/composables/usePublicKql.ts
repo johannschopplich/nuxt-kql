@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
+import type { FetchError } from 'ohmyfetch'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { ModuleOptions } from '../../module'
@@ -39,7 +40,7 @@ export function usePublicKql<
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[usePublicKql] Empty KQL query')
 
-  return useFetch<ResT, Error, NitroFetchRequest, ResT>(kql.prefix, {
+  return useFetch<ResT, FetchError, NitroFetchRequest, ResT>(kql.prefix, {
     ...opts,
     key: hash(_query.value),
     baseURL: kql.url,
@@ -50,5 +51,5 @@ export function usePublicKql<
       ...getAuthHeaders(kql as ModuleOptions),
       ...(opts.language ? { 'X-Language': opts.language } : {}),
     },
-  }) as AsyncData<ResT, true | Error>
+  }) as AsyncData<ResT, true | FetchError>
 }
