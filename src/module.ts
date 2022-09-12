@@ -187,6 +187,7 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
           prefetchResults[key] = result
         }
         catch (e) {
+          logger.error(e)
           logger.error(`Couldn't prefetch ${key} KQL query`)
         }
       }
@@ -220,14 +221,12 @@ ${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
       },
     })
 
-    // Protect authorization data if public requests are disabled
-    if (!options.clientRequests)
-      return
-
-    // Public runtime config
-    nuxt.options.runtimeConfig.public.kql = defu(
-      nuxt.options.runtimeConfig.public.kql,
-      options,
-    )
+    // Write data to public runtime config if client requests are enabled
+    if (options.clientRequests) {
+      nuxt.options.runtimeConfig.public.kql = defu(
+        nuxt.options.runtimeConfig.public.kql,
+        options,
+      )
+    }
   },
 })
