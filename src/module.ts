@@ -134,7 +134,7 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // Add KQL composables
-    nuxt.hook('autoImports:dirs', (dirs) => {
+    nuxt.hook('imports:dirs', (dirs) => {
       dirs.push(resolve('runtime/composables'))
     })
 
