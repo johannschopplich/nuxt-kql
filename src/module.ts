@@ -161,25 +161,13 @@ export declare const apiRoute = '${apiRoute}'
       },
     })
 
-    const kqlTypes = [
-      'KirbyQueryModel',
-      'KirbyQuery',
-      'KirbyQueryRequest',
-      'KirbyQueryResponse',
-      'KirbyBlockType',
-      'KirbyBlock',
-      'KirbyLayoutColumn',
-      'KirbyLayout',
-    ].join(', ')
-
     // Copy global KQL type helpers to Nuxt types dir
     addTemplate({
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
 declare module '#nuxt-kql' {
   // TODO: Update docs to import types from \`kirby-fest\` instead
-  import { ${kqlTypes} } from 'kirby-fest'
-  export { ${kqlTypes} }
+  export * from 'kirby-fest'
 }
 `.trimStart(),
     })
