@@ -5,9 +5,9 @@ import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { ModuleOptions } from '../../module'
 import type { MaybeComputedRef } from '../utils'
-import { getAuthHeaders, headersToObject, resolveUnref } from '../utils'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
+import { buildAuthHeader, headersToObject, resolveUnref } from '../utils'
 import { useFetch, useRuntimeConfig } from '#imports'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 export type UseKqlOptions<T> = Omit<
   UseFetchOptions<T>,
@@ -32,7 +32,7 @@ export function usePublicKql<
 >(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
   const { kql } = useRuntimeConfig().public
 
-  if (!kql?.clientRequests)
+  if (!kql.clientRequests)
     throw new Error('Fetching queries client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
 
   const _query = computed(() => resolveUnref(query))
@@ -48,7 +48,11 @@ export function usePublicKql<
     body: _query.value,
     headers: {
       ...headersToObject(opts.headers),
-      ...getAuthHeaders(kql as ModuleOptions),
+      ...buildAuthHeader({
+        auth: kql.auth as ModuleOptions['auth'],
+        token: kql.token,
+        credentials: kql.credentials,
+      }),
       ...(opts.language ? { 'X-Language': opts.language } : {}),
     },
   }) as AsyncData<ResT, true | FetchError>

@@ -33,7 +33,15 @@ export function headersToObject(headers: HeadersInit = {}): Record<string, strin
 /**
  * Generate authentication headers for KQL fetch requests
  */
-export function getAuthHeaders({ auth, token, credentials }: ModuleOptions) {
+export function buildAuthHeader({
+  auth,
+  token,
+  credentials,
+}: {
+  auth: ModuleOptions['auth']
+  token: ModuleOptions['token']
+  credentials: ModuleOptions['credentials']
+}) {
   const headers: Record<string, string> = {}
 
   if (auth === 'basic' && credentials) {

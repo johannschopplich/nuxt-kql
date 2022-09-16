@@ -1,8 +1,8 @@
 import type { FetchOptions } from 'ohmyfetch'
 import type { ModuleOptions } from '../../module'
-import { getAuthHeaders, headersToObject } from '../utils'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
+import { buildAuthHeader, headersToObject } from '../utils'
 import { useRuntimeConfig } from '#imports'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 export type PublicKqlOptions = Omit<
   FetchOptions,
@@ -20,7 +20,7 @@ export function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 ): Promise<T> {
   const { kql } = useRuntimeConfig().public
 
-  if (!kql?.clientRequests)
+  if (!kql.clientRequests)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
 
   return $fetch<T>(kql.prefix, {
@@ -30,7 +30,11 @@ export function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     body: query,
     headers: {
       ...headersToObject(opts.headers),
-      ...getAuthHeaders(kql as ModuleOptions),
+      ...buildAuthHeader({
+        auth: kql.auth as ModuleOptions['auth'],
+        token: kql.token,
+        credentials: kql.credentials,
+      }),
       ...(opts.language ? { 'X-Language': opts.language } : {}),
     },
   })

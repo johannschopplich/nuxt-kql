@@ -3,7 +3,7 @@ import { defu } from 'defu'
 import { $fetch } from 'ohmyfetch'
 import { pascalCase } from 'scule'
 import { addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
-import { getAuthHeaders } from './runtime/utils'
+import { buildAuthHeader } from './runtime/utils'
 import type { KirbyQueryRequest, KirbyQueryResponse } from './types'
 
 export interface ModuleOptions {
@@ -89,7 +89,11 @@ export default defineNuxtModule<ModuleOptions>({
         baseURL: options.url,
         method: 'POST',
         body: query,
-        headers: getAuthHeaders(options),
+        headers: buildAuthHeader({
+          auth: options.auth,
+          token: options.token,
+          credentials: options.credentials,
+        }),
       })
     }
 

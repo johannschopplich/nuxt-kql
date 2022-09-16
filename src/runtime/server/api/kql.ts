@@ -1,9 +1,9 @@
 import { createError, defineEventHandler, readBody } from 'h3'
 import type { FetchError } from 'ohmyfetch'
 import type { ModuleOptions } from '../../../module'
-import { getAuthHeaders } from '../../utils'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
+import { buildAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
   const body = await readBody(event)
@@ -27,7 +27,11 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
       body: query,
       headers: {
         ...headers,
-        ...getAuthHeaders(kql as ModuleOptions),
+        ...buildAuthHeader({
+          auth: kql.auth as ModuleOptions['auth'],
+          token: kql.token,
+          credentials: kql.credentials,
+        }),
       },
     })
   }
