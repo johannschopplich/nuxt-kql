@@ -5,8 +5,7 @@
 Adapt `nuxt-kql` to your needs by setting module options in your `nuxt.config.ts`:
 
 ```ts
-import { defineNuxtConfig } from 'nuxt'
-
+// `nuxt.config.ts`
 export default defineNuxtConfig({
   modules: ['nuxt-kql'],
   kql: {

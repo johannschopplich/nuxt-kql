@@ -6,8 +6,6 @@ To get started, define a **key** for your query as well as the actual query requ
 
 ```ts
 // `nuxt.config.ts`
-import { defineNuxtConfig } from 'nuxt'
-
 export default defineNuxtConfig({
   modules: ['nuxt-kql'],
 

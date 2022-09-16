@@ -26,8 +26,6 @@ Add `nuxt-kql` to your Nuxt config:
 
 ```ts
 // `nuxt.config.ts`
-import { defineNuxtConfig } from 'nuxt'
-
 export default defineNuxtConfig({
   modules: ['nuxt-kql'],
 })
