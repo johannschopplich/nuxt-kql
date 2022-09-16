@@ -9,6 +9,9 @@ import type { KirbyQueryRequest } from '#nuxt-kql'
 ## Types
 
 ```ts
+type KirbyQueryModel = 'collection' | 'file' | 'kirby' | 'page' | 'site' | 'user'
+type KirbyQuery = KirbyQueryModel | `${KirbyQueryModel}.${string}` | `${KirbyQueryModel}(${string})`
+
 interface KirbyQueryRequest {
   /**
    * @example
