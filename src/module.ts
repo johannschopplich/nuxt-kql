@@ -4,7 +4,7 @@ import { $fetch } from 'ohmyfetch'
 import { pascalCase } from 'scule'
 import { addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
 import { getAuthHeaders } from './runtime/utils'
-import type { KirbyQueryRequest, KirbyQueryResponse } from './runtime/types'
+import type { KirbyQueryRequest, KirbyQueryResponse } from './types'
 
 export interface ModuleOptions {
   /**
@@ -163,7 +163,7 @@ export declare const apiRoute = '${apiRoute}'
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
 declare module '#nuxt-kql' {
-${(await readFile(resolve('runtime/types.d.ts'), 'utf-8'))
+${(await readFile(resolve('types.ts'), 'utf-8'))
   .replace(/^export\s+/gm, '')
   .split('\n')
   .map(i => `  ${i}`)
