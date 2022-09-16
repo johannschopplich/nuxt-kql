@@ -1,10 +1,9 @@
-import { readFile } from 'fs/promises'
 import { defu } from 'defu'
 import { $fetch } from 'ohmyfetch'
 import { pascalCase } from 'scule'
 import { addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
+import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { buildAuthHeader } from './runtime/utils'
-import type { KirbyQueryRequest, KirbyQueryResponse } from './types'
 
 export interface ModuleOptions {
   /**
@@ -162,16 +161,25 @@ export declare const apiRoute = '${apiRoute}'
       },
     })
 
+    const kqlTypes = [
+      'KirbyQueryModel',
+      'KirbyQuery',
+      'KirbyQueryRequest',
+      'KirbyQueryResponse',
+      'KirbyBlockType',
+      'KirbyBlock',
+      'KirbyLayoutColumn',
+      'KirbyLayout',
+    ].join(', ')
+
     // Copy global KQL type helpers to Nuxt types dir
     addTemplate({
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
 declare module '#nuxt-kql' {
-${(await readFile(resolve('types.ts'), 'utf-8'))
-  .replace(/^export\s+/gm, '')
-  .split('\n')
-  .map(i => `  ${i}`)
-  .join('\n')}
+  // TODO: Update docs to import types from \`kirby-fest\` instead
+  import { ${kqlTypes} } from 'kirby-fest'
+  export { ${kqlTypes} }
 }
 `.trimStart(),
     })

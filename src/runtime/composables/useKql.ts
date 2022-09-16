@@ -3,11 +3,11 @@ import { hash } from 'ohash'
 import type { FetchError } from 'ohmyfetch'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
+import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import type { MaybeComputedRef } from '../utils'
 import { headersToObject, resolveUnref } from '../utils'
 import { useFetch } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 export type UseKqlOptions<T> = Omit<
   UseFetchOptions<T>,

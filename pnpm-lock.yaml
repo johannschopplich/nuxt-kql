@@ -11,6 +11,7 @@ importers:
       bumpp: ^8.2.1
       defu: ^6.1.0
       eslint: ^8.23.1
+      kirby-fest: ^0.2.0
       nuxt: ^3.0.0-rc.10
       nuxt-kql: workspace:*
       ohash: ^0.1.5
@@ -23,6 +24,7 @@ importers:
     dependencies:
       '@nuxt/kit': 3.0.0-rc.10
       defu: 6.1.0
+      kirby-fest: 0.2.0
       ohash: 0.1.5
       ohmyfetch: 0.4.18
       scule: 0.3.2
@@ -4313,6 +4315,10 @@ packages:
       array-includes: 3.1.5
       object.assign: 4.1.4
     dev: true
+
+  /kirby-fest/0.2.0:
+    resolution: {integrity: sha512-3hTjQ4uADeBWDVbAohkDGmenezAhheMShDxAQVyXLDbvPqv52nzq8tfYUPBh0Rz6kuFs8mBpNTUm7AeGEspLxg==}
+    dev: false
 
   /kleur/3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}

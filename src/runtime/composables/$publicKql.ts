@@ -1,8 +1,8 @@
 import type { FetchOptions } from 'ohmyfetch'
+import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import type { ModuleOptions } from '../../module'
 import { buildAuthHeader, headersToObject } from '../utils'
 import { useRuntimeConfig } from '#imports'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 export type PublicKqlOptions = Omit<
   FetchOptions,

@@ -1,8 +1,8 @@
 import { hash } from 'ohash'
+import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { headersToObject } from '../utils'
 import { useNuxtApp } from '#imports'
 import { apiRoute } from '#build/nuxt-kql/options'
-import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 export interface KqlOptions {
   /**

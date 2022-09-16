@@ -8,16 +8,27 @@ import type { KirbyQueryRequest } from '#nuxt-kql'
 
 ## Types
 
+::: info
+Types are re-exported by the [`kirby-fest`](https://github.com/johannschopplich/kirby-fest) package.
+:::
+
 ```ts
-type KirbyQueryModel = 'collection' | 'file' | 'kirby' | 'page' | 'site' | 'user'
-type KirbyQuery = KirbyQueryModel | `${KirbyQueryModel}.${string}` | `${KirbyQueryModel}(${string})`
+type KirbyQueryModel<T extends string = never> =
+  | 'collection'
+  | 'file'
+  | 'kirby'
+  | 'page'
+  | 'site'
+  | 'user'
+  | T
+
+type KirbyQuery<T extends string = never> =
+  | KirbyQueryModel<T>
+  | `${KirbyQueryModel<T>}.${string}`
+  | `${KirbyQueryModel<T>}(${string})`
 
 interface KirbyQueryRequest {
-  /**
-   * @example
-   * kirby.page("about")
-   */
-  query: `${'kirby' | 'site' | 'page'}${string}`
+  query: KirbyQuery
   select?: Record<string, any> | string[]
   pagination?: {
     /** @default 100 */

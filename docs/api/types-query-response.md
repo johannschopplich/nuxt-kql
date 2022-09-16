@@ -8,8 +8,15 @@ import type { KirbyQueryResponse } from '#nuxt-kql'
 
 ## Types
 
+::: info
+Types are re-exported by the [`kirby-fest`](https://github.com/johannschopplich/kirby-fest) package.
+:::
+
 ```ts
-interface KirbyQueryResponse<T = any, Pagination extends boolean = false> {
+interface KirbyQueryResponse<
+  T = any,
+  Pagination extends boolean = false,
+> {
   code: number
   status: string
   result?: Pagination extends true
