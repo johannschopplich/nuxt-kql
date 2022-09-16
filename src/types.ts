@@ -1,6 +1,9 @@
 // https://github.com/getkirby/kql/blob/main/src/Kql/Kql.php#L73
 export type KirbyQueryModel = 'collection' | 'file' | 'kirby' | 'page' | 'site' | 'user'
-export type KirbyQuery = KirbyQueryModel | `${KirbyQueryModel}.${string}` | `${KirbyQueryModel}(${string})`
+export type KirbyQuery =
+  | KirbyQueryModel
+  | `${KirbyQueryModel}.${string}`
+  | `${KirbyQueryModel}(${string})`
 
 export interface KirbyQueryRequest {
   /**
