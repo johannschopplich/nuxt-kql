@@ -5,4 +5,3 @@ import { site } from '#build/kql'
 <template>
   <pre>{{ JSON.stringify(site) }}</pre>
 </template>
-

@@ -111,10 +111,20 @@ export default defineNuxtModule<ModuleOptions>({
       logger.warn('Missing `KIRBY_API_TOKEN` in `.env` for bearer authentication')
 
     // Private runtime config
+    // @ts-expect-error: prefetch queries of playground break assignment
     nuxt.options.runtimeConfig.kql = defu(
       nuxt.options.runtimeConfig.kql,
       options,
     )
+
+    // Write data to public runtime config if client requests are enabled
+    if (options.clientRequests) {
+      // @ts-expect-error: prefetch queries of playground break assignment
+      nuxt.options.runtimeConfig.public.kql = defu(
+        nuxt.options.runtimeConfig.public.kql,
+        options,
+      )
+    }
 
     // Transpile runtime
     const { resolve } = createResolver(import.meta.url)
@@ -220,13 +230,5 @@ declare module '#nuxt-kql' {
           .join('\n')
       },
     })
-
-    // Write data to public runtime config if client requests are enabled
-    if (options.clientRequests) {
-      nuxt.options.runtimeConfig.public.kql = defu(
-        nuxt.options.runtimeConfig.public.kql,
-        options,
-      )
-    }
   },
 })

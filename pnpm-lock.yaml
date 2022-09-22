@@ -11,7 +11,7 @@ importers:
       bumpp: ^8.2.1
       defu: ^6.1.0
       eslint: ^8.23.1
-      kirby-fest: ^0.2.0
+      kirby-fest: ^0.3.0
       nuxt: ^3.0.0-rc.11
       nuxt-kql: workspace:*
       ohash: ^0.1.5
@@ -24,7 +24,7 @@ importers:
     dependencies:
       '@nuxt/kit': 3.0.0-rc.11
       defu: 6.1.0
-      kirby-fest: 0.2.0
+      kirby-fest: 0.3.0
       ohash: 0.1.5
       ohmyfetch: 0.4.19
       scule: 0.3.2
@@ -4286,8 +4286,8 @@ packages:
       graceful-fs: 4.2.10
     dev: true
 
-  /kirby-fest/0.2.0:
-    resolution: {integrity: sha512-3hTjQ4uADeBWDVbAohkDGmenezAhheMShDxAQVyXLDbvPqv52nzq8tfYUPBh0Rz6kuFs8mBpNTUm7AeGEspLxg==}
+  /kirby-fest/0.3.0:
+    resolution: {integrity: sha512-7MV8L3lwtZHZGWWo+WZCHA0k9LTuCt66T/ejz0aWUvpcTgKKp9TCqHThmkwHK3CSjyJMD/Wp7FfBZST2ljZWow==}
     dev: false
 
   /kleur/3.0.3:
