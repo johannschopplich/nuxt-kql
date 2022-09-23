@@ -4,8 +4,9 @@ import type { FetchError } from 'ohmyfetch'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import type { MaybeComputedRef } from '../utils'
-import { headersToObject, kqlApiRoute, resolveUnref } from '../utils'
+import { resolveUnref } from '@vueuse/core'
+import type { MaybeComputedRef } from '@vueuse/core'
+import { headersToObject, kqlApiRoute } from '../utils'
 import { useFetch } from '#imports'
 
 export type UseKqlOptions<T> = Omit<

@@ -3,8 +3,9 @@ import { hash } from 'ohash'
 import type { FetchError } from 'ohmyfetch'
 import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
-import { headersToObject, kirbyApiRoute, resolveUnref } from '../utils'
-import type { MaybeComputedRef } from '../utils'
+import { resolveUnref } from '@vueuse/core'
+import type { MaybeComputedRef } from '@vueuse/core'
+import { headersToObject, kirbyApiRoute } from '../utils'
 import { useFetch } from '#imports'
 
 export type UseKirbyDataOptions<T> = Omit<

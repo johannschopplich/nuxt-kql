@@ -1,23 +1,7 @@
-import { unref } from 'vue'
-import type { ComputedRef, Ref } from 'vue'
 import type { ModuleOptions } from '../module'
 
 export const kqlApiRoute = '/api/__kql__' as const
 export const kirbyApiRoute = '/api/__kirby__' as const
-
-/**
- * Maybe it's a ref, or a plain value, or a getter function
- */
-export type MaybeComputedRef<T> = (() => T) | ComputedRef<T> | T | Ref<T>
-
-/**
- * Normalize value/ref/getter to `ref` or `computed`
- */
-export function resolveUnref<T>(r: MaybeComputedRef<T>): T {
-  return typeof r === 'function'
-    ? (r as any)()
-    : unref(r)
-}
 
 /**
  * Normalize headers to object
