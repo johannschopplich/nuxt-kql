@@ -145,6 +145,13 @@ export default defineNuxtModule<ModuleOptions>({
       handler: resolve('runtime/server/api/kql'),
     })
 
+    // Add another proxy endpoint to fetch raw Kirby data server-side
+    addServerHandler({
+      route: kirbyApiRoute,
+      method: 'post',
+      handler: resolve('runtime/server/api/kirby'),
+    })
+
     // Add KQL composables
     addImportsDir(resolve('runtime/composables'))
 
