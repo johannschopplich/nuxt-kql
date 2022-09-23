@@ -8,8 +8,20 @@ describe('nuxt-kql', async () => {
     rootDir: fileURLToPath(new URL('../playground', import.meta.url)),
   })
 
-  it('fetches KQL data with composables', async () => {
-    const html = await $fetch('/test/composables')
+  it('fetches queries with $kql', async () => {
+    const html = await $fetch('/test/$kql')
+    const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
+    expect(content).toMatchSnapshot()
+  })
+
+  it('fetches queries with useKql', async () => {
+    const html = await $fetch('/test/useKql')
+    const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
+    expect(content).toMatchSnapshot()
+  })
+
+  it('fetches Kirby data useKirbyData', async () => {
+    const html = await $fetch('/test/useKirbyData')
     const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
     expect(content).toMatchSnapshot()
   })

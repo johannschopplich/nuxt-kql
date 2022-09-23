@@ -1,15 +1,11 @@
 <script setup lang="ts">
-const { data } = await useKql({
+const data = await $kql({
   query: 'site',
   select: {
     title: true,
     children: {
       query: 'site.children',
-      select: {
-        id: true,
-        title: true,
-        isListed: true,
-      },
+      select: ['id', 'title', 'isListed'],
     },
   },
 })
@@ -18,3 +14,4 @@ const { data } = await useKql({
 <template>
   <pre>{{ JSON.stringify(data) }}</pre>
 </template>
+
