@@ -1,7 +1,20 @@
 <script setup lang="ts">
-import { site } from '#build/kql'
+const { data } = await useKql({
+  query: 'site',
+  select: {
+    title: true,
+    children: {
+      query: 'site.children',
+      select: {
+        id: true,
+        title: true,
+        isListed: true,
+      },
+    },
+  },
+})
 </script>
 
 <template>
-  <pre>{{ JSON.stringify(site) }}</pre>
+  <pre>{{ JSON.stringify(data) }}</pre>
 </template>
