@@ -1,6 +1,8 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
-import type { UseFetchOptions } from 'nuxt/app'
+import type { FetchError } from 'ohmyfetch'
+import type { NitroFetchRequest } from 'nitropack'
+import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import { headersToObject, kirbyApiRoute, resolveUnref } from '../utils'
 import type { MaybeComputedRef } from '../utils'
 import { useFetch } from '#imports'
@@ -23,7 +25,7 @@ export function useKirbyData<T = any>(
 ) {
   const _uri = computed(() => resolveUnref(uri).replace(/^\//, ''))
 
-  return useFetch<T>(kirbyApiRoute, {
+  return useFetch<T, FetchError, NitroFetchRequest, T>(kirbyApiRoute, {
     ...opts,
     key: hash(_uri.value),
     method: 'POST',
@@ -31,5 +33,5 @@ export function useKirbyData<T = any>(
       uri: _uri.value,
       headers: headersToObject(opts.headers),
     },
-  })
+  }) as AsyncData<T, true | FetchError>
 }
