@@ -7,7 +7,6 @@ import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
   const body = await readBody(event)
-
   const query: Partial<KirbyQueryRequest> = body.query || {}
   const headers: Record<string, string> = body.headers || {}
 

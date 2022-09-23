@@ -2,6 +2,9 @@ import { unref } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
 import type { ModuleOptions } from '../module'
 
+export const kqlApiRoute = '/api/__kql__' as const
+export const kirbyApiRoute = '/api/__kirby__' as const
+
 /**
  * Maybe it's a ref, or a plain value, or a getter function
  */
@@ -37,11 +40,7 @@ export function buildAuthHeader({
   auth,
   token,
   credentials,
-}: {
-  auth: ModuleOptions['auth']
-  token: ModuleOptions['token']
-  credentials: ModuleOptions['credentials']
-}) {
+}: Pick<ModuleOptions, 'auth' | 'token' | 'credentials'>) {
   const headers: Record<string, string> = {}
 
   if (auth === 'basic' && credentials) {

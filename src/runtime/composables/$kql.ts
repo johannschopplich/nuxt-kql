@@ -1,8 +1,7 @@
 import { hash } from 'ohash'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { headersToObject } from '../utils'
+import { headersToObject, kqlApiRoute } from '../utils'
 import { useNuxtApp } from '#imports'
-import { apiRoute } from '#build/nuxt-kql/options'
 
 export interface KqlOptions {
   /**
@@ -34,7 +33,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   }
 
   if (opts.cache === false) {
-    return $fetch<T>(apiRoute, {
+    return $fetch<T>(kqlApiRoute, {
       method: 'POST',
       body,
     })
@@ -50,7 +49,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   if (key in nuxt._kqlPromises)
     return nuxt._kqlPromises[key]
 
-  const request = $fetch(apiRoute, { method: 'POST', body })
+  const request = $fetch(kqlApiRoute, { method: 'POST', body })
     .then((response) => {
       nuxt.payload.data![key] = response
       delete nuxt._kqlPromises[key]

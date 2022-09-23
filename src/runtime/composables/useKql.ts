@@ -5,9 +5,8 @@ import type { NitroFetchRequest } from 'nitropack'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import type { MaybeComputedRef } from '../utils'
-import { headersToObject, resolveUnref } from '../utils'
+import { headersToObject, kqlApiRoute, resolveUnref } from '../utils'
 import { useFetch } from '#imports'
-import { apiRoute } from '#build/nuxt-kql/options'
 
 export type UseKqlOptions<T> = Omit<
   UseFetchOptions<T>,
@@ -35,7 +34,7 @@ export function useKql<
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
 
-  return useFetch<ResT, FetchError, NitroFetchRequest, ResT>(apiRoute, {
+  return useFetch<ResT, FetchError, NitroFetchRequest, ResT>(kqlApiRoute, {
     ...opts,
     key: hash(_query.value),
     method: 'POST',

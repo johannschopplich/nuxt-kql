@@ -1,9 +1,9 @@
 import { defu } from 'defu'
 import { $fetch } from 'ohmyfetch'
 import { pascalCase } from 'scule'
-import { addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
+import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { buildAuthHeader } from './runtime/utils'
+import { buildAuthHeader, kirbyApiRoute, kqlApiRoute } from './runtime/utils'
 
 export interface ModuleOptions {
   /**
@@ -80,7 +80,6 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     const logger = useLogger()
-    const apiRoute = '/api/__kql__' as const
     const prefetchResults: Record<string, KirbyQueryResponse> = {}
 
     function kql(query: KirbyQueryRequest) {
@@ -139,39 +138,17 @@ export default defineNuxtModule<ModuleOptions>({
       config.externals.inline.push(resolve('runtime'))
     })
 
-    // Add KQL proxy endpoint to send queries on server-side
+    // Add KQL proxy endpoint to send queries server-side
     addServerHandler({
-      route: apiRoute,
+      route: kqlApiRoute,
       method: 'post',
       handler: resolve('runtime/server/api/kql'),
     })
 
     // Add KQL composables
-    nuxt.hook('imports:dirs', (dirs) => {
-      dirs.push(resolve('runtime/composables'))
-    })
+    addImportsDir(resolve('runtime/composables'))
 
-    // Add module options
-    addTemplate({
-      filename: 'nuxt-kql/options.mjs',
-      getContents() {
-        return `
-export const apiRoute = '${apiRoute}'
-`.trimStart()
-      },
-    })
-
-    // Add module options types
-    addTemplate({
-      filename: 'nuxt-kql/options.d.ts',
-      getContents() {
-        return `
-export declare const apiRoute = '${apiRoute}'
-`.trimStart()
-      },
-    })
-
-    // Copy global KQL type helpers to Nuxt types dir
+    // Provide global KQL type helpers
     addTemplate({
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
