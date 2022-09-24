@@ -2,30 +2,14 @@ import { computed } from 'vue'
 import { hash } from 'ohash'
 import type { FetchError } from 'ohmyfetch'
 import type { NitroFetchRequest } from 'nitropack'
-import type { AsyncData, UseFetchOptions } from 'nuxt/app'
+import type { AsyncData } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { buildAuthHeader, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
+import type { UseKqlOptions } from './useKql'
 import { useFetch, useRuntimeConfig } from '#imports'
-
-export type UseKqlOptions<T> = Omit<
-  UseFetchOptions<T>,
-  | 'baseURL'
-  | 'params'
-  | 'parseResponse'
-  | 'pick'
-  | 'responseType'
-  | 'response'
-  | 'transform'
-  | keyof Omit<globalThis.RequestInit, 'headers'>
-> & {
-  /**
-   * Language code to fetch data for in multilang Kirby setups
-   */
-  language?: string
-}
 
 export function usePublicKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
