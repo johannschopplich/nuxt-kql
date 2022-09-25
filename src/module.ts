@@ -117,13 +117,13 @@ export default defineNuxtModule<ModuleOptions>({
     )
 
     // Write data to public runtime config if client requests are enabled
-    if (options.clientRequests) {
-      // @ts-expect-error: prefetch queries of playground break assignment
-      nuxt.options.runtimeConfig.public.kql = defu(
-        nuxt.options.runtimeConfig.public.kql,
-        options,
-      )
-    }
+    // @ts-expect-error: prefetch queries of playground break assignment
+    nuxt.options.runtimeConfig.public.kql = defu(
+      nuxt.options.runtimeConfig.public.kql,
+      options.clientRequests
+        ? options
+        : { clientRequests: false },
+    )
 
     // Transpile runtime
     const { resolve } = createResolver(import.meta.url)
