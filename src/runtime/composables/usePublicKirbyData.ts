@@ -22,7 +22,7 @@ export function usePublicKirbyData<T = any>(
   const _uri = computed(() => resolveUnref(uri).replace(/^\//, ''))
 
   if (!_uri.value)
-    console.error('[usePublicKql] Empty Kirby URI')
+    console.error('[usePublicKirbyData] Empty Kirby URI')
 
   return useFetch<T, FetchError, NitroFetchRequest, T>(_uri.value, {
     ...opts,
