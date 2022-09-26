@@ -1,9 +1,18 @@
 import { hash } from 'ohash'
+import type { FetchOptions } from 'ohmyfetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { headersToObject, kqlApiRoute } from '../utils'
-import { useNuxtApp } from '#imports'
+import { buildAuthHeader, headersToObject, kqlApiRoute } from '../utils'
+import type { ModuleOptions } from '../../module'
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 
-export interface KqlOptions {
+export type KqlOptions = Pick<
+  FetchOptions,
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
+  | 'headers'
+> & {
   /**
    * Language code to fetch data for in multilang Kirby setups
    */
@@ -12,6 +21,11 @@ export interface KqlOptions {
    * Custom headers to send with the request
    */
   headers?: HeadersInit
+  /**
+   * Skip the Nuxt server proxy and fetch directly from the API
+   * Requires `clientRequests` to be enabled in the module options
+   */
+  client?: boolean
 }
 
 export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
@@ -19,6 +33,11 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   opts: KqlOptions = {},
 ): Promise<T> {
   const nuxt = useNuxtApp()
+  const { kql } = useRuntimeConfig().public
+
+  if (opts.client && !kql.clientRequests)
+    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
+
   nuxt._kqlPromises = nuxt._kqlPromises || {}
   const key = `$kql${hash(query)}`
 
@@ -28,7 +47,8 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   if (key in nuxt._kqlPromises)
     return nuxt._kqlPromises[key]
 
-  const request = $fetch(kqlApiRoute, {
+  const fetchOptions: FetchOptions = {
+    ...opts,
     method: 'POST',
     body: {
       query,
@@ -37,7 +57,28 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
         ...(opts.language ? { 'X-Language': opts.language } : {}),
       },
     },
-  }).then((response) => {
+  }
+
+  const publicFetchOptions: FetchOptions = {
+    ...opts,
+    baseURL: kql.url,
+    method: 'POST',
+    body: query,
+    headers: {
+      ...headersToObject(opts.headers),
+      ...buildAuthHeader({
+        auth: kql.auth as ModuleOptions['auth'],
+        token: kql.token,
+        credentials: kql.credentials,
+      }),
+      ...(opts.language ? { 'X-Language': opts.language } : {}),
+    },
+  }
+
+  const request = $fetch(
+    opts.client ? kql.prefix : kqlApiRoute,
+    opts.client ? publicFetchOptions : fetchOptions,
+  ).then((response) => {
     nuxt.payload.data![key] = response
     delete nuxt._kqlPromises[key]
     return response
