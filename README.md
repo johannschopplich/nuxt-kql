@@ -14,7 +14,7 @@
 - 🔒 Protect your Kirby credentials when sending queries
 - 🪢 Supports token-based authentication with [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
 - 🤹 No CORS issues!
-- 🍱 Handle request just like with the [`useFetch`](https://v3.nuxtjs.org/guide/features/data-fetching/#usefetch) composable
+- 🍱 Handle request just like with the [`useFetch`](https://v3.nuxtjs.org/getting-started/data-fetching/#usefetch) composable
 - 🗃 Cached query responses
 - 🦾 Strongly typed
 
