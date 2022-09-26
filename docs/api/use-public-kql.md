@@ -14,17 +14,17 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 
 ## Types
 
-See [`useKql`](/api/use-kql)
+See [`useKql`](/api/use-kql).
 
 ## Return Values
 
-See [`useKql`](/api/use-kql)
+See [`useKql`](/api/use-kql).
 
 ## Example
 
 ```vue
 <script setup lang="ts">
-const { data, pending, error, refresh } = await usePublicKql(
+const { data, pending, error, refresh } = await useKql(
   {
     query: 'site',
     select: {
