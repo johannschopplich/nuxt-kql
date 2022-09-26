@@ -9,7 +9,8 @@ export interface KirbyFetchOptions {
    */
   headers?: HeadersInit
   /**
-   * Disable the proxy and fetch directly from the API
+   * Skip the Nuxt server proxy and fetch directly from the API
+   * Requires `clientRequests` to be enabled in the module options
    */
   client?: boolean
 }

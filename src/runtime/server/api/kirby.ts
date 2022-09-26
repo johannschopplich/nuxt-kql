@@ -4,7 +4,7 @@ import type { ModuleOptions } from '../../../module'
 import { buildAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<any> => {
   const body = await readBody(event)
   const uri: string = body.uri || ''
   const headers: Record<string, string> = body.headers || {}
@@ -12,14 +12,14 @@ export default defineEventHandler(async (event) => {
   if (!uri) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Empty page ID',
+      statusMessage: 'Empty page URI',
     })
   }
 
   const { kql } = useRuntimeConfig()
 
   try {
-    return await $fetch<any>(uri, {
+    return await $fetch(uri, {
       baseURL: kql.url,
       headers: {
         ...headers,

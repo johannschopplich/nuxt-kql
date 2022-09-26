@@ -14,18 +14,23 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 function usePublicKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: MaybeComputedRef<ReqT>, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | Error>
+>(query: MaybeComputedRef<ReqT>, opts?: UseKqlOptions<ResT>): AsyncData<ResT, true | FetchError>
 
-type UseKqlOptions<T> = Omit<
+type UseKqlOptions<T> = Pick<
   UseFetchOptions<T>,
-  | 'baseURL'
-  | 'params'
-  | 'parseResponse'
-  | 'pick'
-  | 'responseType'
-  | 'response'
-  | 'transform'
-  | keyof Omit<globalThis.RequestInit, 'headers'>
+  // Pick from `AsyncDataOptions`
+  | 'lazy'
+  | 'default'
+  | 'watch'
+  | 'initialCache'
+  | 'immediate'
+  // Pick from `FetchOptions`
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
+  // Pick from `globalThis.RequestInit`
+  | 'headers'
 > & {
   /**
    * Language code to fetch data for in multilang Kirby setups

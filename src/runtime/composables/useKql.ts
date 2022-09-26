@@ -1,24 +1,28 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
 import type { FetchError } from 'ohmyfetch'
-import type { NitroFetchRequest } from 'nitropack'
-import type { AsyncData, UseFetchOptions } from 'nuxt/app'
+import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { headersToObject, kqlApiRoute } from '../utils'
-import { useFetch } from '#imports'
+import { useAsyncData } from '#imports'
 
-export type UseKqlOptions<T> = Omit<
+export type UseKqlOptions<T> = Pick<
   UseFetchOptions<T>,
-  | 'baseURL'
-  | 'params'
-  | 'parseResponse'
-  | 'pick'
-  | 'responseType'
-  | 'response'
-  | 'transform'
-  | keyof Omit<globalThis.RequestInit, 'headers'>
+  // Pick from `AsyncDataOptions`
+  | 'lazy'
+  | 'default'
+  | 'watch'
+  | 'initialCache'
+  | 'immediate'
+  // Pick from `FetchOptions`
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
+  // Pick from `globalThis.RequestInit`
+  | 'headers'
 > & {
   /**
    * Language code to fetch data for in multilang Kirby setups
@@ -32,19 +36,38 @@ export function useKql<
 >(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
   const _query = computed(() => resolveUnref(query))
 
+  const {
+    lazy,
+    default: defaultFn,
+    initialCache,
+    immediate,
+    ...fetchOptions
+  } = opts
+
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
 
-  return useFetch<ResT, FetchError, NitroFetchRequest, ResT>(kqlApiRoute, {
-    ...opts,
-    key: hash(_query.value),
-    method: 'POST',
-    body: {
-      query: _query.value,
-      headers: {
-        ...headersToObject(opts.headers),
-        ...(opts.language ? { 'X-Language': opts.language } : {}),
+  const asyncDataOptions: AsyncDataOptions<ResT> = {
+    lazy,
+    default: defaultFn,
+    initialCache,
+    immediate,
+    watch: [
+      _query,
+    ],
+  }
+
+  return useAsyncData<ResT, FetchError>(`$kql${hash(_query.value)}`, () => {
+    return $fetch(kqlApiRoute, {
+      ...fetchOptions,
+      method: 'POST',
+      body: {
+        query: _query.value,
+        headers: {
+          ...headersToObject(opts.headers),
+          ...(opts.language ? { 'X-Language': opts.language } : {}),
+        },
       },
-    },
-  }) as AsyncData<ResT, true | FetchError>
+    }) as Promise<ResT>
+  }, asyncDataOptions)
 }
