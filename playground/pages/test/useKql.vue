@@ -14,4 +14,3 @@ const { data } = await useKql({
 <template>
   <pre>{{ JSON.stringify(data) }}</pre>
 </template>
-

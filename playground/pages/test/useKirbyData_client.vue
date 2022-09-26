@@ -5,4 +5,3 @@ const { data } = await useKirbyData('_site', { client: true })
 <template>
   <pre>{{ JSON.stringify(data) }}</pre>
 </template>
-
