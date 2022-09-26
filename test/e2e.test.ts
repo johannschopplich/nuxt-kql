@@ -14,14 +14,26 @@ describe('nuxt-kql', async () => {
     expect(content).toMatchSnapshot()
   })
 
-  it('fetches queries with useKql', async () => {
-    const html = await $fetch('/test/useKql')
+  it('fetches queries with $kql (client requests)', async () => {
+    const html = await $fetch('/test/$kql_client')
+    const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
+    expect(content).toMatchSnapshot()
+  })
+
+  it('fetches queries with useKql (client requests)', async () => {
+    const html = await $fetch('/test/useKql_client')
     const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
     expect(content).toMatchSnapshot()
   })
 
   it('fetches Kirby data useKirbyData', async () => {
     const html = await $fetch('/test/useKirbyData')
+    const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
+    expect(content).toMatchSnapshot()
+  })
+
+  it('fetches Kirby data useKirbyData (client requests)', async () => {
+    const html = await $fetch('/test/useKirbyData_client')
     const content = html.match(/<pre>(.*)<\/pre>/s)?.[1]
     expect(content).toMatchSnapshot()
   })

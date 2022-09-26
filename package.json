@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.0.0-rc.11",
-    "@vueuse/core": "^9.2.0",
+    "@vueuse/core": "^9.3.0",
     "defu": "^6.1.0",
     "kirby-fest": "^0.3.0",
     "ohash": "^0.1.5",
