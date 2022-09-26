@@ -82,10 +82,14 @@ export function useKirbyData<T = any>(
     },
   }
 
-  return useAsyncData<T, FetchError>(`$kirby${hash(_uri.value)}`, () => {
-    return $fetch(opts.client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
-      ...fetchOptions,
-      ...(opts.client ? _publicFetchOptions : _fetchOptions),
-    }) as Promise<T>
-  }, asyncDataOptions)
+  return useAsyncData<T, FetchError>(
+    `$kirby${hash(_uri.value)}`,
+    () => {
+      return $fetch(opts.client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
+        ...fetchOptions,
+        ...(opts.client ? _publicFetchOptions : _fetchOptions),
+      }) as Promise<T>
+    },
+    asyncDataOptions,
+  )
 }

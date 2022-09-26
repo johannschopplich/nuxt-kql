@@ -63,13 +63,10 @@ export function $kirby<T = any>(
     },
   }
 
-  const request = $fetch(
-    client ? joinURL(kql.url, uri) : kirbyApiRoute,
-    {
-      ...fetchOptions,
-      ...(client ? _publicFetchOptions : _fetchOptions),
-    },
-  ).then((response) => {
+  const request = $fetch(client ? joinURL(kql.url, uri) : kirbyApiRoute, {
+    ...fetchOptions,
+    ...(client ? _publicFetchOptions : _fetchOptions),
+  }).then((response) => {
     nuxt.payload.data![key] = response
     promiseMap.delete(key)
     return response

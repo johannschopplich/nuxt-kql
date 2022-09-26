@@ -91,11 +91,15 @@ export function useKql<
     },
   }
 
-  return useAsyncData<ResT, FetchError>(`$kql${hash(_query.value)}`, () => {
-    return $fetch(opts.client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
-      ...fetchOptions,
-      method: 'POST',
-      ...(opts.client ? _publicFetchOptions : _fetchOptions),
-    }) as Promise<ResT>
-  }, asyncDataOptions)
+  return useAsyncData<ResT, FetchError>(
+    `$kql${hash(_query.value)}`,
+    () => {
+      return $fetch(opts.client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
+        ...fetchOptions,
+        method: 'POST',
+        ...(opts.client ? _publicFetchOptions : _fetchOptions),
+      }) as Promise<ResT>
+    },
+    asyncDataOptions,
+  )
 }

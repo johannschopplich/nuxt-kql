@@ -72,14 +72,11 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     },
   }
 
-  const request = $fetch(
-    client ? joinURL(kql.url, kql.prefix) : kqlApiRoute,
-    {
-      ...fetchOptions,
-      method: 'POST',
-      ...(client ? _publicFetchOptions : _fetchOptions),
-    },
-  ).then((response) => {
+  const request = $fetch(client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
+    ...fetchOptions,
+    method: 'POST',
+    ...(client ? _publicFetchOptions : _fetchOptions),
+  }).then((response) => {
     nuxt.payload.data![key] = response
     promiseMap.delete(key)
     return response
