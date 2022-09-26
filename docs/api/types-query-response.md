@@ -15,7 +15,7 @@ Types are re-exported from the [`kirby-fest`](https://github.com/johannschopplic
 ```ts
 interface KirbyQueryResponse<
   T = any,
-  Pagination extends boolean = false,
+  Pagination extends boolean = false
 > {
   code: number
   status: string
