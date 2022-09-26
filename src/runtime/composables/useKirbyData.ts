@@ -44,13 +44,14 @@ export function useKirbyData<T = any>(
     default: defaultFn,
     initialCache,
     immediate,
+    client,
     ...fetchOptions
   } = opts
 
   if (!_uri.value)
     console.error('[useKirbyData] Empty Kirby URI')
 
-  if (opts.client && !kql.client)
+  if (client && !kql.client)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
 
   const asyncDataOptions: AsyncDataOptions<T> = {
@@ -85,9 +86,9 @@ export function useKirbyData<T = any>(
   return useAsyncData<T, FetchError>(
     `$kirby${hash(_uri.value)}`,
     () => {
-      return $fetch(opts.client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
+      return $fetch(client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
         ...fetchOptions,
-        ...(opts.client ? _publicFetchOptions : _fetchOptions),
+        ...(client ? _publicFetchOptions : _fetchOptions),
       }) as Promise<T>
     },
     asyncDataOptions,

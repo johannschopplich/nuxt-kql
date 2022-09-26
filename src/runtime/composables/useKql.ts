@@ -49,13 +49,15 @@ export function useKql<
     default: defaultFn,
     initialCache,
     immediate,
+    language,
+    client,
     ...fetchOptions
   } = opts
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
 
-  if (opts.client && !kql.client)
+  if (client && !kql.client)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
 
   const asyncDataOptions: AsyncDataOptions<ResT> = {
@@ -73,7 +75,7 @@ export function useKql<
       query: _query.value,
       headers: {
         ...headersToObject(opts.headers),
-        ...(opts.language ? { 'X-Language': opts.language } : {}),
+        ...(language ? { 'X-Language': language } : {}),
       },
     },
   }
@@ -87,17 +89,17 @@ export function useKql<
         token: kql.token,
         credentials: kql.credentials,
       }),
-      ...(opts.language ? { 'X-Language': opts.language } : {}),
+      ...(language ? { 'X-Language': language } : {}),
     },
   }
 
   return useAsyncData<ResT, FetchError>(
     `$kql${hash(_query.value)}`,
     () => {
-      return $fetch(opts.client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
+      return $fetch(client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
         ...fetchOptions,
         method: 'POST',
-        ...(opts.client ? _publicFetchOptions : _fetchOptions),
+        ...(client ? _publicFetchOptions : _fetchOptions),
       }) as Promise<ResT>
     },
     asyncDataOptions,
