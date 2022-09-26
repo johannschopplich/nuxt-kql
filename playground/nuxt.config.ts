@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     prefix: 'api/kql',
     auth: 'bearer',
     // Enable client-side query requests with `useKql({}, { client: true })`
-    clientRequests: true,
+    client: true,
     // Prefetch queries at build-time
     prefetch: {
       site: {

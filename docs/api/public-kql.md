@@ -4,7 +4,7 @@
 Deprecated. Please use `$kql` instead with the option `{ client: true }`.
 :::
 
-Returns raw KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
+Returns raw KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.client` option to be `true` in `nuxt.config.ts`.
 
 ::: warning
 Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `$kql` if you're unsure what to do instead.

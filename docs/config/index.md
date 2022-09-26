@@ -55,13 +55,14 @@ interface ModuleOptions {
   }
 
   /**
-   * Enable client-side KQL request
+   * Enable client-side requests besides server-side ones
+   *
    * By default, KQL data is fetched safely with a server-side proxy
    * If enabled, you can fetch data directly from the Kirby instance
    * Note: This means your token or user credentials will be publicly visible
    * @default false
    */
-  clientRequests?: boolean
+  client?: boolean
 
   /**
    * Prefetch custom queries at build-time

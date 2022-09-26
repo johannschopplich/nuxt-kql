@@ -1,10 +1,10 @@
 # `usePublicKql`
 
 ::: warning
-Deprecated. Please use `useKql` instead with the option `{ client: true }`.
+Deprecated. Please use [`useKql`](/api/use-kql) instead with the option `{ client: true }`.
 :::
 
-Returns KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
+Returns KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.client` option to be `true` in `nuxt.config.ts`.
 
 Query responses are cached.
 

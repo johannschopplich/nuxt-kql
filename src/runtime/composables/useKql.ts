@@ -31,7 +31,7 @@ export type UseKqlOptions<T> = Pick<
   language?: string
   /**
    * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `clientRequests` to be enabled in the module options
+   * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
 }
@@ -54,8 +54,8 @@ export function useKql<
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
 
-  if (opts.client && !kql.clientRequests)
-    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
+  if (opts.client && !kql.client)
+    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
 
   const asyncDataOptions: AsyncDataOptions<ResT> = {
     lazy,

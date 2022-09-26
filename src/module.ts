@@ -41,13 +41,14 @@ export interface ModuleOptions {
   }
 
   /**
-   * Enable client-side KQL request
+   * Enable client-side requests besides server-side ones
+   *
    * By default, KQL data is fetched safely with a server-side proxy
    * If enabled, you can fetch data directly from the Kirby instance
    * Note: This means your token or user credentials will be publicly visible
    * @default false
    */
-  clientRequests?: boolean
+  client?: boolean
 
   /**
    * Prefetch custom queries at build-time
@@ -74,7 +75,7 @@ export default defineNuxtModule<ModuleOptions>({
       username: process.env.KIRBY_API_USERNAME as string,
       password: process.env.KIRBY_API_PASSWORD as string,
     },
-    clientRequests: false,
+    client: false,
     prefetch: {},
   },
   async setup(options, nuxt) {
@@ -119,9 +120,9 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-expect-error: prefetch queries of playground break assignment
     nuxt.options.runtimeConfig.public.kql = defu(
       nuxt.options.runtimeConfig.public.kql,
-      options.clientRequests
+      options.client
         ? options
-        : { clientRequests: false },
+        : { client: false },
     )
 
     // Transpile runtime

@@ -26,7 +26,7 @@ export type UseKirbyDataOptions<T> = Pick<
 > & {
   /**
    * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `clientRequests` to be enabled in the module options
+   * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
 }
@@ -49,8 +49,8 @@ export function useKirbyData<T = any>(
   if (!_uri.value)
     console.error('[useKirbyData] Empty Kirby URI')
 
-  if (opts.client && !kql.clientRequests)
-    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
+  if (opts.client && !kql.client)
+    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
 
   const asyncDataOptions: AsyncDataOptions<T> = {
     lazy,

@@ -23,7 +23,7 @@ export type KqlOptions = Pick<
   headers?: HeadersInit
   /**
    * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `clientRequests` to be enabled in the module options
+   * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
 }
@@ -35,8 +35,8 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const nuxt = useNuxtApp()
   const { kql } = useRuntimeConfig().public
 
-  if (opts.client && !kql.clientRequests)
-    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
+  if (opts.client && !kql.client)
+    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
 
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
   const key = `$kql${hash(query)}`

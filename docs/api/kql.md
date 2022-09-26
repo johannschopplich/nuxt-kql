@@ -30,7 +30,7 @@ type KqlOptions = Pick<
   headers?: HeadersInit
   /**
    * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `clientRequests` to be enabled in the module options
+   * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
 }
