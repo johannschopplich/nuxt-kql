@@ -33,14 +33,14 @@ export function $kirby<T = any>(
   if (opts.client && !kql.clientRequests)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "clientRequests" to "true".')
 
-  nuxt._kqlPromises = nuxt._kqlPromises || {}
+  nuxt._promiseState = nuxt._promiseState || {}
   const key = `$kirby${hash(uri)}`
 
   if (key in nuxt.payload.data!)
     return Promise.resolve(nuxt.payload.data![key])
 
-  if (key in nuxt._kqlPromises)
-    return nuxt._kqlPromises[key]
+  if (key in nuxt._promiseState)
+    return nuxt._promiseState[key]
 
   const fetchOptions: FetchOptions = {
     ...opts,
@@ -69,11 +69,11 @@ export function $kirby<T = any>(
     opts.client ? publicFetchOptions : fetchOptions,
   ).then((response) => {
     nuxt.payload.data![key] = response
-    delete nuxt._kqlPromises[key]
+    delete nuxt._promiseState[key]
     return response
   }) as Promise<T>
 
-  nuxt._kqlPromises[key] = request
+  nuxt._promiseState[key] = request
 
   return request
 }

@@ -92,7 +92,7 @@ export function useKql<
   }
 
   return useAsyncData<ResT, FetchError>(`$kql${hash(_query.value)}`, () => {
-    return $fetch(opts.client ? kql.prefix : kqlApiRoute, {
+    return $fetch(opts.client ? kql.prefix as string : kqlApiRoute, {
       ...fetchOptions,
       method: 'POST',
       ...opts.client ? _publicFetchOptions : _fetchOptions,
