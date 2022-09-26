@@ -21,7 +21,7 @@ export type UseKirbyDataOptions<T> = Omit<
   | keyof Omit<globalThis.RequestInit, 'headers'>
 > & {
   /**
-   * Enable client-side requests to the API
+   * Disable the proxy and fetch directly from the API
    */
   client?: boolean
 }
