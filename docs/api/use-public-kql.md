@@ -1,7 +1,7 @@
 # `usePublicKql`
 
-::: info
-Deprecated. Please use `useKql` instead with the option `{ client: true }` enabled.
+::: warning
+Deprecated. Please use `useKql` instead with the option `{ client: true }`.
 :::
 
 Returns KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
@@ -27,10 +27,7 @@ See [`useKql`](/api/use-kql).
 const { data, pending, error, refresh } = await useKql(
   {
     query: 'site',
-    select: {
-      title: true,
-      children: true,
-    },
+    select: ['title', 'children']
   },
   { client: true }
 )

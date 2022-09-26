@@ -1,5 +1,9 @@
 # `$publicKql`
 
+::: warning
+Deprecated. Please use `$kql` instead with the option `{ client: true }`.
+:::
+
 Returns raw KQL query data. Fetches the data directly from the Kirby instance. Requires `kql.clientRequests` option to be `true` in `nuxt.config.ts`.
 
 ::: warning
@@ -8,50 +12,21 @@ Authorization credentials will be publicly visible. Also, possible CORS issues a
 
 ## Types
 
-```ts
-function $publicKql<T extends KirbyQueryResponse = KirbyQueryResponse>(
-  query: KirbyQueryRequest,
-  options: PublicKqlOptions = {},
-): Promise<T>
-
-// `FetchOptions` imported from `ohmyfetch`
-type PublicKqlOptions = Omit<
-  FetchOptions,
-  'baseURL' | 'body' | 'params' | 'parseResponse' | 'responseType' | 'response'
-> & {
-  /**
-   * Language code to fetch data for in multilang Kirby setups
-   */
-  language?: string
-}
-```
+See [`$kql`](/api/kql).
 
 ## Example
 
 ```vue
 <script setup lang="ts">
-const data = await $publicKql(
+const data = await $kql(
   {
     query: 'site',
-    select: {
-      title: true,
-      children: true,
-    },
+    select: ['title', 'children']
   },
   {
-    async onRequest({ request }) {
-      console.log(request)
-    },
-    async onResponse({ response }) {
-      console.log(response)
-    },
-    async onRequestError({ error }) {
-      console.log(error)
-    },
-    async onResponseError({ error }) {
-      console.log(error)
-    },
-  })
+    client: true,
+  }
+)
 </script>
 
 <template>

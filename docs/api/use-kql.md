@@ -52,10 +52,7 @@ By default, Nuxt waits until a `refresh` is finished before it can be executed a
 <script setup lang="ts">
 const { data, pending, error, refresh } = await useKql({
   query: 'site',
-  select: {
-    title: true,
-    children: true,
-  },
+  select: ['title', 'children']
 })
 </script>
 

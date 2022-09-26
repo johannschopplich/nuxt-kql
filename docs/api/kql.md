@@ -12,7 +12,14 @@ function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   opts: KqlOptions = {},
 ): Promise<T>
 
-interface KqlOptions {
+type KqlOptions = Pick<
+  FetchOptions,
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
+  | 'headers'
+> & {
   /**
    * Language code to fetch data for in multilang Kirby setups
    */
@@ -21,6 +28,11 @@ interface KqlOptions {
    * Custom headers to send with the request
    */
   headers?: HeadersInit
+  /**
+   * Skip the Nuxt server proxy and fetch directly from the API
+   * Requires `clientRequests` to be enabled in the module options
+   */
+  client?: boolean
 }
 ```
 
@@ -28,13 +40,26 @@ interface KqlOptions {
 
 ```vue
 <script setup lang="ts">
-const data = await $kql({
-  query: 'site',
-  select: {
-    title: true,
-    children: true,
+const data = await $kql(
+  {
+    query: 'site',
+    select: ['title', 'children']
   },
-})
+  {
+    async onRequest({ request }) {
+      console.log(request)
+    },
+    async onResponse({ response }) {
+      console.log(response)
+    },
+    async onRequestError({ error }) {
+      console.log(error)
+    },
+    async onResponseError({ error }) {
+      console.log(error)
+    },
+  }
+)
 </script>
 
 <template>

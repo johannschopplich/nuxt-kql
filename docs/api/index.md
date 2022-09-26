@@ -6,7 +6,6 @@
 
 - [`useKql`](/api/use-kql)
 - [`$kql`](/api/kql)
-- [`$publicKql`](/api/public-kql)
 
 ## Types
 
@@ -20,6 +19,6 @@ Example use-case would be a reactive query using a typed [ref()](https://vuejs.o
 ```ts
 const query = ref<KirbyQueryRequest>({
   query: 'site',
-  select: ['id', 'title', 'isListed']
+  select: ['title', 'isListed']
 })
 ```
