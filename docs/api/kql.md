@@ -14,12 +14,6 @@ function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 
 interface KqlOptions {
   /**
-   * Cache result with same query for hydration
-   *
-   * @default true
-   */
-  cache?: boolean
-  /**
    * Language code to fetch data for in multilang Kirby setups
    */
   language?: string
