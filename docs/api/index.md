@@ -5,7 +5,6 @@
 `nuxt-kql` offers several composables to return data from KQL queries. All composables are [auto-imported](https://v3.nuxtjs.org/guide/concepts/auto-imports) and globally available inside your `<script setup>`.
 
 - [`useKql`](/api/use-kql)
-- [`usePublicKql`](/api/use-public-kql)
 - [`$kql`](/api/kql)
 - [`$publicKql`](/api/public-kql)
 
@@ -21,9 +20,6 @@ Example use-case would be a reactive query using a typed [ref()](https://vuejs.o
 ```ts
 const query = ref<KirbyQueryRequest>({
   query: 'site',
-  select: {
-    title: true,
-    children: true,
-  },
+  select: ['id', 'title', 'isListed']
 })
 ```
