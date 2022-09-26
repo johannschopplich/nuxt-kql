@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
+import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ohmyfetch'
 import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
@@ -78,7 +79,6 @@ export function useKql<
   }
 
   const _publicFetchOptions: FetchOptions = {
-    baseURL: kql.url,
     body: _query.value,
     headers: {
       ...headersToObject(opts.headers),
@@ -92,10 +92,10 @@ export function useKql<
   }
 
   return useAsyncData<ResT, FetchError>(`$kql${hash(_query.value)}`, () => {
-    return $fetch(opts.client ? kql.prefix as string : kqlApiRoute, {
+    return $fetch(opts.client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
       ...fetchOptions,
       method: 'POST',
-      ...opts.client ? _publicFetchOptions : _fetchOptions,
+      ...(opts.client ? _publicFetchOptions : _fetchOptions),
     }) as Promise<ResT>
   }, asyncDataOptions)
 }

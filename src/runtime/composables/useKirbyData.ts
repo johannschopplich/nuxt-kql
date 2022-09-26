@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
+import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ohmyfetch'
 import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
@@ -71,7 +72,6 @@ export function useKirbyData<T = any>(
   }
 
   const _publicFetchOptions: FetchOptions = {
-    baseURL: kql.url,
     headers: {
       ...headersToObject(opts.headers),
       ...buildAuthHeader({
@@ -83,9 +83,9 @@ export function useKirbyData<T = any>(
   }
 
   return useAsyncData<T, FetchError>(`$kirby${hash(_uri.value)}`, () => {
-    return $fetch(opts.client ? _uri.value : kirbyApiRoute, {
+    return $fetch(opts.client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
       ...fetchOptions,
-      ...opts.client ? _publicFetchOptions : _fetchOptions,
+      ...(opts.client ? _publicFetchOptions : _fetchOptions),
     }) as Promise<T>
   }, asyncDataOptions)
 }

@@ -55,7 +55,8 @@
     "kirby-fest": "^0.3.0",
     "ohash": "^0.1.5",
     "ohmyfetch": "^0.4.19",
-    "scule": "^0.3.2"
+    "scule": "^0.3.2",
+    "ufo": "^0.8.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",

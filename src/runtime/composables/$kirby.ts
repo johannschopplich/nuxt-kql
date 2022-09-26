@@ -1,4 +1,5 @@
 import { hash } from 'ohash'
+import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ohmyfetch'
 import { buildAuthHeader, headersToObject, kirbyApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
@@ -29,8 +30,9 @@ export function $kirby<T = any>(
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const { kql } = useRuntimeConfig().public
+  const { client = false, ...fetchOptions } = opts
 
-  if (opts.client && !kql.client)
+  if (client && !kql.client)
     throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
 
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
@@ -42,8 +44,7 @@ export function $kirby<T = any>(
   if (promiseMap.has(key))
     return promiseMap.get(key)!
 
-  const fetchOptions: FetchOptions = {
-    ...opts,
+  const _fetchOptions: FetchOptions = {
     method: 'POST',
     body: {
       uri,
@@ -51,9 +52,7 @@ export function $kirby<T = any>(
     },
   }
 
-  const publicFetchOptions: FetchOptions = {
-    ...opts,
-    baseURL: kql.url,
+  const _publicFetchOptions: FetchOptions = {
     headers: {
       ...headersToObject(opts.headers),
       ...buildAuthHeader({
@@ -65,8 +64,11 @@ export function $kirby<T = any>(
   }
 
   const request = $fetch(
-    opts.client ? uri : kirbyApiRoute,
-    opts.client ? publicFetchOptions : fetchOptions,
+    client ? joinURL(kql.url, uri) : kirbyApiRoute,
+    {
+      ...fetchOptions,
+      ...(client ? _publicFetchOptions : _fetchOptions),
+    },
   ).then((response) => {
     nuxt.payload.data![key] = response
     promiseMap.delete(key)
