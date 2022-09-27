@@ -65,7 +65,7 @@ interface ModuleOptions {
   client?: boolean
 
   /**
-   * Prefetch custom queries at build-time
+   * Prefetch custom KQL queries at build-time
    * The queries will be fully typed and importable from `#build/kql`
    * @default {}
    */

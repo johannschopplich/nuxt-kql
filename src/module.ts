@@ -1,9 +1,9 @@
 import { defu } from 'defu'
-import { $fetch } from 'ohmyfetch'
 import { pascalCase } from 'scule'
-import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
-import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { buildAuthHeader, kirbyApiRoute, kqlApiRoute } from './runtime/utils'
+import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import type { KirbyQueryRequest } from 'kirby-fest'
+import { kirbyApiRoute, kqlApiRoute } from './runtime/utils'
+import { logger, prefetchQueries } from './utils'
 
 export interface ModuleOptions {
   /**
@@ -51,7 +51,7 @@ export interface ModuleOptions {
   client?: boolean
 
   /**
-   * Prefetch custom queries at build-time
+   * Prefetch custom KQL queries at build-time
    * The queries will be fully typed and importable from `#build/kql`
    * @default {}
    */
@@ -79,22 +79,6 @@ export default defineNuxtModule<ModuleOptions>({
     prefetch: {},
   },
   async setup(options, nuxt) {
-    const logger = useLogger()
-    const prefetchResults: Record<string, KirbyQueryResponse> = {}
-
-    function kql(query: KirbyQueryRequest) {
-      return $fetch<KirbyQueryResponse>(options.prefix!, {
-        baseURL: options.url,
-        method: 'POST',
-        body: query,
-        headers: buildAuthHeader({
-          auth: options.auth,
-          token: options.token,
-          credentials: options.credentials,
-        }),
-      })
-    }
-
     // Make sure Kirby URL and KQL endpoint are set
     if (!options.url)
       logger.warn('Missing `KIRBY_BASE_URL` in `.env`')
@@ -171,45 +155,22 @@ declare module '#nuxt-kql' {
       options.references.push({ path: `${nuxt.options.buildDir}/types/nuxt-kql.d.ts` })
     })
 
-    // Prefetch custom queries at build-time
-    if (options.prefetch && Object.keys(options.prefetch).length !== 0) {
-      const start = Date.now()
-
-      for (const [key, query] of Object.entries(options.prefetch)) {
-        try {
-          const result = await kql(query)
-          prefetchResults[key] = result
-        }
-        catch (e) {
-          logger.error(e)
-          logger.error(`Couldn't prefetch ${key} KQL query`)
-        }
-      }
-
-      const prefetchCount = Object.keys(prefetchResults).length
-      if (prefetchCount > 0) {
-        const firstQueryResult = Object.keys(prefetchResults)[0]
-        logger.info(
-          `Prefetched ${prefetchCount === 1 ? firstQueryResult : prefetchCount} KQL ${
-            prefetchCount === 1 ? 'query' : 'queries'
-          } in ${Date.now() - start}ms`,
-        )
-      }
-    }
+    // Prefetch custom KQL queries at build-time
+    const prefetchResults = await prefetchQueries(options)
 
     // Add template for prefetched query data
     addTemplate({
       filename: 'kql.ts',
       write: true,
       getContents() {
-        return Object.entries(prefetchResults)
+        return [...prefetchResults.entries()]
           .map(
             ([key, response]) =>
-            `export const ${key} = ${
-              response?.result
-                ? JSON.stringify(response.result, undefined, 2)
-                : '{} as Record<string, any>'
-            }\n` + `export type ${pascalCase(key)} = typeof ${key}\n`,
+              `export const ${key} = ${
+                response?.result
+                  ? JSON.stringify(response.result, undefined, 2)
+                  : '{} as Record<string, any>'
+              }\n` + `export type ${pascalCase(key)} = typeof ${key}\n`,
           )
           .join('\n')
       },
