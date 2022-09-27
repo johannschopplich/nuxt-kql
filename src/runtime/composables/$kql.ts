@@ -2,7 +2,7 @@ import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ohmyfetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { buildAuthHeader, headersToObject, kqlApiRoute } from '../utils'
+import { buildAuthHeader, clientErrorMessage, headersToObject, kqlApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
@@ -38,7 +38,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const { client = false, ...fetchOptions } = opts
 
   if (client && !kql.client)
-    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
+    throw new Error(clientErrorMessage)
 
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
   const key = `$kql${hash(query)}`

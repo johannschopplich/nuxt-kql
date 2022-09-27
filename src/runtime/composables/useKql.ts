@@ -6,7 +6,7 @@ import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { buildAuthHeader, headersToObject, kqlApiRoute } from '../utils'
+import { buildAuthHeader, clientErrorMessage, headersToObject, kqlApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
@@ -58,7 +58,7 @@ export function useKql<
     console.error('[useKql] Empty KQL query')
 
   if (client && !kql.client)
-    throw new Error('Fetching from Kirby client-side isn\'t allowed. Enable it by setting "client" to "true".')
+    throw new Error(clientErrorMessage)
 
   const asyncDataOptions: AsyncDataOptions<ResT> = {
     lazy,

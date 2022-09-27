@@ -2,6 +2,7 @@ import type { ModuleOptions } from '../module'
 
 export const kqlApiRoute = '/api/__kql__' as const
 export const kirbyApiRoute = '/api/__kirby__' as const
+export const clientErrorMessage = 'Fetching from Kirby client-side isn\'t allowed. Enable it by setting the module option "client" to "true" in your Nuxt config.'
 
 /**
  * Normalize headers to object
