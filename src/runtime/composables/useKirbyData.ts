@@ -44,6 +44,7 @@ export function useKirbyData<T = any>(
     default: defaultFn,
     initialCache,
     immediate,
+    headers,
     client,
     ...fetchOptions
   } = opts
@@ -68,13 +69,13 @@ export function useKirbyData<T = any>(
     method: 'POST',
     body: {
       uri: _uri.value,
-      headers: headersToObject(opts.headers),
+      headers: headersToObject(headers),
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
     headers: {
-      ...headersToObject(opts.headers),
+      ...headersToObject(headers),
       ...buildAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,

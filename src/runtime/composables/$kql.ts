@@ -19,10 +19,6 @@ export type KqlOptions = Pick<
    */
   language?: string
   /**
-   * Custom headers to send with the request
-   */
-  headers?: HeadersInit
-  /**
    * Skip the Nuxt server proxy and fetch directly from the API
    * Requires `client` to be enabled in the module options as well
    */
@@ -35,7 +31,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const { kql } = useRuntimeConfig().public
-  const { client = false, ...fetchOptions } = opts
+  const { headers, language, client = false, ...fetchOptions } = opts
 
   if (client && !kql.client)
     throw new Error(clientErrorMessage)
@@ -53,8 +49,8 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     body: {
       query,
       headers: {
-        ...headersToObject(opts.headers),
-        ...(opts.language ? { 'X-Language': opts.language } : {}),
+        ...headersToObject(headers),
+        ...(language ? { 'X-Language': language } : {}),
       },
     },
   }
@@ -62,13 +58,13 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const _publicFetchOptions: FetchOptions = {
     body: query,
     headers: {
-      ...headersToObject(opts.headers),
+      ...headersToObject(headers),
       ...buildAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
         credentials: kql.credentials,
       }),
-      ...(opts.language ? { 'X-Language': opts.language } : {}),
+      ...(language ? { 'X-Language': language } : {}),
     },
   }
 

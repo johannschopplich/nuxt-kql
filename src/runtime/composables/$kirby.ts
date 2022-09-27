@@ -14,10 +14,6 @@ export type KirbyFetchOptions = Pick<
   | 'headers'
 > & {
   /**
-   * Custom headers to send with the request
-   */
-  headers?: HeadersInit
-  /**
    * Skip the Nuxt server proxy and fetch directly from the API
    * Requires `client` to be enabled in the module options as well
    */
@@ -30,7 +26,7 @@ export function $kirby<T = any>(
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const { kql } = useRuntimeConfig().public
-  const { client = false, ...fetchOptions } = opts
+  const { headers, client = false, ...fetchOptions } = opts
 
   if (client && !kql.client)
     throw new Error(clientErrorMessage)
@@ -48,13 +44,13 @@ export function $kirby<T = any>(
     method: 'POST',
     body: {
       uri,
-      headers: headersToObject(opts.headers),
+      headers: headersToObject(headers),
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
     headers: {
-      ...headersToObject(opts.headers),
+      ...headersToObject(headers),
       ...buildAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,

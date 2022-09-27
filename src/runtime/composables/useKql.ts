@@ -49,6 +49,7 @@ export function useKql<
     default: defaultFn,
     initialCache,
     immediate,
+    headers,
     language,
     client,
     ...fetchOptions
@@ -74,7 +75,7 @@ export function useKql<
     body: {
       query: _query.value,
       headers: {
-        ...headersToObject(opts.headers),
+        ...headersToObject(headers),
         ...(language ? { 'X-Language': language } : {}),
       },
     },
@@ -83,7 +84,7 @@ export function useKql<
   const _publicFetchOptions: FetchOptions = {
     body: _query.value,
     headers: {
-      ...headersToObject(opts.headers),
+      ...headersToObject(headers),
       ...buildAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
