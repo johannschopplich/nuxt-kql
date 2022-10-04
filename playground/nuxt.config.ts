@@ -2,10 +2,12 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
 
   kql: {
-    prefix: 'api/kql',
+    // Enable token-based authentication
     auth: 'bearer',
+
     // Enable client-side query requests with `useKql({}, { client: true })`
     client: true,
+
     // Prefetch queries at build-time
     prefetch: {
       site: {
