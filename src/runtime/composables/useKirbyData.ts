@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ohmyfetch'
-import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
+import type { AsyncData, AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { buildAuthHeader, clientErrorMessage, headersToObject, kirbyApiRoute } from '../utils'
@@ -93,5 +93,5 @@ export function useKirbyData<T = any>(
       }) as Promise<T>
     },
     asyncDataOptions,
-  )
+  ) as AsyncData<T, FetchError | null | true>
 }
