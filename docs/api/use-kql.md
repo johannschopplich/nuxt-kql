@@ -10,7 +10,10 @@ Query responses are cached.
 function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: MaybeComputedRef<ReqT>, opts?: UseKqlOptions<ResT>): AsyncData<ResT, FetchError>
+>(
+  query: MaybeComputedRef<ReqT>,
+  opts?: UseKqlOptions<ResT>,
+): AsyncData<ResT, FetchError | null | true>
 
 type UseKqlOptions<T> = Pick<
   UseFetchOptions<T>,
