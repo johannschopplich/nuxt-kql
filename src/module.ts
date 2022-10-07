@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { defu } from 'defu'
 import { pascalCase } from 'scule'
 import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
@@ -120,8 +121,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolve('runtime'))
 
     // Inline module runtime in Nitro bundle
-    // Needed to circumvent "cannot find module error" in `server/api/kql.ts`
-    // for the `util` import
+    // Needed to circumvent "cannot find module error" in `server/api/kql.ts` for the `util` import
     nuxt.hook('nitro:config', (config) => {
       config.externals = config.externals || {}
       config.externals.inline = config.externals.inline || []
@@ -158,7 +158,7 @@ declare module '#nuxt-kql' {
 
     // Add global `#nuxt-kql` type import path
     nuxt.hook('prepare:types', (options) => {
-      options.references.push({ path: `${nuxt.options.buildDir}/types/nuxt-kql.d.ts` })
+      options.references.push({ path: join(nuxt.options.buildDir, 'types/nuxt-kql.d.ts') })
     })
 
     // Prefetch custom KQL queries at build-time
