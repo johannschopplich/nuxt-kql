@@ -30,8 +30,7 @@ export async function prefetchQueries(
       )
     }
     catch (e) {
-      logger.error(e)
-      logger.error(`Couldn't prefetch ${key} KQL query`)
+      logger.error(`Couldn't prefetch ${key} KQL query:`, e)
     }
   }
 
