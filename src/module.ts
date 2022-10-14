@@ -9,7 +9,7 @@ import { logger, prefetchQueries } from './utils'
 export interface ModuleOptions {
   /**
    * Kirby base URL, like `https://kirby.example.com`
-   * @default 'process.env.KIRBY_BASE_URL'
+   * @default process.env.KIRBY_BASE_URL
    */
   url?: string
 
@@ -29,7 +29,7 @@ export interface ModuleOptions {
 
   /**
    * Token for bearer authentication
-   * @default 'process.env.KIRBY_API_TOKEN'
+   * @default process.env.KIRBY_API_TOKEN
    */
   token?: string
 
