@@ -22,12 +22,14 @@ See the types below for a complete list of options.
 interface ModuleOptions {
   /**
    * Kirby base URL, like `https://kirby.example.com`
+   *
    * @default process.env.KIRBY_BASE_URL
    */
   url?: string
 
   /**
    * Kirby KQL API route path
+   *
    * @default 'api/query' for `basic` authentication
    * @default 'api/kql' for `bearer` authentication
    */
@@ -35,19 +37,24 @@ interface ModuleOptions {
 
   /**
    * Kirby API authentication method
+   *
+   * @remarks
    * Set to `none` to disable authentication
+   *
    * @default 'basic'
    */
   auth?: 'basic' | 'bearer' | 'none'
 
   /**
    * Token for bearer authentication
+   *
    * @default process.env.KIRBY_API_TOKEN
    */
   token?: string
 
   /**
    * Username/password pair for basic authentication
+   *
    * @default { username: process.env.KIRBY_API_USERNAME, password: process.env.KIRBY_API_PASSWORD }
    */
   credentials?: {
@@ -58,16 +65,21 @@ interface ModuleOptions {
   /**
    * Enable client-side requests besides server-side ones
    *
+   * @remarks
    * By default, KQL data is fetched safely with a server-side proxy
    * If enabled, you can fetch data directly from the Kirby instance
    * Note: This means your token or user credentials will be publicly visible
+   *
    * @default false
    */
   client?: boolean
 
   /**
    * Prefetch custom KQL queries at build-time
+   *
+   * @remarks
    * The queries will be fully typed and importable from `#build/kql`
+   *
    * @default {}
    */
   prefetch?: Record<string, KirbyQueryRequest>
