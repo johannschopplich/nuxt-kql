@@ -4,7 +4,7 @@ Returns raw KQL query data. Uses an internal server route to proxy requests.
 
 Query responses are cached by default.
 
-## Types
+## Type Declarations
 
 ```ts
 function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(

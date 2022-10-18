@@ -7,7 +7,7 @@
 - [`useKql`](/api/use-kql)
 - [`$kql`](/api/kql)
 
-## Types
+## Type Declarations
 
 Common types are importable from the special `#nuxt-kql` module alias:
 

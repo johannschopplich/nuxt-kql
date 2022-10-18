@@ -6,7 +6,7 @@ Importable from `#nuxt-kql`.
 import type { KirbyQueryResponse } from '#nuxt-kql'
 ```
 
-## Types
+## Type Declarations
 
 ::: info
 Types are re-exported from the [`kirby-fest`](https://github.com/johannschopplich/kirby-fest) package.

@@ -12,7 +12,7 @@ Query responses are cached.
 Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly. Use `useKql` if you're unsure what to do instead.
 :::
 
-## Types
+## Type Declarations
 
 See [`useKql`](/api/use-kql).
 

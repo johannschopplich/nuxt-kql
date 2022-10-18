@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 })
 ```
 
-## Types
+## Type Declarations
 
 See the types below for a complete list of options.
 

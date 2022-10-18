@@ -139,7 +139,7 @@ function sidebarApi(): DefaultTheme.SidebarGroup[] {
       ],
     },
     {
-      text: 'Types',
+      text: 'Type Declarations',
       items: [
         { text: 'KirbyQueryRequest', link: '/api/types-query-request' },
         { text: 'KirbyQueryResponse', link: '/api/types-query-response' },
