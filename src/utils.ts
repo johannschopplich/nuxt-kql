@@ -1,10 +1,11 @@
 import { $fetch } from 'ohmyfetch'
 import { useLogger } from '@nuxt/kit'
+import type { Consola } from 'consola'
 import type { KirbyQueryResponse } from 'kirby-fest'
 import { buildAuthHeader } from './runtime/utils'
 import type { ModuleOptions } from './module'
 
-export const logger = useLogger('nuxt-kql')
+export const logger: Consola = useLogger('nuxt-kql')
 
 export async function prefetchQueries(
   options: ModuleOptions,
