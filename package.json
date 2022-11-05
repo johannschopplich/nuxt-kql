@@ -2,7 +2,7 @@
   "name": "nuxt-kql",
   "type": "module",
   "version": "0.21.10",
-  "packageManager": "pnpm@7.13.5",
+  "packageManager": "pnpm@7.14.2",
   "description": "Nuxt 3 module for Kirby's Query Language API",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
   "license": "MIT",
@@ -49,26 +49,25 @@
     "prepare": "nuxi prepare playground"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.12",
-    "@vueuse/core": "^9.3.1",
+    "@nuxt/kit": "^3.0.0-rc.13",
+    "@vueuse/core": "^9.4.0",
     "defu": "^6.1.0",
-    "kirby-fest": "^0.3.0",
+    "kirby-fest": "^0.3.1",
     "ohash": "^0.1.5",
-    "ohmyfetch": "^0.4.20",
+    "ohmyfetch": "^0.4.21",
     "scule": "^0.3.2",
     "ufo": "^0.8.6"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.27.0",
+    "@antfu/eslint-config": "^0.29.3",
     "@nuxt/module-builder": "^0.2.0",
-    "@nuxt/test-utils": "^3.0.0-rc.12",
-    "@types/node": "18.8.0",
+    "@nuxt/test-utils": "^3.0.0-rc.13",
     "bumpp": "^8.2.1",
-    "eslint": "^8.25.0",
-    "nuxt": "^3.0.0-rc.12",
+    "eslint": "^8.26.0",
+    "nuxt": "^3.0.0-rc.13",
     "nuxt-kql": "workspace:*",
     "typescript": "^4.8.4",
-    "vitest": "^0.24.3",
-    "vue-tsc": "^1.0.8"
+    "vitest": "^0.24.5",
+    "vue-tsc": "^1.0.9"
   }
 }
