@@ -1,8 +1,8 @@
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ohmyfetch'
-import type { AsyncData, AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
+import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
@@ -11,14 +11,14 @@ import type { ModuleOptions } from '../../module'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Pick<
-  UseFetchOptions<T>,
-  // Pick from `AsyncDataOptions`
+  AsyncDataOptions<T>,
   | 'lazy'
   | 'default'
   | 'watch'
   | 'initialCache'
   | 'immediate'
-  // Pick from `FetchOptions`
+> & Pick<
+  FetchOptions,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'
@@ -75,7 +75,7 @@ export function useKql<
     body: {
       query: _query.value,
       headers: {
-        ...headersToObject(headers),
+        ...headersToObject(unref(headers)),
         ...(language ? { 'X-Language': language } : {}),
       },
     },
@@ -84,7 +84,7 @@ export function useKql<
   const _publicFetchOptions: FetchOptions = {
     body: _query.value,
     headers: {
-      ...headersToObject(headers),
+      ...headersToObject(unref(headers)),
       ...buildAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,

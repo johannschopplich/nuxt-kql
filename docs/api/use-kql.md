@@ -16,14 +16,14 @@ function useKql<
 ): AsyncData<ResT, FetchError | null | true>
 
 type UseKqlOptions<T> = Pick<
-  UseFetchOptions<T>,
-  // Pick from `AsyncDataOptions`
+  AsyncDataOptions<T>,
   | 'lazy'
   | 'default'
   | 'watch'
   | 'initialCache'
   | 'immediate'
-  // Pick from `FetchOptions`
+> & Pick<
+  FetchOptions,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'

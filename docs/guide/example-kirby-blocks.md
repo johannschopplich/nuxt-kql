@@ -17,7 +17,7 @@ import { KirbyBlock } from '#nuxt-kql'
 
 // Select page content needed for a simple page
 const { data } = await useKql({
-  query: 'kirby.page("notes/across-the-ocean")',
+  query: 'page("notes/across-the-ocean")',
   select: {
     id: true,
     title: true,

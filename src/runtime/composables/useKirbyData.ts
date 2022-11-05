@@ -1,23 +1,23 @@
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ohmyfetch'
-import type { AsyncData, AsyncDataOptions, UseFetchOptions } from 'nuxt/app'
+import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { buildAuthHeader, clientErrorMessage, headersToObject, kirbyApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
-export type UseKirbyDataOptions<T> = Pick<
-  UseFetchOptions<T>,
-  // Pick from `AsyncDataOptions`
+type UseKirbyDataOptions<T> = Pick<
+  AsyncDataOptions<T>,
   | 'lazy'
   | 'default'
   | 'watch'
   | 'initialCache'
   | 'immediate'
-  // Pick from `FetchOptions`
+> & Pick<
+  FetchOptions,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'
@@ -69,13 +69,13 @@ export function useKirbyData<T = any>(
     method: 'POST',
     body: {
       uri: _uri.value,
-      headers: headersToObject(headers),
+      headers: headersToObject(unref(headers)),
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
     headers: {
-      ...headersToObject(headers),
+      ...headersToObject(unref(headers)),
       ...buildAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
