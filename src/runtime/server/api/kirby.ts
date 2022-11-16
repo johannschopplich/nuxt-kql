@@ -1,5 +1,5 @@
 import { createError, defineEventHandler, readBody } from 'h3'
-import type { FetchError } from 'ohmyfetch'
+import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../../../module'
 import { buildAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'

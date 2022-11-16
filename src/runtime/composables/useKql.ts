@@ -1,7 +1,7 @@
 import { computed, unref } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
-import type { FetchError, FetchOptions } from 'ohmyfetch'
+import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
@@ -15,7 +15,6 @@ export type UseKqlOptions<T> = Pick<
   | 'lazy'
   | 'default'
   | 'watch'
-  | 'initialCache'
   | 'immediate'
 > & Pick<
   FetchOptions,
@@ -47,7 +46,6 @@ export function useKql<
   const {
     lazy,
     default: defaultFn,
-    initialCache,
     immediate,
     headers,
     language,
@@ -64,7 +62,6 @@ export function useKql<
   const asyncDataOptions: AsyncDataOptions<ResT> = {
     lazy,
     default: defaultFn,
-    initialCache,
     immediate,
     watch: [
       _query,

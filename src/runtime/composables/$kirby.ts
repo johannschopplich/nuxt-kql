@@ -1,6 +1,6 @@
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
-import type { FetchOptions } from 'ohmyfetch'
+import type { FetchOptions } from 'ofetch'
 import { buildAuthHeader, clientErrorMessage, headersToObject, kirbyApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'

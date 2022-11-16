@@ -1,4 +1,4 @@
-import { $fetch } from 'ohmyfetch'
+import { $fetch } from 'ofetch'
 import { useLogger } from '@nuxt/kit'
 import type { Consola } from 'consola'
 import type { KirbyQueryResponse } from 'kirby-fest'

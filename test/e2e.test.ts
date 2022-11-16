@@ -1,12 +1,8 @@
-import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { $fetch, setup } from '@nuxt/test-utils'
+import { $fetch } from '@nuxt/test-utils'
 
 describe('nuxt-kql', async () => {
-  await setup({
-    server: true,
-    rootDir: fileURLToPath(new URL('../playground', import.meta.url)),
-  })
+
 
   it('fetches queries with $kql', async () => {
     const html = await $fetch('/test/$kql')

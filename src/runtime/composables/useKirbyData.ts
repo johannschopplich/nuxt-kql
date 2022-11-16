@@ -1,7 +1,7 @@
 import { computed, unref } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
-import type { FetchError, FetchOptions } from 'ohmyfetch'
+import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
@@ -14,7 +14,6 @@ type UseKirbyDataOptions<T> = Pick<
   | 'lazy'
   | 'default'
   | 'watch'
-  | 'initialCache'
   | 'immediate'
 > & Pick<
   FetchOptions,
@@ -42,7 +41,6 @@ export function useKirbyData<T = any>(
   const {
     lazy,
     default: defaultFn,
-    initialCache,
     immediate,
     headers,
     client,
@@ -58,7 +56,6 @@ export function useKirbyData<T = any>(
   const asyncDataOptions: AsyncDataOptions<T> = {
     lazy,
     default: defaultFn,
-    initialCache,
     immediate,
     watch: [
       _uri,

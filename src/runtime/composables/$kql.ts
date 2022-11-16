@@ -1,6 +1,6 @@
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
-import type { FetchOptions } from 'ohmyfetch'
+import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { buildAuthHeader, clientErrorMessage, headersToObject, kqlApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
