@@ -20,7 +20,6 @@ type UseKqlOptions<T> = Pick<
   | 'lazy'
   | 'default'
   | 'watch'
-  | 'initialCache'
   | 'immediate'
 > & Pick<
   FetchOptions,
