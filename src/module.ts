@@ -120,7 +120,6 @@ export default defineNuxtModule<ModuleOptions>({
     )
 
     // Write data to public runtime config if client requests are enabled
-    nuxt.options.runtimeConfig.public = nuxt.options.runtimeConfig.public || {}
     // @ts-expect-error: prefetch queries of playground break assignment
     nuxt.options.runtimeConfig.public.kql = defu(
       nuxt.options.runtimeConfig.public.kql,
