@@ -1,16 +1,17 @@
-import { computed, unref } from 'vue'
+import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { buildAuthHeader, clientErrorMessage, headersToObject, kirbyApiRoute } from '../utils'
+import { clientErrorMessage, getAuthHeader, headersToObject, kirbyApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Pick<
   AsyncDataOptions<T>,
+  | 'server'
   | 'lazy'
   | 'default'
   | 'watch'
@@ -39,9 +40,11 @@ export function useKirbyData<T = any>(
   const _uri = computed(() => resolveUnref(uri).replace(/^\//, ''))
 
   const {
+    server,
     lazy,
     default: defaultFn,
     immediate,
+    watch,
     headers,
     client,
     ...fetchOptions
@@ -54,26 +57,28 @@ export function useKirbyData<T = any>(
     throw new Error(clientErrorMessage)
 
   const asyncDataOptions: AsyncDataOptions<T> = {
+    server,
     lazy,
     default: defaultFn,
     immediate,
     watch: [
       _uri,
+      ...(watch || []),
     ],
   }
 
-  const _fetchOptions: FetchOptions = {
+  const _fetchOptions = reactive<FetchOptions>({
     method: 'POST',
     body: {
-      uri: _uri.value,
-      headers: headersToObject(unref(headers)),
+      uri: _uri,
+      headers: headersToObject(headers),
     },
-  }
+  })
 
-  const _publicFetchOptions: FetchOptions = {
+  const _publicFetchOptions = {
     headers: {
-      ...headersToObject(unref(headers)),
-      ...buildAuthHeader({
+      ...headersToObject(headers),
+      ...getAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
         credentials: kql.credentials,
@@ -81,11 +86,17 @@ export function useKirbyData<T = any>(
     },
   }
 
+  let controller: AbortController
+
   return useAsyncData<T, FetchError>(
     `$kirby${hash(_uri.value)}`,
     () => {
+      controller?.abort?.()
+      controller = typeof AbortController !== 'undefined' ? new AbortController() : {} as AbortController
+
       return $fetch(client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
         ...fetchOptions,
+        signal: controller.signal,
         ...(client ? _publicFetchOptions : _fetchOptions),
       }) as Promise<T>
     },

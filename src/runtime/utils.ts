@@ -4,9 +4,6 @@ export const kqlApiRoute = '/api/__kql__' as const
 export const kirbyApiRoute = '/api/__kirby__' as const
 export const clientErrorMessage = 'Fetching from Kirby client-side isn\'t allowed. Enable it by setting the module option "client" to "true" in your "nuxt.config.ts".'
 
-/**
- * Normalize headers to object
- */
 export function headersToObject(headers: HeadersInit = {}): Record<string, string> {
   // SSR compatibility for `Headers` prototype
   if (typeof Headers !== 'undefined' && headers instanceof Headers)
@@ -18,10 +15,7 @@ export function headersToObject(headers: HeadersInit = {}): Record<string, strin
   return headers as Record<string, string>
 }
 
-/**
- * Generate authentication headers for KQL fetch requests
- */
-export function buildAuthHeader({
+export function getAuthHeader({
   auth,
   token,
   credentials,

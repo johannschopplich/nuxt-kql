@@ -1,4 +1,4 @@
-import { computed, unref } from 'vue'
+import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ofetch'
@@ -6,12 +6,13 @@ import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { buildAuthHeader, clientErrorMessage, headersToObject, kqlApiRoute } from '../utils'
+import { clientErrorMessage, getAuthHeader, headersToObject, kqlApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Pick<
   AsyncDataOptions<T>,
+  | 'server'
   | 'lazy'
   | 'default'
   | 'watch'
@@ -44,9 +45,11 @@ export function useKql<
   const _query = computed(() => resolveUnref(query))
 
   const {
+    server,
     lazy,
     default: defaultFn,
     immediate,
+    watch,
     headers,
     language,
     client,
@@ -60,43 +63,53 @@ export function useKql<
     throw new Error(clientErrorMessage)
 
   const asyncDataOptions: AsyncDataOptions<ResT> = {
+    server,
     lazy,
     default: defaultFn,
     immediate,
     watch: [
       _query,
+      ...(watch || []),
     ],
   }
 
-  const _fetchOptions: FetchOptions = {
-    body: {
-      query: _query.value,
-      headers: {
-        ...headersToObject(unref(headers)),
-        ...(language ? { 'X-Language': language } : {}),
-      },
-    },
+  const baseHeaders = {
+    ...headersToObject(headers),
+    ...(language ? { 'X-Language': language } : {}),
   }
 
-  const _publicFetchOptions: FetchOptions = {
-    body: _query.value,
+  const _fetchOptions = reactive<FetchOptions>({
+    method: 'POST',
+    body: {
+      query: _query,
+      headers: baseHeaders,
+    },
+  })
+
+  const _publicFetchOptions = reactive<FetchOptions>({
+    method: 'POST',
+    body: _query,
     headers: {
-      ...headersToObject(unref(headers)),
-      ...buildAuthHeader({
+      ...baseHeaders,
+      ...getAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
         credentials: kql.credentials,
       }),
-      ...(language ? { 'X-Language': language } : {}),
     },
-  }
+  })
+
+  let controller: AbortController
 
   return useAsyncData<ResT, FetchError>(
     `$kql${hash(_query.value)}`,
     () => {
+      controller?.abort?.()
+      controller = typeof AbortController !== 'undefined' ? new AbortController() : {} as AbortController
+
       return $fetch(client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
         ...fetchOptions,
-        method: 'POST',
+        signal: controller.signal,
         ...(client ? _publicFetchOptions : _fetchOptions),
       }) as Promise<ResT>
     },

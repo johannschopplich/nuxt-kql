@@ -2,7 +2,7 @@ import { $fetch } from 'ofetch'
 import { useLogger } from '@nuxt/kit'
 import type { Consola } from 'consola'
 import type { KirbyQueryResponse } from 'kirby-fest'
-import { buildAuthHeader } from './runtime/utils'
+import { getAuthHeader } from './runtime/utils'
 import type { ModuleOptions } from './module'
 
 export const logger: Consola = useLogger('nuxt-kql')
@@ -26,7 +26,7 @@ export async function prefetchQueries(
           baseURL: options.url,
           method: 'POST',
           body: query,
-          headers: buildAuthHeader({ auth, token, credentials }),
+          headers: getAuthHeader({ auth, token, credentials }),
         }),
       )
     }

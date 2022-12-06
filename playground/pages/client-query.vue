@@ -13,8 +13,13 @@ const query = ref<KirbyQueryRequest>({
 const { data, refresh } = await useKql(query, { client: true })
 
 function updateQuery() {
-  (query.value.select as Record<string, any>).title = 'site.title.upper'
-  refresh()
+  query.value = {
+    query: 'site',
+    select: {
+      title: 'site.title.upper',
+      children: true,
+    },
+  }
 }
 </script>
 

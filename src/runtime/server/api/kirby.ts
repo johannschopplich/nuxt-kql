@@ -1,13 +1,14 @@
 import { createError, defineEventHandler, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../../../module'
-import { buildAuthHeader } from '../../utils'
+import { getAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<any> => {
-  const body = await readBody(event)
-  const uri: string = body.uri || ''
-  const headers: Record<string, string> = body.headers || {}
+  const { uri, headers } = await readBody<{
+    uri?: string
+    headers?: Record<string, string>
+  }>(event)
 
   if (!uri) {
     throw createError({
@@ -23,7 +24,7 @@ export default defineEventHandler(async (event): Promise<any> => {
       baseURL: kql.url,
       headers: {
         ...headers,
-        ...buildAuthHeader({
+        ...getAuthHeader({
           auth: kql.auth as ModuleOptions['auth'],
           token: kql.token,
           credentials: kql.credentials,
@@ -34,7 +35,7 @@ export default defineEventHandler(async (event): Promise<any> => {
   catch (err) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Couldn\'t fetch Kirby data',
+      statusMessage: `Failed to fetch "${uri}"`,
       data: (err as FetchError).message,
     })
   }

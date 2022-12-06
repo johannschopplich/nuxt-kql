@@ -2,13 +2,14 @@ import { createError, defineEventHandler, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import type { ModuleOptions } from '../../../module'
-import { buildAuthHeader } from '../../utils'
+import { getAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
-  const body = await readBody(event)
-  const query: Partial<KirbyQueryRequest> = body.query || {}
-  const headers: Record<string, string> = body.headers || {}
+  const { query = {}, headers } = await readBody<{
+    query?: Partial<KirbyQueryRequest>
+    headers?: Record<string, string>
+  }>(event)
 
   if (Object.keys(query).length === 0 || !query?.query) {
     throw createError({
@@ -26,7 +27,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
       body: query,
       headers: {
         ...headers,
-        ...buildAuthHeader({
+        ...getAuthHeader({
           auth: kql.auth as ModuleOptions['auth'],
           token: kql.token,
           credentials: kql.credentials,
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
   catch (err) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Couldn\'t execute KQL query',
+      statusMessage: 'Failed to execute KQL query',
       data: (err as FetchError).message,
     })
   }
