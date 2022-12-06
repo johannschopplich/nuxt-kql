@@ -52,8 +52,9 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const _fetchOptions: FetchOptions = {
     method: 'POST',
     body: {
+      key,
       query,
-      headers: baseHeaders,
+      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   }
 

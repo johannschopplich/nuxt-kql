@@ -52,6 +52,7 @@
     "@nuxt/kit": "^3.0.0",
     "@vueuse/core": "^9.6.0",
     "defu": "^6.1.1",
+    "destr": "^1.2.2",
     "kirby-fest": "^0.3.1",
     "ofetch": "^1.0.0",
     "ohash": "^1.0.0",

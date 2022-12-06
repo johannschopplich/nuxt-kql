@@ -81,8 +81,9 @@ export function useKql<
   const _fetchOptions = reactive<FetchOptions>({
     method: 'POST',
     body: {
+      key,
       query: _query,
-      headers: baseHeaders,
+      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   })
 

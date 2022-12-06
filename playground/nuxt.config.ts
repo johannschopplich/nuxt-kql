@@ -25,6 +25,12 @@ export default defineNuxtConfig({
         },
       },
     },
+
+    experimental: {
+      server: {
+        cache: true,
+      },
+    },
   },
 
   typescript: {

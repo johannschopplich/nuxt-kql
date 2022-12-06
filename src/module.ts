@@ -70,6 +70,26 @@ export interface ModuleOptions {
    * @default {}
    */
   prefetch?: Record<string, KirbyQueryRequest>
+
+  /**
+   * Experimental features that may change in the future
+   */
+  experimental?: {
+    server?: {
+      /**
+       * Enable server-side caching of queries using the Nitro storage layer
+       *
+       * @see https://nitro.unjs.io/guide/introduction/storage
+       */
+      cache?: boolean
+      /**
+       * Cache expiration time in milliseconds
+       *
+       * @default 3600000
+       */
+      expires?: number
+    }
+  }
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -91,6 +111,12 @@ export default defineNuxtModule<ModuleOptions>({
     },
     client: false,
     prefetch: {},
+    experimental: {
+      server: {
+        cache: false,
+        expires: 3600000,
+      },
+    },
   },
   async setup(options, nuxt) {
     // Make sure Kirby URL and KQL endpoint are set

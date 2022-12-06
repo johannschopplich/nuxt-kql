@@ -1,12 +1,14 @@
 import { createError, defineEventHandler, readBody } from 'h3'
+import destr from 'destr'
 import type { FetchError } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { getAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
-  const { query = {}, headers } = await readBody<{
-    query?: Partial<KirbyQueryRequest>
+  const { key, query, headers } = await readBody<{
+    key: string
+    query: Partial<KirbyQueryRequest>
     headers?: Record<string, string>
   }>(event)
 
@@ -17,10 +19,19 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
     })
   }
 
+  const storage = useStorage()
   const { kql } = useRuntimeConfig()
+  const { server } = kql.experimental
+
+  if (
+    server.cache
+    && await storage.hasItem(key)
+    && ((await storage.getMeta(key))?.expires ?? 0) > Date.now()
+  )
+    return destr(await storage.getItem(key))
 
   try {
-    return await $fetch<KirbyQueryResponse>(kql.prefix, {
+    const result = await $fetch<KirbyQueryResponse>(kql.prefix, {
       baseURL: kql.url,
       method: 'POST',
       body: query,
@@ -29,6 +40,13 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
         ...getAuthHeader(kql),
       },
     })
+
+    if (server.cache) {
+      await storage.setItem(key, JSON.stringify(result))
+      await storage.setMeta(key, { expires: Date.now() + server.expires })
+    }
+
+    return result
   }
   catch (err) {
     throw createError({
