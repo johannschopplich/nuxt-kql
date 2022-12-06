@@ -6,7 +6,6 @@ import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
-import type { ModuleOptions } from '../../module'
 import { useAsyncData, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Pick<
@@ -93,11 +92,7 @@ export function useKql<
     body: _query,
     headers: {
       ...baseHeaders,
-      ...getAuthHeader({
-        auth: kql.auth as ModuleOptions['auth'],
-        token: kql.token,
-        credentials: kql.credentials,
-      }),
+      ...getAuthHeader(kql),
     },
   })
 

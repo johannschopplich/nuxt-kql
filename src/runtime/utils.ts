@@ -19,7 +19,7 @@ export function getAuthHeader({
   auth,
   token,
   credentials,
-}: Pick<ModuleOptions, 'auth' | 'token' | 'credentials'>) {
+}: Pick<ModuleOptions, 'token' | 'credentials'> & { auth?: string }) {
   const headers: Record<string, string> = {}
 
   if (auth === 'basic' && credentials) {

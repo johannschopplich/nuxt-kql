@@ -5,7 +5,6 @@ import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
-import type { ModuleOptions } from '../../module'
 import { useAsyncData, useNuxtApp, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Pick<
@@ -80,11 +79,7 @@ export function useKirbyData<T = any>(
     baseURL: kql.url,
     headers: {
       ...headersToObject(headers),
-      ...getAuthHeader({
-        auth: kql.auth as ModuleOptions['auth'],
-        token: kql.token,
-        credentials: kql.credentials,
-      }),
+      ...getAuthHeader(kql),
     },
   }
 

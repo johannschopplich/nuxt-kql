@@ -2,7 +2,6 @@ import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
 import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
-import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KirbyFetchOptions = Pick<
@@ -51,11 +50,7 @@ export function $kirby<T = any>(
   const _publicFetchOptions: FetchOptions = {
     headers: {
       ...headersToObject(headers),
-      ...getAuthHeader({
-        auth: kql.auth as ModuleOptions['auth'],
-        token: kql.token,
-        credentials: kql.credentials,
-      }),
+      ...getAuthHeader(kql),
     },
   }
 

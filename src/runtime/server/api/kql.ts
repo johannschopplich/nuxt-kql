@@ -1,7 +1,6 @@
 import { createError, defineEventHandler, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import type { ModuleOptions } from '../../../module'
 import { getAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
@@ -27,11 +26,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
       body: query,
       headers: {
         ...headers,
-        ...getAuthHeader({
-          auth: kql.auth as ModuleOptions['auth'],
-          token: kql.token,
-          credentials: kql.credentials,
-        }),
+        ...getAuthHeader(kql),
       },
     })
   }

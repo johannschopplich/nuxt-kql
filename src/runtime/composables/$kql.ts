@@ -3,7 +3,6 @@ import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
-import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KqlOptions = Pick<
@@ -63,11 +62,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     body: query,
     headers: {
       ...baseHeaders,
-      ...getAuthHeader({
-        auth: kql.auth as ModuleOptions['auth'],
-        token: kql.token,
-        credentials: kql.credentials,
-      }),
+      ...getAuthHeader(kql),
     },
   }
 
