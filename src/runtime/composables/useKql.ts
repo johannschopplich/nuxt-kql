@@ -7,7 +7,7 @@ import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
-import { useAsyncData, useRuntimeConfig } from '#imports'
+import { useAsyncData, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Pick<
   AsyncDataOptions<T>,

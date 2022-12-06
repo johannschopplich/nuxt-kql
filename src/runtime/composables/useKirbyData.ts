@@ -6,7 +6,7 @@ import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
-import { useAsyncData, useRuntimeConfig } from '#imports'
+import { useAsyncData, useNuxtApp, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Pick<
   AsyncDataOptions<T>,
