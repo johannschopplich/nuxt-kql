@@ -2,7 +2,7 @@ import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { clientErrorMessage, getAuthHeader, headersToObject, kqlApiRoute } from '../utils'
+import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
@@ -34,7 +34,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const { headers, language, client = false, ...fetchOptions } = opts
 
   if (client && !kql.client)
-    throw new Error(clientErrorMessage)
+    throw new Error(DEFAULT_CLIENT_ERROR)
 
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
   const key = `$kql${hash(query)}`
@@ -71,7 +71,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     },
   }
 
-  const request = $fetch(client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
+  const request = $fetch(client ? joinURL(kql.url, kql.prefix) : KQL_API_ROUTE, {
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {

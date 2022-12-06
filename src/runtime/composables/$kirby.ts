@@ -1,7 +1,7 @@
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
-import { clientErrorMessage, getAuthHeader, headersToObject, kirbyApiRoute } from '../utils'
+import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
@@ -29,7 +29,7 @@ export function $kirby<T = any>(
   const { headers, client = false, ...fetchOptions } = opts
 
   if (client && !kql.client)
-    throw new Error(clientErrorMessage)
+    throw new Error(DEFAULT_CLIENT_ERROR)
 
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
   const key = `$kirby${hash(uri)}`
@@ -59,7 +59,7 @@ export function $kirby<T = any>(
     },
   }
 
-  const request = $fetch(client ? joinURL(kql.url, uri) : kirbyApiRoute, {
+  const request = $fetch(client ? joinURL(kql.url, uri) : KIRBY_API_ROUTE, {
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {

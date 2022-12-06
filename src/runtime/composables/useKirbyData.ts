@@ -1,11 +1,10 @@
 import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
-import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { clientErrorMessage, getAuthHeader, headersToObject, kirbyApiRoute } from '../utils'
+import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
@@ -36,8 +35,10 @@ export function useKirbyData<T = any>(
   uri: MaybeComputedRef<string>,
   opts: UseKirbyDataOptions<T> = {},
 ) {
+  const nuxt = useNuxtApp()
   const { kql } = useRuntimeConfig().public
   const _uri = computed(() => resolveUnref(uri).replace(/^\//, ''))
+  const key = `$kirby${hash(_uri.value)}`
 
   const {
     server,
@@ -54,7 +55,7 @@ export function useKirbyData<T = any>(
     console.error('[useKirbyData] Empty Kirby URI')
 
   if (client && !kql.client)
-    throw new Error(clientErrorMessage)
+    throw new Error(DEFAULT_CLIENT_ERROR)
 
   const asyncDataOptions: AsyncDataOptions<T> = {
     server,
@@ -75,7 +76,8 @@ export function useKirbyData<T = any>(
     },
   })
 
-  const _publicFetchOptions = {
+  const _publicFetchOptions: FetchOptions = {
+    baseURL: kql.url,
     headers: {
       ...headersToObject(headers),
       ...getAuthHeader({
@@ -89,16 +91,31 @@ export function useKirbyData<T = any>(
   let controller: AbortController
 
   return useAsyncData<T, FetchError>(
-    `$kirby${hash(_uri.value)}`,
-    () => {
+    key,
+    async () => {
       controller?.abort?.()
-      controller = typeof AbortController !== 'undefined' ? new AbortController() : {} as AbortController
 
-      return $fetch(client ? joinURL(kql.url, _uri.value) : kirbyApiRoute, {
+      if (key in nuxt.payload.data)
+        return Promise.resolve(nuxt.payload.data[key])
+
+      if (key in nuxt.static.data)
+        return Promise.resolve(nuxt.static.data[key])
+
+      controller = typeof AbortController !== 'undefined'
+        ? new AbortController()
+        : ({} as AbortController)
+
+      const result = (await $fetch<T>(client ? _uri.value : KIRBY_API_ROUTE, {
         ...fetchOptions,
         signal: controller.signal,
         ...(client ? _publicFetchOptions : _fetchOptions),
-      }) as Promise<T>
+      })) as T
+
+      // Workaround to persist response client-side
+      // https://github.com/nuxt/framework/issues/8917
+      nuxt.static.data[key] = result
+
+      return result
     },
     asyncDataOptions,
   ) as AsyncData<T, FetchError | null | true>
