@@ -3,6 +3,8 @@ import destr from 'destr'
 import type { FetchError } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { getAuthHeader } from '../../utils'
+// @ts-expect-error: Will be resolved by Nitro
+import { useStorage } from '#internal/nitro/virtual/storage'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => {
