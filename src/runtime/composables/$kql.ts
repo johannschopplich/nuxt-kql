@@ -2,7 +2,7 @@ import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { buildAuthHeader, clientErrorMessage, headersToObject, kqlApiRoute } from '../utils'
+import { clientErrorMessage, getAuthHeader, headersToObject, kqlApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
@@ -45,35 +45,38 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   if (promiseMap.has(key))
     return promiseMap.get(key)!
 
+  const baseHeaders = {
+    ...headersToObject(headers),
+    ...(language ? { 'X-Language': language } : {}),
+  }
+
   const _fetchOptions: FetchOptions = {
+    method: 'POST',
     body: {
       query,
-      headers: {
-        ...headersToObject(headers),
-        ...(language ? { 'X-Language': language } : {}),
-      },
+      headers: baseHeaders,
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
+    method: 'POST',
     body: query,
     headers: {
-      ...headersToObject(headers),
-      ...buildAuthHeader({
+      ...baseHeaders,
+      ...getAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
         credentials: kql.credentials,
       }),
-      ...(language ? { 'X-Language': language } : {}),
     },
   }
 
   const request = $fetch(client ? joinURL(kql.url, kql.prefix) : kqlApiRoute, {
     ...fetchOptions,
-    method: 'POST',
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {
-    nuxt.payload.data![key] = response
+    if (process.server)
+      nuxt.payload.data![key] = response
     promiseMap.delete(key)
     return response
   }) as Promise<T>

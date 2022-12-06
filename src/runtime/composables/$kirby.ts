@@ -1,7 +1,7 @@
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
-import { buildAuthHeader, clientErrorMessage, headersToObject, kirbyApiRoute } from '../utils'
+import { clientErrorMessage, getAuthHeader, headersToObject, kirbyApiRoute } from '../utils'
 import type { ModuleOptions } from '../../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
@@ -51,7 +51,7 @@ export function $kirby<T = any>(
   const _publicFetchOptions: FetchOptions = {
     headers: {
       ...headersToObject(headers),
-      ...buildAuthHeader({
+      ...getAuthHeader({
         auth: kql.auth as ModuleOptions['auth'],
         token: kql.token,
         credentials: kql.credentials,
@@ -63,7 +63,8 @@ export function $kirby<T = any>(
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {
-    nuxt.payload.data![key] = response
+    if (process.server)
+      nuxt.payload.data![key] = response
     promiseMap.delete(key)
     return response
   }) as Promise<T>
