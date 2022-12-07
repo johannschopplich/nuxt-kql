@@ -83,5 +83,24 @@ interface ModuleOptions {
    * @default {}
    */
   prefetch?: Record<string, KirbyQueryRequest>
+
+  /**
+   * Server-side features
+   */
+  server?: {
+    /**
+     * Enable server-side caching of queries using the Nitro storage layer
+     * (in-memory cache)
+     *
+     * @see https://nitro.unjs.io/guide/introduction/storage
+     */
+    cache?: boolean
+    /**
+     * Cache expiration time in milliseconds
+     *
+     * @default 60 * 60 * 1000
+     */
+    cacheTTL?: number
+  }
 }
 ```

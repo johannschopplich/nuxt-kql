@@ -21,9 +21,9 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
     })
   }
 
-  const storage = useStorage()
   const { kql } = useRuntimeConfig()
-  const { server } = kql.experimental
+  const storage = useStorage()
+  const { server } = kql
 
   if (
     server.cache
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event): Promise<KirbyQueryResponse> => 
 
     if (server.cache) {
       await storage.setItem(key, JSON.stringify(result))
-      await storage.setMeta(key, { expires: Date.now() + server.expires })
+      await storage.setMeta(key, { expires: Date.now() + server.cacheTTL })
     }
 
     return result

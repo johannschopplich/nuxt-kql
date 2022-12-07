@@ -88,6 +88,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
       items: [
         { text: 'Token-Based Authentication', link: '/guide/token-authentication' },
         { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
+        { text: 'Server-Side Cache', link: '/guide/server-side-cache' },
       ],
     },
     {
