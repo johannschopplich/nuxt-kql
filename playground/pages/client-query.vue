@@ -10,7 +10,7 @@ const query = ref<KirbyQueryRequest>({
   },
 })
 
-const { data, refresh } = await useKql(query, { client: true })
+const { data } = await useKql(query, { client: true })
 
 function updateQuery() {
   query.value = {
@@ -35,9 +35,6 @@ function updateQuery() {
     <h2>Response</h2>
     <pre>{{ JSON.stringify(data?.result, undefined, 2) }}</pre>
     <p>Refreshed: {{ refreshIndex }} times</p>
-    <button @click="refresh(), refreshIndex++">
-      Refresh
-    </button>
     <button @click="updateQuery()">
       Change query and refresh
     </button>

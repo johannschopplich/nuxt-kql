@@ -32,8 +32,8 @@ export function $kirby<T = any>(
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
   const key = `$kirby${hash(uri)}`
 
-  if (key in nuxt.payload.data!)
-    return Promise.resolve(nuxt.payload.data![key])
+  if (key in nuxt.payload.data)
+    return Promise.resolve(nuxt.payload.data[key])
 
   if (promiseMap.has(key))
     return promiseMap.get(key)!
@@ -61,7 +61,7 @@ export function $kirby<T = any>(
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {
     if (process.server)
-      nuxt.payload.data![key] = response
+      nuxt.payload.data[key] = response
     promiseMap.delete(key)
     return response
   }) as Promise<T>

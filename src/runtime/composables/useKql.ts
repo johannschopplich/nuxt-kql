@@ -6,7 +6,7 @@ import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
-import { useAsyncData, useNuxtApp, useRuntimeConfig } from '#imports'
+import { useAsyncData, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Pick<
   AsyncDataOptions<T>,
@@ -39,10 +39,9 @@ export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
 >(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
-  const nuxt = useNuxtApp()
   const { kql } = useRuntimeConfig().public
   const _query = computed(() => resolveUnref(query))
-  const key = `$kql${hash(_query.value)}`
+  const key = computed(() => `$kql${hash(_query.value)}`)
 
   const {
     server,
@@ -100,15 +99,14 @@ export function useKql<
   let controller: AbortController
 
   return useAsyncData<ResT, FetchError>(
-    key,
-    async () => {
+    key.value,
+    async (nuxt) => {
       controller?.abort?.()
 
-      if (key in nuxt.payload.data)
-        return nuxt.payload.data[key]
-
-      if (key in nuxt.static.data)
-        return nuxt.static.data[key]
+      // Workaround to persist response client-side
+      // https://github.com/nuxt/framework/issues/8917
+      if (key.value in nuxt!.static.data)
+        return nuxt!.static.data[key.value]
 
       controller = typeof AbortController !== 'undefined'
         ? new AbortController()
@@ -120,9 +118,7 @@ export function useKql<
         ...(client ? _publicFetchOptions : _fetchOptions),
       })) as ResT
 
-      // Workaround to persist response client-side
-      // https://github.com/nuxt/framework/issues/8917
-      nuxt.static.data[key] = result
+      nuxt!.static.data[key.value] = result
 
       return result
     },
