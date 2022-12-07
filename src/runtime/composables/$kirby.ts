@@ -39,22 +39,23 @@ export function $kirby<T = any>(
   if (promiseMap.has(key))
     return promiseMap.get(key)!
 
+  const baseHeaders = headersToObject(headers)
+
   const _fetchOptions: FetchOptions = {
     method: 'POST',
     body: {
-      uri,
-      headers: headersToObject(headers),
+      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
     headers: {
-      ...headersToObject(headers),
+      ...baseHeaders,
       ...getAuthHeader(kql),
     },
   }
 
-  const request = $fetch(client ? joinURL(kql.url, uri) : KIRBY_API_ROUTE, {
+  const request = $fetch(joinURL(client ? kql.url : KIRBY_API_ROUTE, uri), {
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {

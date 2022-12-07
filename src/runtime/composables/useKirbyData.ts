@@ -1,5 +1,6 @@
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { hash } from 'ohash'
+import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
@@ -56,6 +57,8 @@ export function useKirbyData<T = any>(
   if (client && !kql.client)
     throw new Error(DEFAULT_CLIENT_ERROR)
 
+  const baseHeaders = headersToObject(headers)
+
   const asyncDataOptions: AsyncDataOptions<T> = {
     server,
     lazy,
@@ -67,18 +70,16 @@ export function useKirbyData<T = any>(
     ],
   }
 
-  const _fetchOptions = reactive<FetchOptions>({
+  const _fetchOptions: FetchOptions = {
     method: 'POST',
     body: {
-      uri: _uri,
-      headers: headersToObject(headers),
+      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
-  })
+  }
 
   const _publicFetchOptions: FetchOptions = {
-    baseURL: kql.url,
     headers: {
-      ...headersToObject(headers),
+      ...baseHeaders,
       ...getAuthHeader(kql),
     },
   }
@@ -100,11 +101,14 @@ export function useKirbyData<T = any>(
         ? new AbortController()
         : ({} as AbortController)
 
-      const result = (await $fetch<T>(client ? _uri.value : KIRBY_API_ROUTE, {
-        ...fetchOptions,
-        signal: controller.signal,
-        ...(client ? _publicFetchOptions : _fetchOptions),
-      })) as T
+      const result = (await $fetch<T>(
+        joinURL(client ? kql.url : KIRBY_API_ROUTE, _uri.value),
+        {
+          ...fetchOptions,
+          signal: controller.signal,
+          ...(client ? _publicFetchOptions : _fetchOptions),
+        },
+      )) as T
 
       // Workaround to persist response client-side
       // https://github.com/nuxt/framework/issues/8917
