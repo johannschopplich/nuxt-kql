@@ -17,6 +17,7 @@ function useKql<
 
 type UseKqlOptions<T> = Pick<
   AsyncDataOptions<T>,
+  | 'server'
   | 'lazy'
   | 'default'
   | 'watch'
