@@ -1,6 +1,5 @@
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
-import { joinURL } from 'ufo'
 import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
@@ -70,14 +69,16 @@ export function useKirbyData<T = any>(
     ],
   }
 
-  const _fetchOptions: FetchOptions = {
+  const _fetchOptions = reactive<FetchOptions>({
     method: 'POST',
     body: {
+      uri: _uri,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
-  }
+  })
 
   const _publicFetchOptions: FetchOptions = {
+    baseURL: kql.url,
     headers: {
       ...baseHeaders,
       ...getAuthHeader(kql),
@@ -102,7 +103,7 @@ export function useKirbyData<T = any>(
         : ({} as AbortController)
 
       const result = (await $fetch<T>(
-        joinURL(client ? kql.url : KIRBY_API_ROUTE, _uri.value),
+        client ? _uri.value : KIRBY_API_ROUTE,
         {
           ...fetchOptions,
           signal: controller.signal,

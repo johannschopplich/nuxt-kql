@@ -4,20 +4,18 @@ import { getAuthHeader } from '../../utils'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event): Promise<any> => {
-  const { headers } = await readBody(event)
-  const { path } = event.context.params
+  const { uri, headers } = await readBody(event)
+  const { kql } = useRuntimeConfig()
 
-  if (!path) {
+  if (!uri) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Empty page URI',
     })
   }
 
-  const { kql } = useRuntimeConfig()
-
   try {
-    return await $fetch(path, {
+    return await $fetch(uri, {
       baseURL: kql.url,
       headers: {
         ...headers,
@@ -28,7 +26,7 @@ export default defineEventHandler(async (event): Promise<any> => {
   catch (err) {
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to fetch "${path}"`,
+      statusMessage: `Failed to fetch "${uri}"`,
       data: (err as FetchError).message,
     })
   }

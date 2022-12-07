@@ -1,5 +1,4 @@
 import { hash } from 'ohash'
-import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
 import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
@@ -44,18 +43,20 @@ export function $kirby<T = any>(
   const _fetchOptions: FetchOptions = {
     method: 'POST',
     body: {
+      uri,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
+    baseURL: kql.url,
     headers: {
       ...baseHeaders,
       ...getAuthHeader(kql),
     },
   }
 
-  const request = $fetch(joinURL(client ? kql.url : KIRBY_API_ROUTE, uri), {
+  const request = $fetch(client ? uri : KIRBY_API_ROUTE, {
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {

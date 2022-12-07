@@ -172,7 +172,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add another proxy endpoint to fetch raw Kirby data server-side
     addServerHandler({
-      route: `${KIRBY_API_ROUTE}/:path`,
+      route: KIRBY_API_ROUTE,
       method: 'post',
       handler: resolve('runtime/server/api/kirby'),
     })
