@@ -134,9 +134,7 @@ function sidebarApi(): DefaultTheme.SidebarGroup[] {
       text: 'Composables',
       items: [
         { text: 'useKql', link: '/api/use-kql' },
-        { text: 'usePublicKql', link: '/api/use-public-kql' },
         { text: '$kql', link: '/api/kql' },
-        { text: '$publicKql', link: '/api/public-kql' },
       ],
     },
     {

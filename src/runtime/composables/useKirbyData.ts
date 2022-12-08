@@ -4,7 +4,7 @@ import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { DEFAULT_CLIENT_ERROR, KIRBY_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
+import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Pick<
@@ -28,6 +28,11 @@ type UseKirbyDataOptions<T> = Pick<
    * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
+  /**
+   * Cache the response between function calls for the same URI
+   * @default true
+   */
+  cache?: boolean
 }
 
 export function useKirbyData<T = any>(
@@ -45,12 +50,13 @@ export function useKirbyData<T = any>(
     immediate,
     watch,
     headers,
-    client,
+    client = false,
+    cache = true,
     ...fetchOptions
   } = opts
 
   if (!_uri.value)
-    console.error('[useKirbyData] Empty Kirby URI')
+    console.warn('[useKirbyData] Empty Kirby URI')
 
   if (client && !kql.client)
     throw new Error(DEFAULT_CLIENT_ERROR)
@@ -71,7 +77,9 @@ export function useKirbyData<T = any>(
   const _fetchOptions = reactive<FetchOptions>({
     method: 'POST',
     body: {
+      key,
       uri: _uri,
+      cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   })
@@ -93,15 +101,15 @@ export function useKirbyData<T = any>(
 
       // Workaround to persist response client-side
       // https://github.com/nuxt/framework/issues/8917
-      if (key.value in nuxt!.static.data)
-        return nuxt!.static.data[key.value]
+      if ((nuxt!.isHydrating || cache) && key.value in nuxt!.payload.data)
+        return nuxt!.payload.data[key.value]
 
       controller = typeof AbortController !== 'undefined'
         ? new AbortController()
         : ({} as AbortController)
 
       const result = (await $fetch<T>(
-        client ? _uri.value : KIRBY_API_ROUTE,
+        client ? _uri.value : KQL_API_ROUTE,
         {
           ...fetchOptions,
           signal: controller.signal,
@@ -109,7 +117,8 @@ export function useKirbyData<T = any>(
         },
       )) as T
 
-      nuxt!.static.data[key.value] = result
+      if (cache)
+        nuxt!.payload.data[key.value] = result
 
       return result
     },

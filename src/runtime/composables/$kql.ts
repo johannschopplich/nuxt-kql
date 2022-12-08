@@ -1,5 +1,4 @@
 import { hash } from 'ohash'
-import { joinURL } from 'ufo'
 import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
@@ -14,7 +13,7 @@ export type KqlOptions = Pick<
   | 'headers'
 > & {
   /**
-   * Language code to fetch data for in multilang Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups
    */
   language?: string
   /**
@@ -22,6 +21,11 @@ export type KqlOptions = Pick<
    * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
+  /**
+   * Cache the response between function calls for the same query
+   * @default true
+   */
+  cache?: boolean
 }
 
 export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
@@ -29,16 +33,15 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   opts: KqlOptions = {},
 ): Promise<T> {
   const nuxt = useNuxtApp()
+  const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
+  const { headers, language, client = false, cache = true, ...fetchOptions } = opts
   const { kql } = useRuntimeConfig().public
-  const { headers, language, client = false, ...fetchOptions } = opts
+  const key = `$kql${hash(query)}`
 
   if (client && !kql.client)
     throw new Error(DEFAULT_CLIENT_ERROR)
 
-  const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
-  const key = `$kql${hash(query)}`
-
-  if (key in nuxt.payload.data)
+  if ((nuxt.isHydrating || cache) && key in nuxt.payload.data)
     return Promise.resolve(nuxt.payload.data[key])
 
   if (promiseMap.has(key))
@@ -54,11 +57,13 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     body: {
       key,
       query,
+      cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   }
 
   const _publicFetchOptions: FetchOptions = {
+    baseURL: kql.url,
     method: 'POST',
     body: query,
     headers: {
@@ -67,12 +72,12 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     },
   }
 
-  const request = $fetch(client ? joinURL(kql.url, kql.prefix) : KQL_API_ROUTE, {
+  const request = $fetch(client ? kql.prefix : KQL_API_ROUTE, {
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {
-    if (process.server)
-      nuxt.payload.data![key] = response
+    if (process.server || cache)
+      nuxt.payload.data[key] = response
     promiseMap.delete(key)
     return response
   }) as Promise<T>

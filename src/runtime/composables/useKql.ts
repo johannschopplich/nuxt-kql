@@ -25,7 +25,7 @@ export type UseKqlOptions<T> = Pick<
   | 'headers'
 > & {
   /**
-   * Language code to fetch data for in multilang Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups
    */
   language?: string
   /**
@@ -33,6 +33,11 @@ export type UseKqlOptions<T> = Pick<
    * Requires `client` to be enabled in the module options as well
    */
   client?: boolean
+  /**
+   * Cache the response between function calls for the same query
+   * @default true
+   */
+  cache?: boolean
 }
 
 export function useKql<
@@ -51,7 +56,8 @@ export function useKql<
     watch,
     headers,
     language,
-    client,
+    client = false,
+    cache = true,
     ...fetchOptions
   } = opts
 
@@ -82,6 +88,7 @@ export function useKql<
     body: {
       key,
       query: _query,
+      cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     },
   })
@@ -105,8 +112,8 @@ export function useKql<
 
       // Workaround to persist response client-side
       // https://github.com/nuxt/framework/issues/8917
-      if (key.value in nuxt!.static.data)
-        return nuxt!.static.data[key.value]
+      if ((nuxt!.isHydrating || cache) && key.value in nuxt!.payload.data)
+        return nuxt!.payload.data[key.value]
 
       controller = typeof AbortController !== 'undefined'
         ? new AbortController()
@@ -118,7 +125,8 @@ export function useKql<
         ...(client ? _publicFetchOptions : _fetchOptions),
       })) as ResT
 
-      nuxt!.static.data[key.value] = result
+      if (cache)
+        nuxt!.payload.data[key.value] = result
 
       return result
     },

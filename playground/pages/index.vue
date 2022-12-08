@@ -27,11 +27,23 @@ const query = ref<KirbyQueryRequest>({
   },
 })
 
-const { data, refresh } = await useKql<KirbyQueryResponse<KirbySite>>(query)
+const { data } = await useKql<KirbyQueryResponse<KirbySite>>(query)
 
 function updateQuery() {
-  (query.value.select as Record<string, any>).title = 'site.title.upper'
-  refresh()
+  query.value = {
+    query: 'site',
+    select: {
+      title: true,
+      children: {
+        query: 'site.children',
+        select: {
+          id: true,
+          title: 'page.title.upper',
+          isListed: true,
+        },
+      },
+    },
+  }
 }
 </script>
 
@@ -45,9 +57,6 @@ function updateQuery() {
     <h2>Response</h2>
     <pre>{{ JSON.stringify(data?.result, undefined, 2) }}</pre>
     <p>Refreshed: {{ refreshIndex }} times</p>
-    <button @click="refresh(), refreshIndex++">
-      Refresh
-    </button>
     <button @click="updateQuery()">
       Change query and refresh
     </button>
