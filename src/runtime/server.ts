@@ -1,59 +1,37 @@
 import { createError, defineEventHandler, readBody } from 'h3'
-import destr from 'destr'
 import type { FetchError } from 'ofetch'
-import type { KirbyQueryRequest } from 'kirby-fest'
+import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
+import type { EventHandlerBody } from './utils'
 // @ts-expect-error: Will be resolved by Nitro
-import { useStorage } from '#internal/nitro/virtual/storage'
+import { cachedFunction } from '#internal/nitro'
 import { useRuntimeConfig } from '#imports'
 
-export default defineEventHandler(async (event): Promise<any> => {
-  const { key, query, uri = '', cache = true, headers } = await readBody<{
-    key: string
-    query?: Partial<KirbyQueryRequest>
-    uri?: string
-    cache?: boolean
-    headers?: Record<string, string>
-  }>(event)
+const fetcher = async (
+  kql: Required<ModuleOptions>,
+  { key, query, uri, headers }: EventHandlerBody,
+) => {
   const isQueryRequest = key.startsWith('$kql')
 
-  if (isQueryRequest && !query?.query) {
+  if (key.startsWith('$kql') && !query?.query) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Empty KQL query',
     })
   }
 
-  const { kql } = useRuntimeConfig()
-  const storage = useStorage()
-  const cacheEnabled = kql.server.cache && cache
-
-  if (
-    cacheEnabled
-    && await storage.hasItem(key)
-    && ((await storage.getMeta(key))?.expires ?? 0) > Date.now()
-  )
-    return destr(await storage.getItem(key))
-
   try {
-    const result = await $fetch(
-      isQueryRequest ? kql.prefix : uri,
-      {
-        baseURL: kql.url,
-        ...(isQueryRequest && {
-          method: 'POST',
-          body: query,
-        }),
-        headers: {
-          ...headers,
-          ...getAuthHeader(kql),
-        },
-      })
-
-    if (cacheEnabled) {
-      await storage.setItem(key, JSON.stringify(result))
-      await storage.setMeta(key, { expires: Date.now() + kql.server.cacheTTL })
-    }
+    const result = await $fetch<any>(isQueryRequest ? kql.prefix : uri!, {
+      baseURL: kql.url,
+      ...(isQueryRequest && {
+        method: 'POST',
+        body: query,
+      }),
+      headers: {
+        ...headers,
+        ...getAuthHeader(kql),
+      },
+    })
 
     return result
   }
@@ -66,4 +44,21 @@ export default defineEventHandler(async (event): Promise<any> => {
       data: (err as FetchError).message,
     })
   }
+}
+
+const cachedFetcher = cachedFunction(fetcher, {
+  // Disable serving stale responses
+  swr: false,
+  maxAge: 15 * 60,
+  getKey: (kql: Required<ModuleOptions>, opts: EventHandlerBody) => opts.key,
+})
+
+export default defineEventHandler(async (event): Promise<any> => {
+  const body = await readBody<EventHandlerBody>(event)
+  const { kql } = useRuntimeConfig()
+
+  if (kql.server.cache && body.cache)
+    return await cachedFetcher(kql, body)
+
+  return await fetcher(kql as Required<ModuleOptions>, body)
 })

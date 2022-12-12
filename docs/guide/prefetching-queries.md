@@ -15,7 +15,7 @@ export default defineNuxtConfig({
       // Define key and query
       site: {
         query: 'site',
-        select: ['title']
+        select: ['title'],
       },
     },
   },

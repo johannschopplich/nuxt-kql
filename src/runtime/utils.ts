@@ -1,4 +1,13 @@
+import type { KirbyQueryRequest } from 'kirby-fest'
 import type { ModuleOptions } from '../module'
+
+export interface EventHandlerBody {
+  key: string
+  query?: Partial<KirbyQueryRequest>
+  uri?: string
+  cache?: boolean
+  headers?: Record<string, string>
+}
 
 export const KQL_API_ROUTE = '/api/__kql'
 export const DEFAULT_CLIENT_ERROR = 'Fetching from Kirby client-side isn\'t allowed. Enable it by setting the module option "client" to "true" in your "nuxt.config.ts".'

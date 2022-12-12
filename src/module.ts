@@ -4,7 +4,7 @@ import { pascalCase } from 'scule'
 import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-fest'
 import { KQL_API_ROUTE } from './runtime/utils'
-import { logger, prefetchQueries } from './utils'
+import { logger, prefetchQueries } from './prefetch'
 
 export interface ModuleOptions {
   /**
@@ -82,12 +82,6 @@ export interface ModuleOptions {
      * @see https://nitro.unjs.io/guide/introduction/storage
      */
     cache?: boolean
-    /**
-     * Cache expiration time in milliseconds
-     *
-     * @default 60 * 60 * 1000
-     */
-    cacheTTL?: number
   }
 }
 
@@ -112,7 +106,6 @@ export default defineNuxtModule<ModuleOptions>({
     prefetch: {},
     server: {
       cache: false,
-      cacheTTL: 60 * 60 * 1000,
     },
   },
   async setup(options, nuxt) {

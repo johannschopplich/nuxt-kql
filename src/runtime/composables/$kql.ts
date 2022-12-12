@@ -1,6 +1,7 @@
 import { hash } from 'ohash'
 import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
+import type { EventHandlerBody } from '../utils'
 import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
@@ -59,7 +60,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
       query,
       cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
-    },
+    } satisfies EventHandlerBody,
   }
 
   const _publicFetchOptions: FetchOptions = {

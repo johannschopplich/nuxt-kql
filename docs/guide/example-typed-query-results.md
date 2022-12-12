@@ -8,7 +8,7 @@ The [`KirbyQueryResponse<T = any, Pagination extends boolean = false>`](/api/typ
 // Extend the default response type with the result we expect from the query response
 await useKql<KirbyQueryResponse<{ title: string }>>({
   query: 'site',
-  select: ['title']
+  select: ['title'],
 })
 ```
 

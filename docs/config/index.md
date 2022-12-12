@@ -95,12 +95,6 @@ interface ModuleOptions {
      * @see https://nitro.unjs.io/guide/introduction/storage
      */
     cache?: boolean
-    /**
-     * Cache expiration time in milliseconds
-     *
-     * @default 60 * 60 * 1000
-     */
-    cacheTTL?: number
   }
 }
 ```

@@ -7,12 +7,8 @@ To fetch language-specific content from your Kirby instance, pass a `language` o
 ```ts
 // Get the German translation of the about page
 const { data } = await useKql(
-  {
-    query: 'page("ueber-uns")'
-  },
-  {
-    language: 'de'
-  }
+  { query: 'page("ueber-uns")' },
+  { language: 'de' },
 )
 ```
 
@@ -45,9 +41,10 @@ const route = useRoute()
 const { language, slug } = useLocaleSlug(route.path)
 
 // Fetch the slug for the current language
-const { data } = await useKql({
-  query: `page("${slug}")`
-}, { language })
+const { data } = await useKql(
+  { query: `page("${slug}")` },
+  { language },
+)
 </script>
 ```
 
@@ -75,7 +72,7 @@ const { data } = await useKql(
       slug: true,
     },
   },
-  { language }
+  { language },
 )
 
 // `en/ueber-uns` can't be found, since the translated slug
