@@ -3,7 +3,6 @@ import { defu } from 'defu'
 import { pascalCase } from 'scule'
 import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-fest'
-import { KQL_API_ROUTE } from './runtime/utils'
 import { logger, prefetchQueries } from './prefetch'
 
 export interface ModuleOptions {
@@ -158,7 +157,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add KQL proxy endpoint to send queries server-side
     addServerHandler({
-      route: KQL_API_ROUTE,
+      route: '/api/__kql/:key',
       method: 'post',
       handler: resolve('runtime/server'),
     })

@@ -1,8 +1,8 @@
 import { hash } from 'ohash'
 import type { FetchOptions } from 'ofetch'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import type { EventHandlerBody } from '../utils'
-import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
+import type { ServerFetchOptions } from '../utils'
+import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KqlOptions = Pick<
@@ -56,11 +56,10 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const _fetchOptions: FetchOptions = {
     method: 'POST',
     body: {
-      key,
       query,
       cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
-    } satisfies EventHandlerBody,
+    } satisfies ServerFetchOptions,
   }
 
   const _publicFetchOptions: FetchOptions = {
@@ -73,7 +72,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     },
   }
 
-  const request = $fetch(client ? kql.prefix : KQL_API_ROUTE, {
+  const request = $fetch(client ? kql.prefix : getProxyPath(key), {
     ...fetchOptions,
     ...(client ? _publicFetchOptions : _fetchOptions),
   }).then((response) => {

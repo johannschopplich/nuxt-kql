@@ -4,7 +4,7 @@ import type { FetchError, FetchOptions } from 'ofetch'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
+import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Pick<
@@ -77,7 +77,6 @@ export function useKirbyData<T = any>(
   const _fetchOptions = reactive<FetchOptions>({
     method: 'POST',
     body: {
-      key,
       uri: _uri,
       cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
@@ -109,7 +108,7 @@ export function useKirbyData<T = any>(
         : ({} as AbortController)
 
       const result = (await $fetch<T>(
-        client ? _uri.value : KQL_API_ROUTE,
+        client ? _uri.value : getProxyPath(key.value),
         {
           ...fetchOptions,
           signal: controller.signal,

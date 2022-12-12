@@ -5,7 +5,7 @@ import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/core'
-import { DEFAULT_CLIENT_ERROR, KQL_API_ROUTE, getAuthHeader, headersToObject } from '../utils'
+import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Pick<
@@ -86,7 +86,6 @@ export function useKql<
   const _fetchOptions = reactive<FetchOptions>({
     method: 'POST',
     body: {
-      key,
       query: _query,
       cache,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
@@ -119,11 +118,14 @@ export function useKql<
         ? new AbortController()
         : ({} as AbortController)
 
-      const result = (await $fetch<ResT>(client ? kql.prefix : KQL_API_ROUTE, {
-        ...fetchOptions,
-        signal: controller.signal,
-        ...(client ? _publicFetchOptions : _fetchOptions),
-      })) as ResT
+      const result = (await $fetch<ResT>(
+        client ? kql.prefix : getProxyPath(key.value),
+        {
+          ...fetchOptions,
+          signal: controller.signal,
+          ...(client ? _publicFetchOptions : _fetchOptions),
+        },
+      )) as ResT
 
       if (cache)
         nuxt!.payload.data[key.value] = result
