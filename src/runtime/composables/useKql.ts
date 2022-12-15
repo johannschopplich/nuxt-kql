@@ -80,7 +80,7 @@ export function useKql<
 
   const baseHeaders = {
     ...headersToObject(headers),
-    ...(language ? { 'X-Language': language } : {}),
+    ...(language && { 'X-Language': language }),
   }
 
   const _fetchOptions = reactive<FetchOptions>({

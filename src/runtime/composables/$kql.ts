@@ -50,7 +50,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 
   const baseHeaders = {
     ...headersToObject(headers),
-    ...(language ? { 'X-Language': language } : {}),
+    ...(language && { 'X-Language': language }),
   }
 
   const _fetchOptions: FetchOptions = {
