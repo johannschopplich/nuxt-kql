@@ -1,6 +1,7 @@
 import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
 import type { FetchError, FetchOptions } from 'ofetch'
+import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import { resolveUnref } from '@vueuse/core'
@@ -83,7 +84,7 @@ export function useKql<
     ...(language && { 'X-Language': language }),
   }
 
-  const _fetchOptions = reactive<FetchOptions>({
+  const _fetchOptions = reactive<NitroFetchOptions<string>>({
     method: 'POST',
     body: {
       query: _query,
@@ -92,7 +93,7 @@ export function useKql<
     },
   })
 
-  const _publicFetchOptions = reactive<FetchOptions>({
+  const _publicFetchOptions = reactive<NitroFetchOptions<string>>({
     baseURL: kql.url,
     method: 'POST',
     body: _query,

@@ -1,5 +1,6 @@
 import { hash } from 'ohash'
 import type { FetchOptions } from 'ofetch'
+import type { NitroFetchOptions } from 'nitropack'
 import type { ServerFetchOptions } from '../utils'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
@@ -45,7 +46,7 @@ export function $kirby<T = any>(
 
   const baseHeaders = headersToObject(headers)
 
-  const _fetchOptions: FetchOptions = {
+  const _fetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
     body: {
       uri,
@@ -54,7 +55,7 @@ export function $kirby<T = any>(
     } satisfies ServerFetchOptions,
   }
 
-  const _publicFetchOptions: FetchOptions = {
+  const _publicFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     headers: {
       ...baseHeaders,

@@ -1,5 +1,6 @@
 import { hash } from 'ohash'
 import type { FetchOptions } from 'ofetch'
+import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
 import type { ServerFetchOptions } from '../utils'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
@@ -53,7 +54,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     ...(language && { 'X-Language': language }),
   }
 
-  const _fetchOptions: FetchOptions = {
+  const _fetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
     body: {
       query,
@@ -62,7 +63,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     } satisfies ServerFetchOptions,
   }
 
-  const _publicFetchOptions: FetchOptions = {
+  const _publicFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     method: 'POST',
     body: query,
