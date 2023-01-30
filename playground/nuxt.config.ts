@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['../src/module'],
+  modules: ['../src/module.ts'],
 
   kql: {
     // Enable token-based authentication
