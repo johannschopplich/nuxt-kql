@@ -1,4 +1,4 @@
-import { join } from 'path'
+import { join } from 'node:path'
 import { defu } from 'defu'
 import { pascalCase } from 'scule'
 import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
