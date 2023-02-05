@@ -1,12 +1,8 @@
 # Getting Started
 
-This section will help you add `nuxt-kql` to your Nuxt 3 project.
+Follow these steps to add `nuxt-kql` to your Nuxt project.
 
-::: tip
-This module ist suited to be used with [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter). You may use it as a base for your KQL server.
-:::
-
-## Step. 1: Install nuxt-kql
+## Step 1: Install nuxt-kql
 
 Using [pnpm](https://pnpm.io):
 
@@ -20,7 +16,7 @@ Using npm:
 $ npm i -D nuxt-kql
 ```
 
-## Step. 2: Add nuxt-kql to Nuxt
+## Step 2: Add nuxt-kql to Nuxt
 
 Add `nuxt-kql` to your Nuxt config:
 
@@ -31,27 +27,41 @@ export default defineNuxtConfig({
 })
 ```
 
-## Step. 3: Set up the Environment
+## Step 3: Set up the Environment
 
-This module will have to know, where the Kirby server is deployed. `nuxt-kql` automatically reads your environment variables.
+Without a backend, `nuxt-kql` won't be able to send queries. In order to do so, you will have to install the official [Kirby KQL](github.com/getkirby/kql) plugin.
 
-Create a `.env` file in your project (or edit the existing one) and add the following environment variables:
+It's recommended to use the [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter) however, which is a custom Kirby instance that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
+
+Enable the `bearer` authentication method in your Nuxt config:
+
+```ts
+// `nuxt.config.ts`
+export default defineNuxtConfig({
+  modules: ['nuxt-kql'],
+
+  kql: {
+    // Enable token-based authentication for the kirby-headless-starter,
+    // which includes a custom KQL endpoint `api/kql`
+    auth: 'bearer',
+  },
+})
+```
+
+`nuxt-kql` automatically reads your environment variables. Set the following environment variables in your project's `.env` file:
 
 ```
 KIRBY_BASE_URL=https://kirby.example.com
-KIRBY_API_USERNAME=your-username
-KIRBY_API_PASSWORD=your-password
+KIRBY_API_TOKEN=your-token
 ```
 
-::: info
-The default KQL endpoint `/api/query` [requires authentication](https://getkirby.com/docs/guide/api/authentication).
+:::tip
+If you have reasons not to use the Kirby Headless Starter and want to use basic authentication, follow the [basic authentication method](/guide/authentication-methods#basic-authentication) guide.
 :::
 
-Now, you can fetch data with the [`useKql`](/api/use-kql) composable.
+## Step 4: Send Queries
 
-## Step. 4: Send Queries
-
-Use the globally available `useKql` composable to send queries:
+Use the globally available [`useKql`](/api/use-kql) composable to send queries:
 
 ```vue
 <script setup lang="ts">

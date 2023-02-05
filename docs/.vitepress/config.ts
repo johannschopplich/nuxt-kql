@@ -70,11 +70,10 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
-function sidebarGuide(): DefaultTheme.SidebarGroup[] {
+function sidebarGuide(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'Introduction',
-      collapsible: true,
       items: [
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
@@ -84,9 +83,8 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
     },
     {
       text: 'Configuration',
-      collapsible: true,
       items: [
-        { text: 'Token-Based Authentication', link: '/guide/token-authentication' },
+        { text: 'Authentication Methods', link: '/guide/authentication-methods' },
         { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
         { text: 'Server-Side Cache', link: '/guide/server-side-cache' },
       ],
@@ -101,7 +99,6 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
     },
     {
       text: 'FAQ',
-      collapsible: true,
       items: [
         { text: 'Are CORS Issues Possible?', link: '/guide/faq-are-cors-issues-possible' },
         { text: 'How to Track Errors?', link: '/guide/faq-how-to-track-errors' },
@@ -111,7 +108,7 @@ function sidebarGuide(): DefaultTheme.SidebarGroup[] {
   ]
 }
 
-function sidebarConfig(): DefaultTheme.SidebarGroup[] {
+function sidebarConfig(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'Config',
@@ -122,7 +119,7 @@ function sidebarConfig(): DefaultTheme.SidebarGroup[] {
   ]
 }
 
-function sidebarApi(): DefaultTheme.SidebarGroup[] {
+function sidebarApi(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'API Reference',

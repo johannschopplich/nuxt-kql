@@ -4,9 +4,9 @@
 
 ## Motivation
 
-Kirby suits well for a headless CMS. Setting up [KQL](https://github.com/getkirby/kql) is fairly easy, but fetching queries can be cumbersome at times. This module tries to solve this by providing simple to use composables consuming KQL queries as parameter.
+Kirby suits well for a headless CMS. Setting up [KQL](https://github.com/getkirby/kql) is fairly easy, but fetching queries can be cumbersome at times. Not to mention CORS issues. This module tries to solve this by providing simple to use composables consuming KQL queries as parameter.
 
-With these composables, your KQL response are cached and authorization is handled for you out of the box.
+With provided composables like [`useKql`](/api/use-kql), your KQL response are cached and authorization is handled for you out of the box.
 
 Most importantly, your Kirby authentication credentials are protected when fetching data, even on the client.
 
