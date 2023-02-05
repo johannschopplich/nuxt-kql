@@ -29,7 +29,7 @@ export default defineNuxtConfig({
 
 ## Step 3: Set up the Environment
 
-Without a backend, `nuxt-kql` won't be able to send queries. In order to do so, you will have to install the official [Kirby KQL](github.com/getkirby/kql) plugin.
+Without a backend, `nuxt-kql` won't be able to send queries. In order to do so, you will have to install the official [Kirby KQL](https://github.com/getkirby/kql) plugin.
 
 It's recommended to use the [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter) however, which is a custom Kirby instance that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
 
