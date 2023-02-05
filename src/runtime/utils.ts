@@ -34,7 +34,7 @@ export function getAuthHeader({
 
   if (auth === 'basic' && credentials) {
     const { username, password } = credentials
-    headers.Authorization = Buffer.from(`${username}:${password}`).toString('base64')
+    headers.Authorization = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
   }
 
   if (auth === 'bearer')
