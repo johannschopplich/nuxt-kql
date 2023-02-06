@@ -55,7 +55,7 @@ Take the imaginary about page from above as an example:
 - `en/about` – the default language's content
 - `de/ueber-uns` – translated content with a custom slug
 
-In a multi-language setup, Kirby's page helper will always resolve the default page id (of the primary language). This behaviour my be unintentional, because the default slug `about` can be accessed within the other language: `de/about`, where only `de/ueber-uns` should be applicable.
+In a multi-language setup, Kirby's page helper will always resolve the default page ID (of the primary language). This behavior may be unintentional, because the default slug `about` can be accessed within the other language: `de/about`, where only `de/ueber-uns` should be applicable.
 
 We can handle that in our frontend:
 

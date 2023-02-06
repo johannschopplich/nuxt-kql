@@ -39,5 +39,5 @@ import type { Site } from '#build/kql'
 ```
 
 ::: info
-The actual **type** for the key will be pascal cased, e. g. the key `somePageKey` will result in the type `SomePageKey`.
+The actual **type** for the key will be pascal cased, e.g. the key `somePageKey` will result in the type `SomePageKey`.
 :::

@@ -1,7 +1,7 @@
 # Authentication Methods
 
 ::: tip
-`nuxt-kql` ist suited to be used with [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter). You may use it as a base for your KQL server.
+`nuxt-kql` is suited to be used with [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter). You may use it as a base for your KQL server.
 :::
 
 Depending on your Kirby setup, you can use one of the following authentication methods:
@@ -36,7 +36,7 @@ Make sure to set the same token as the `KIRBY_HEADLESS_API_TOKEN` environment va
 
 ## Basic Authentication
 
-In the case you don't want to build upon the [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter), for example because you only want to opt-in to KQL with an existing Kirby project, you can use basic authentication.
+In the case you don't want to build upon the [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter), for example because you only want to opt in to KQL with an existing Kirby project, you can use basic authentication.
 
 ::: tip
 The default KQL endpoint `/api/query` [requires authentication](https://getkirby.com/docs/guide/api/authentication). You have to enable HTTP basic authentication in your Kirby project's `config.php` file:

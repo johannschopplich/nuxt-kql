@@ -1,6 +1,6 @@
 # How to Track Errors?
 
-Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, if the request to Kirby succeeded. Even if your request is not authenticatd, a connection to the Kirby instance could be established.
+Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, if the request to Kirby succeeded. Even if your request is not authenticated, a connection to the Kirby instance could be established.
 
 Inspect the `code` and `status` property of your query response first to make sure the Kirby instance at least returns something:
 
@@ -13,7 +13,7 @@ console.log('Status Code', data.code)
 console.log('Status Message', data.status)
 ```
 
-If that won't give you relevant insights, the request to the Kirby backend was probably faulty. The [Nuxt server route to proxy KQL requests](/guide/how-it-works) used by [`useKql`](/api/use-kql) and [`$kql`](/api/kql) will return a `H3Error` (from the [h3](https://github.com/unjs/h3) package):
+If that doesn't give you relevant insights, the request to the Kirby backend was probably faulty. The [Nuxt server route to proxy KQL requests](/guide/how-it-works) used by [`useKql`](/api/use-kql) and [`$kql`](/api/kql) will return a `H3Error` (from the [h3](https://github.com/unjs/h3) package):
 
 ```ts
 // See https://github.com/unjs/h3 for details
