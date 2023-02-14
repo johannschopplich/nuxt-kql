@@ -30,8 +30,8 @@ export type UseKqlOptions<T> = Pick<
    */
   language?: string
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `client` to be enabled in the module options as well
+   * Skip the Nuxt server proxy and fetch directly from the API.
+   * Requires `client` to be enabled in the module options as well.
    */
   client?: boolean
   /**
@@ -84,7 +84,7 @@ export function useKql<
     ...(language && { 'X-Language': language }),
   }
 
-  const _fetchOptions = reactive<NitroFetchOptions<string>>({
+  const _serverFetchOptions = reactive<NitroFetchOptions<string>>({
     method: 'POST',
     body: {
       query: _query,
@@ -93,7 +93,7 @@ export function useKql<
     },
   })
 
-  const _publicFetchOptions = reactive<NitroFetchOptions<string>>({
+  const _clientFetchOptions = reactive<NitroFetchOptions<string>>({
     baseURL: kql.url,
     method: 'POST',
     body: _query,
@@ -124,7 +124,7 @@ export function useKql<
         {
           ...fetchOptions,
           signal: controller.signal,
-          ...(client ? _publicFetchOptions : _fetchOptions),
+          ...(client ? _clientFetchOptions : _serverFetchOptions),
         },
       )) as ResT
 

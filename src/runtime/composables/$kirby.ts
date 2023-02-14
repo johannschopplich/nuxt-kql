@@ -14,8 +14,8 @@ export type KirbyFetchOptions = Pick<
   | 'headers'
 > & {
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `client` to be enabled in the module options as well
+   * Skip the Nuxt server proxy and fetch directly from the API.
+   * Requires `client` to be enabled in the module options as well.
    */
   client?: boolean
   /**
@@ -46,7 +46,7 @@ export function $kirby<T = any>(
 
   const baseHeaders = headersToObject(headers)
 
-  const _fetchOptions: NitroFetchOptions<string> = {
+  const _serverFetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
     body: {
       uri,
@@ -55,7 +55,7 @@ export function $kirby<T = any>(
     } satisfies ServerFetchOptions,
   }
 
-  const _publicFetchOptions: NitroFetchOptions<string> = {
+  const _clientFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     headers: {
       ...baseHeaders,
@@ -65,7 +65,7 @@ export function $kirby<T = any>(
 
   const request = $fetch(client ? uri : getProxyPath(key), {
     ...fetchOptions,
-    ...(client ? _publicFetchOptions : _fetchOptions),
+    ...(client ? _clientFetchOptions : _serverFetchOptions),
   }).then((response) => {
     if (process.server || cache)
       nuxt.payload.data[key] = response

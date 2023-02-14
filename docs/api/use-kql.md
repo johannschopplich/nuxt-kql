@@ -36,8 +36,8 @@ type UseKqlOptions<T> = Pick<
    */
   language?: string
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `client` to be enabled in the module options as well
+   * Skip the Nuxt server proxy and fetch directly from the API.
+   * Requires `client` to be enabled in the module options as well.
    */
   client?: boolean
   /**

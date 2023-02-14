@@ -25,8 +25,8 @@ type UseKirbyDataOptions<T> = Pick<
   | 'headers'
 > & {
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `client` to be enabled in the module options as well
+   * Skip the Nuxt server proxy and fetch directly from the API.
+   * Requires `client` to be enabled in the module options as well.
    */
   client?: boolean
   /**
@@ -75,7 +75,7 @@ export function useKirbyData<T = any>(
     ],
   }
 
-  const _fetchOptions = reactive<NitroFetchOptions<string>>({
+  const _serverFetchOptions = reactive<NitroFetchOptions<string>>({
     method: 'POST',
     body: {
       uri: _uri,
@@ -84,7 +84,7 @@ export function useKirbyData<T = any>(
     },
   })
 
-  const _publicFetchOptions: NitroFetchOptions<string> = {
+  const _clientFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     headers: {
       ...baseHeaders,
@@ -113,7 +113,7 @@ export function useKirbyData<T = any>(
         {
           ...fetchOptions,
           signal: controller.signal,
-          ...(client ? _publicFetchOptions : _fetchOptions),
+          ...(client ? _clientFetchOptions : _serverFetchOptions),
         },
       )) as T
 

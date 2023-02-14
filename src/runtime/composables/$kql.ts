@@ -19,8 +19,8 @@ export type KqlOptions = Pick<
    */
   language?: string
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API
-   * Requires `client` to be enabled in the module options as well
+   * Skip the Nuxt server proxy and fetch directly from the API.
+   * Requires `client` to be enabled in the module options as well.
    */
   client?: boolean
   /**
@@ -54,7 +54,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     ...(language && { 'X-Language': language }),
   }
 
-  const _fetchOptions: NitroFetchOptions<string> = {
+  const _serverFetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
     body: {
       query,
@@ -63,7 +63,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     } satisfies ServerFetchOptions,
   }
 
-  const _publicFetchOptions: NitroFetchOptions<string> = {
+  const _clientFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     method: 'POST',
     body: query,
@@ -75,7 +75,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 
   const request = $fetch(client ? kql.prefix : getProxyPath(key), {
     ...fetchOptions,
-    ...(client ? _publicFetchOptions : _fetchOptions),
+    ...(client ? _clientFetchOptions : _serverFetchOptions),
   }).then((response) => {
     if (process.server || cache)
       nuxt.payload.data[key] = response
