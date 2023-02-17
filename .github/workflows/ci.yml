@@ -62,6 +62,9 @@ jobs:
 
       - run: corepack enable
 
+      - name: Environment Variables
+        run: cp .env.example .env
+
       - name: Install
         run: pnpm i
 
