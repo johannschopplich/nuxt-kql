@@ -41,7 +41,6 @@ Add `nuxt-kql` to your Nuxt config:
 export default defineNuxtConfig({
   modules: ['nuxt-kql'],
 })
-
 ```
 
 And send queries in your template:

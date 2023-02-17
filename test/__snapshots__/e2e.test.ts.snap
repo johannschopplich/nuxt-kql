@@ -1,13 +1,241 @@
 // Vitest Snapshot v1
 
-exports[`nuxt-kql > can prefetch KQL queries 1`] = `"{&quot;title&quot;:&quot;Mægazine&quot;,&quot;children&quot;:[{&quot;id&quot;:&quot;photography&quot;,&quot;title&quot;:&quot;Photography&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;notes&quot;,&quot;title&quot;:&quot;Notes&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;about&quot;,&quot;title&quot;:&quot;About us&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;error&quot;,&quot;title&quot;:&quot;Error&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;home&quot;,&quot;title&quot;:&quot;Home&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;sandbox&quot;,&quot;title&quot;:&quot;Sandbox&quot;,&quot;isListed&quot;:false}]}"`;
+exports[`nuxt-kql > can prefetch KQL queries 1`] = `
+{
+  "children": [
+    {
+      "id": "photography",
+      "isListed": true,
+      "title": "Photography",
+    },
+    {
+      "id": "notes",
+      "isListed": true,
+      "title": "Notes",
+    },
+    {
+      "id": "about",
+      "isListed": true,
+      "title": "About us",
+    },
+    {
+      "id": "error",
+      "isListed": false,
+      "title": "Error",
+    },
+    {
+      "id": "home",
+      "isListed": false,
+      "title": "Home",
+    },
+    {
+      "id": "sandbox",
+      "isListed": false,
+      "title": "Sandbox",
+    },
+  ],
+  "title": "Mægazine",
+}
+`;
 
-exports[`nuxt-kql > fetches Kirby data useKirbyData (client requests) 1`] = `"{&quot;title&quot;:&quot;Mægazine&quot;,&quot;children&quot;:[{&quot;id&quot;:&quot;photography&quot;,&quot;title&quot;:&quot;Photography&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;notes&quot;,&quot;title&quot;:&quot;Notes&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;about&quot;,&quot;title&quot;:&quot;About us&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;error&quot;,&quot;title&quot;:&quot;Error&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;home&quot;,&quot;title&quot;:&quot;Home&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;sandbox&quot;,&quot;title&quot;:&quot;Sandbox&quot;,&quot;isListed&quot;:false}]}"`;
+exports[`nuxt-kql > fetches Kirby data useKirbyData (client requests) 1`] = `
+{
+  "children": [
+    {
+      "id": "photography",
+      "isListed": true,
+      "title": "Photography",
+    },
+    {
+      "id": "notes",
+      "isListed": true,
+      "title": "Notes",
+    },
+    {
+      "id": "about",
+      "isListed": true,
+      "title": "About us",
+    },
+    {
+      "id": "error",
+      "isListed": false,
+      "title": "Error",
+    },
+    {
+      "id": "home",
+      "isListed": false,
+      "title": "Home",
+    },
+    {
+      "id": "sandbox",
+      "isListed": false,
+      "title": "Sandbox",
+    },
+  ],
+  "title": "Mægazine",
+}
+`;
 
-exports[`nuxt-kql > fetches Kirby data useKirbyData 1`] = `"{&quot;title&quot;:&quot;Mægazine&quot;,&quot;children&quot;:[{&quot;id&quot;:&quot;photography&quot;,&quot;title&quot;:&quot;Photography&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;notes&quot;,&quot;title&quot;:&quot;Notes&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;about&quot;,&quot;title&quot;:&quot;About us&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;error&quot;,&quot;title&quot;:&quot;Error&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;home&quot;,&quot;title&quot;:&quot;Home&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;sandbox&quot;,&quot;title&quot;:&quot;Sandbox&quot;,&quot;isListed&quot;:false}]}"`;
+exports[`nuxt-kql > fetches Kirby data useKirbyData 1`] = `
+{
+  "children": [
+    {
+      "id": "photography",
+      "isListed": true,
+      "title": "Photography",
+    },
+    {
+      "id": "notes",
+      "isListed": true,
+      "title": "Notes",
+    },
+    {
+      "id": "about",
+      "isListed": true,
+      "title": "About us",
+    },
+    {
+      "id": "error",
+      "isListed": false,
+      "title": "Error",
+    },
+    {
+      "id": "home",
+      "isListed": false,
+      "title": "Home",
+    },
+    {
+      "id": "sandbox",
+      "isListed": false,
+      "title": "Sandbox",
+    },
+  ],
+  "title": "Mægazine",
+}
+`;
 
-exports[`nuxt-kql > fetches queries with $kql (client requests) 1`] = `"{&quot;code&quot;:200,&quot;status&quot;:&quot;OK&quot;,&quot;result&quot;:{&quot;title&quot;:&quot;Mægazine&quot;,&quot;children&quot;:[{&quot;id&quot;:&quot;photography&quot;,&quot;title&quot;:&quot;Photography&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;notes&quot;,&quot;title&quot;:&quot;Notes&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;about&quot;,&quot;title&quot;:&quot;About us&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;error&quot;,&quot;title&quot;:&quot;Error&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;home&quot;,&quot;title&quot;:&quot;Home&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;sandbox&quot;,&quot;title&quot;:&quot;Sandbox&quot;,&quot;isListed&quot;:false}]}}"`;
+exports[`nuxt-kql > fetches queries with $kql (client requests) 1`] = `
+{
+  "code": 200,
+  "result": {
+    "children": [
+      {
+        "id": "photography",
+        "isListed": true,
+        "title": "Photography",
+      },
+      {
+        "id": "notes",
+        "isListed": true,
+        "title": "Notes",
+      },
+      {
+        "id": "about",
+        "isListed": true,
+        "title": "About us",
+      },
+      {
+        "id": "error",
+        "isListed": false,
+        "title": "Error",
+      },
+      {
+        "id": "home",
+        "isListed": false,
+        "title": "Home",
+      },
+      {
+        "id": "sandbox",
+        "isListed": false,
+        "title": "Sandbox",
+      },
+    ],
+    "title": "Mægazine",
+  },
+  "status": "OK",
+}
+`;
 
-exports[`nuxt-kql > fetches queries with $kql 1`] = `"{&quot;code&quot;:200,&quot;status&quot;:&quot;OK&quot;,&quot;result&quot;:{&quot;title&quot;:&quot;Mægazine&quot;,&quot;children&quot;:[{&quot;id&quot;:&quot;photography&quot;,&quot;title&quot;:&quot;Photography&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;notes&quot;,&quot;title&quot;:&quot;Notes&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;about&quot;,&quot;title&quot;:&quot;About us&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;error&quot;,&quot;title&quot;:&quot;Error&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;home&quot;,&quot;title&quot;:&quot;Home&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;sandbox&quot;,&quot;title&quot;:&quot;Sandbox&quot;,&quot;isListed&quot;:false}]}}"`;
+exports[`nuxt-kql > fetches queries with $kql 1`] = `
+{
+  "code": 200,
+  "result": {
+    "children": [
+      {
+        "id": "photography",
+        "isListed": true,
+        "title": "Photography",
+      },
+      {
+        "id": "notes",
+        "isListed": true,
+        "title": "Notes",
+      },
+      {
+        "id": "about",
+        "isListed": true,
+        "title": "About us",
+      },
+      {
+        "id": "error",
+        "isListed": false,
+        "title": "Error",
+      },
+      {
+        "id": "home",
+        "isListed": false,
+        "title": "Home",
+      },
+      {
+        "id": "sandbox",
+        "isListed": false,
+        "title": "Sandbox",
+      },
+    ],
+    "title": "Mægazine",
+  },
+  "status": "OK",
+}
+`;
 
-exports[`nuxt-kql > fetches queries with useKql (client requests) 1`] = `"{&quot;code&quot;:200,&quot;status&quot;:&quot;OK&quot;,&quot;result&quot;:{&quot;title&quot;:&quot;Mægazine&quot;,&quot;children&quot;:[{&quot;id&quot;:&quot;photography&quot;,&quot;title&quot;:&quot;Photography&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;notes&quot;,&quot;title&quot;:&quot;Notes&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;about&quot;,&quot;title&quot;:&quot;About us&quot;,&quot;isListed&quot;:true},{&quot;id&quot;:&quot;error&quot;,&quot;title&quot;:&quot;Error&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;home&quot;,&quot;title&quot;:&quot;Home&quot;,&quot;isListed&quot;:false},{&quot;id&quot;:&quot;sandbox&quot;,&quot;title&quot;:&quot;Sandbox&quot;,&quot;isListed&quot;:false}]}}"`;
+exports[`nuxt-kql > fetches queries with useKql (client requests) 1`] = `
+{
+  "code": 200,
+  "result": {
+    "children": [
+      {
+        "id": "photography",
+        "isListed": true,
+        "title": "Photography",
+      },
+      {
+        "id": "notes",
+        "isListed": true,
+        "title": "Notes",
+      },
+      {
+        "id": "about",
+        "isListed": true,
+        "title": "About us",
+      },
+      {
+        "id": "error",
+        "isListed": false,
+        "title": "Error",
+      },
+      {
+        "id": "home",
+        "isListed": false,
+        "title": "Home",
+      },
+      {
+        "id": "sandbox",
+        "isListed": false,
+        "title": "Sandbox",
+      },
+    ],
+    "title": "Mægazine",
+  },
+  "status": "OK",
+}
+`;

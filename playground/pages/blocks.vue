@@ -19,9 +19,7 @@ const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? 
   <div>
     <h1>Parse Kirby Blocks</h1>
     <hr>
-    <h2>
-      {{ data?.result?.title }}
-    </h2>
+    <h2>{{ data?.result?.title }}</h2>
     <div class="prose">
       <template v-for="(block, index) in blocks" :key="index">
         <component :is="block.content.level" v-if="block.type === 'heading'">

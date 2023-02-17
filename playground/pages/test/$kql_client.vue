@@ -9,9 +9,6 @@ const data = await $kql({
     },
   },
 }, { client: true })
+
+useTestResult(data)
 </script>
-
-<template>
-  <pre>{{ JSON.stringify(data) }}</pre>
-</template>
-
