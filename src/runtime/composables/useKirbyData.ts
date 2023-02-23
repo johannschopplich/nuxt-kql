@@ -101,7 +101,7 @@ export function useKirbyData<T = any>(
       controller?.abort?.()
 
       // Workaround to persist response client-side
-      // https://github.com/nuxt/framework/issues/8917
+      // https://github.com/nuxt/nuxt/issues/15445
       if ((nuxt!.isHydrating || cache) && key.value in nuxt!.payload.data)
         return nuxt!.payload.data[key.value]
 
@@ -109,7 +109,7 @@ export function useKirbyData<T = any>(
         ? new AbortController()
         : ({} as AbortController)
 
-      const result = (await $fetch<T>(
+      const result = (await globalThis.$fetch<T>(
         client ? _uri.value : getProxyPath(key.value),
         {
           ...fetchOptions,

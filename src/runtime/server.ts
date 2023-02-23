@@ -4,20 +4,21 @@ import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
 import type { ServerFetchOptions } from './utils'
 // @ts-expect-error: Will be resolved by Nitro
-import { cachedFunction } from '#internal/nitro'
+import { defineCachedFunction } from '#internal/nitro'
 import { useRuntimeConfig } from '#imports'
 
-const fetcher = async (
-  key: string,
-  kql: Required<ModuleOptions>,
-  { query, uri, headers }: ServerFetchOptions,
-) => {
-  const hasQuery = key.startsWith('$kql')
+type FetcherOptions = {
+  key: string
+  kql: Required<ModuleOptions>
+} & ServerFetchOptions
+
+const fetcher = async ({ key, kql, query, uri, headers }: FetcherOptions) => {
+  const isQueryRequest = key.startsWith('$kql')
 
   try {
-    const result = await $fetch<any>(hasQuery ? kql.prefix : uri!, {
+    const result = await $fetch<any>(isQueryRequest ? kql.prefix : uri!, {
       baseURL: kql.url,
-      ...(hasQuery && {
+      ...(isQueryRequest && {
         method: 'POST',
         body: query,
       }),
@@ -32,7 +33,7 @@ const fetcher = async (
   catch (err) {
     throw createError({
       statusCode: 500,
-      statusMessage: hasQuery
+      statusMessage: isQueryRequest
         ? 'Failed to execute KQL query'
         : `Failed to fetch "${uri}"`,
       data: (err as FetchError).message,
@@ -40,18 +41,17 @@ const fetcher = async (
   }
 }
 
-const cachedFetcher = cachedFunction(fetcher, {
+const cachedFetcher = defineCachedFunction(fetcher, {
   // Disable serving stale responses
   swr: false,
   maxAge: 15 * 60,
-  getKey: (key: string) => key,
+  getKey: (opts: FetcherOptions) => opts.key,
 })
 
 export default defineEventHandler(async (event): Promise<any> => {
   const body = await readBody<ServerFetchOptions>(event)
   const { key } = getRouterParams(event)
   const _key = decodeURIComponent(key)
-  const { kql } = useRuntimeConfig()
 
   if (_key.startsWith('$kql') && !body.query?.query) {
     throw createError({
@@ -60,8 +60,15 @@ export default defineEventHandler(async (event): Promise<any> => {
     })
   }
 
-  if (kql.server.cache && body.cache)
-    return await cachedFetcher(_key, kql, body)
+  const { kql } = useRuntimeConfig()
+  const opts: FetcherOptions = {
+    key: _key,
+    kql: kql as Required<ModuleOptions>,
+    ...body,
+  }
 
-  return await fetcher(_key, kql as Required<ModuleOptions>, body)
+  if (kql.server.cache && body.cache)
+    return await cachedFetcher(opts)
+
+  return await fetcher(opts)
 })
