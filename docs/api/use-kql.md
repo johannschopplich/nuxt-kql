@@ -13,22 +13,14 @@ function useKql<
 >(
   query: MaybeComputedRef<ReqT>,
   opts?: UseKqlOptions<ResT>,
-): AsyncData<ResT, FetchError | null | true>
+): AsyncData<ResT, FetchError>
 
-type UseKqlOptions<T> = Pick<
-  AsyncDataOptions<T>,
-  | 'server'
-  | 'lazy'
-  | 'default'
-  | 'watch'
-  | 'immediate'
-> & Pick<
+type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   FetchOptions,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'
   | 'onResponseError'
-  // Pick from `globalThis.RequestInit`
   | 'headers'
 > & {
   /**
@@ -49,7 +41,7 @@ type UseKqlOptions<T> = Pick<
 }
 ```
 
-`useKql` infers all of Nuxt's [`useAsyncData` options](https://v3.nuxtjs.org/api/composables/use-async-data#params).
+`useKql` infers all of Nuxt's [`useAsyncData` options](https://nuxt.com/docs/api/composables/use-async-data#params).
 
 ## Return Values
 

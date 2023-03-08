@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
-import type { FetchError, FetchOptions } from 'ofetch'
+import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
@@ -9,20 +9,12 @@ import type { MaybeComputedRef } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
-export type UseKqlOptions<T> = Pick<
-  AsyncDataOptions<T>,
-  | 'server'
-  | 'lazy'
-  | 'default'
-  | 'watch'
-  | 'immediate'
-> & Pick<
-  FetchOptions,
+export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
+  NitroFetchOptions<string>,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'
   | 'onResponseError'
-  // Pick from `globalThis.RequestInit`
   | 'headers'
 > & {
   /**
@@ -54,8 +46,10 @@ export function useKql<
     server,
     lazy,
     default: defaultFn,
-    immediate,
+    transform,
+    pick,
     watch,
+    immediate,
     headers,
     language,
     client = false,
@@ -73,11 +67,13 @@ export function useKql<
     server,
     lazy,
     default: defaultFn,
-    immediate,
+    transform,
+    pick,
     watch: [
       _query,
       ...(watch || []),
     ],
+    immediate,
   }
 
   const baseHeaders = {
@@ -135,5 +131,5 @@ export function useKql<
       return result
     },
     asyncDataOptions,
-  ) as AsyncData<ResT, FetchError | null | true>
+  ) as AsyncData<ResT, FetchError>
 }

@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
-> Kirby [KQL](https://github.com/getkirby/kql) module for [Nuxt 3](https://v3.nuxtjs.org).
+> Kirby [KQL](https://github.com/getkirby/kql) module for [Nuxt 3](https://nuxt.com).
 
 - [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
 - [📖 &nbsp;Read the documentation](https://nuxt-kql.jhnn.dev)
@@ -14,7 +14,7 @@
 - 🔒 Protect your Kirby credentials when sending queries
 - 🪢 Supports token-based authentication with [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
 - 🤹 No CORS issues!
-- 🍱 Handle request just like with the [`useFetch`](https://v3.nuxtjs.org/getting-started/data-fetching/#usefetch) composable
+- 🍱 Handle request just like with the [`useFetch`](https://nuxt.com/docs/getting-started/data-fetching/#usefetch) composable
 - 🗃 Cached query responses
 - 🦾 Strongly typed
 

@@ -2,7 +2,7 @@
 
 ## Composables
 
-`nuxt-kql` offers several composables to return data from KQL queries. All composables are [auto-imported](https://v3.nuxtjs.org/guide/concepts/auto-imports) and globally available inside your `<script setup>`.
+`nuxt-kql` offers several composables to return data from KQL queries. All composables are [auto-imported](https://nuxt.com/docs/guide/concepts/auto-imports) and globally available inside your `<script setup>`.
 
 - [`useKql`](/api/use-kql)
 - [`$kql`](/api/kql)
