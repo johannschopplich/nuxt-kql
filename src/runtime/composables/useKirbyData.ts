@@ -35,7 +35,6 @@ export function useKirbyData<T = any>(
 ) {
   const { kql } = useRuntimeConfig().public
   const _uri = computed(() => resolveUnref(uri).replace(/^\//, ''))
-  const key = computed(() => `$kirby${hash(_uri.value)}`)
 
   const {
     server,
@@ -90,6 +89,7 @@ export function useKirbyData<T = any>(
   }
 
   let controller: AbortController
+  const key = computed(() => `$kirby${hash(_uri.value)}`)
 
   return useAsyncData<T, FetchError>(
     key.value,

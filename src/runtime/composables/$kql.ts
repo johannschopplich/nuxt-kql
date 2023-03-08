@@ -39,7 +39,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
   const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
   const { headers, language, client = false, cache = true, ...fetchOptions } = opts
   const { kql } = useRuntimeConfig().public
-  const key = `$kql${hash(query)}`
+  const key = `$kql${hash([query, language])}`
 
   if (client && !kql.client)
     throw new Error(DEFAULT_CLIENT_ERROR)

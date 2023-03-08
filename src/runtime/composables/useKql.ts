@@ -40,7 +40,6 @@ export function useKql<
 >(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
   const { kql } = useRuntimeConfig().public
   const _query = computed(() => resolveUnref(query))
-  const key = computed(() => `$kql${hash(_query.value)}`)
 
   const {
     server,
@@ -101,6 +100,7 @@ export function useKql<
   })
 
   let controller: AbortController
+  const key = computed(() => `$kql${hash([_query.value, language])}`)
 
   return useAsyncData<ResT, FetchError>(
     key.value,
