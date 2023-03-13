@@ -3,7 +3,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --vp-c-accent: #9da591;
+  --vp-c-accent: #208CFF;
   --vp-c-brand: #ff9320;
   --vp-c-brand-light: #ffa749;
   --vp-c-brand-lighter: #ffbb72;
@@ -19,12 +19,12 @@
   --vp-home-hero-name-background: -webkit-linear-gradient(
     120deg,
     #ff9320 30%,
-    #d9dcd4
+    #208CFF
   );
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
     #ff932060 30%,
-    #d9dcd460
+    #208CFF60
   );
   --vp-home-hero-image-filter: blur(30px);
 }

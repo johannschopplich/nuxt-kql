@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
-> Kirby [KQL](https://github.com/getkirby/kql) module for [Nuxt 3](https://nuxt.com).
+> [Nuxt 3](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
 
 - [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
 - [📖 &nbsp;Read the documentation](https://nuxt-kql.jhnn.dev)
