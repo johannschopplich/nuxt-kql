@@ -31,7 +31,7 @@ export function $kirby<T = any>(
   opts: KirbyFetchOptions = {},
 ): Promise<T> {
   const nuxt = useNuxtApp()
-  const promiseMap: Map<string, Promise<T>> = nuxt._promiseMap = nuxt._promiseMap || new Map()
+  const promiseMap = (nuxt._promiseMap = nuxt._promiseMap || new Map()) as Map<string, Promise<T>>
   const { headers, client = false, cache = true, ...fetchOptions } = opts
   const { kql } = useRuntimeConfig().public
   const key = `$kirby${hash(uri)}`
