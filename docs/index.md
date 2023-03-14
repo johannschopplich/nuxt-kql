@@ -25,11 +25,15 @@ hero:
 
 features:
   - title: Protect Your Kirby Credentials
+    icon: 🔒
     details: A Nuxt server route proxies your queries. No CORS issues!
   - title: Various Authentication Methods
-    details: Basic, bearer or no authentication. Teams up best with kirby-headless-starter!
+    icon: 🪢
+    details: Basic or bearer authentication with <code>kirby-headless-starter</code>.
   - title: Familiar Data Handling
-    details: Handle query requests just like with Nuxt's useFetch composable. Caching included.
+    icon: 🤹
+    details: Handle query requests just like with Nuxt's <code>useFetch</code> composable. Caching included.
   - title: TypeScript
-    details: Bring your own query response typings. Otherwise, nuxt-kql will provide defaults for you.
+    icon: 🦾
+    details: Bring your own query response typings. Otherwise, <code>nuxt-kql</code> will provide defaults for you.
 ---
