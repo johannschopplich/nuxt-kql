@@ -1,3 +1,4 @@
+import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { FetchOptions } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
@@ -13,6 +14,10 @@ export type KirbyFetchOptions = Pick<
   | 'onResponseError'
   | 'headers'
 > & {
+  /**
+   * Language code to fetch data for in multi-language Kirby setups
+   */
+  language?: string
   /**
    * Skip the Nuxt server proxy and fetch directly from the API.
    * Requires `client` to be enabled in the module options as well.
@@ -32,8 +37,10 @@ export function $kirby<T = any>(
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const promiseMap = (nuxt._promiseMap = nuxt._promiseMap || new Map()) as Map<string, Promise<T>>
-  const { headers, client = false, cache = true, ...fetchOptions } = opts
+  const { headers, language, client = false, cache = true, ...fetchOptions } = opts
   const { kql } = useRuntimeConfig().public
+
+  uri = language ? joinURL(language, uri) : uri
   const key = `$kirby${hash(uri)}`
 
   if (client && !kql.client)

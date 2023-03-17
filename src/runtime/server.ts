@@ -1,4 +1,4 @@
-import { createError, defineEventHandler, getRouterParams, readBody } from 'h3'
+import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
@@ -50,10 +50,9 @@ const cachedFetcher = defineCachedFunction(fetcher, {
 
 export default defineEventHandler(async (event): Promise<any> => {
   const body = await readBody<ServerFetchOptions>(event)
-  const { key } = getRouterParams(event)
-  const _key = decodeURIComponent(key)
+  const key = decodeURIComponent(getRouterParam(event, 'key'))
 
-  if (_key.startsWith('$kql') && !body.query?.query) {
+  if (key.startsWith('$kql') && !body.query?.query) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Empty KQL query',
@@ -62,7 +61,7 @@ export default defineEventHandler(async (event): Promise<any> => {
 
   const { kql } = useRuntimeConfig()
   const opts: FetcherOptions = {
-    key: _key,
+    key,
     kql: kql as Required<ModuleOptions>,
     ...body,
   }

@@ -38,9 +38,6 @@ export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
 >(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
-  const { kql } = useRuntimeConfig().public
-  const _query = computed(() => resolveUnref(query))
-
   const {
     server,
     lazy,
@@ -55,6 +52,9 @@ export function useKql<
     cache = true,
     ...fetchOptions
   } = opts
+
+  const { kql } = useRuntimeConfig().public
+  const _query = computed(() => resolveUnref(query))
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')

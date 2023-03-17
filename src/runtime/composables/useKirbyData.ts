@@ -1,4 +1,5 @@
 import { computed, reactive } from 'vue'
+import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
@@ -17,6 +18,10 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
   | 'headers'
 > & {
   /**
+   * Language code to fetch data for in multi-language Kirby setups
+   */
+  language?: string
+  /**
    * Skip the Nuxt server proxy and fetch directly from the API.
    * Requires `client` to be enabled in the module options as well.
    * @default false
@@ -33,9 +38,6 @@ export function useKirbyData<T = any>(
   uri: MaybeComputedRef<string>,
   opts: UseKirbyDataOptions<T> = {},
 ) {
-  const { kql } = useRuntimeConfig().public
-  const _uri = computed(() => resolveUnref(uri).replace(/^\//, ''))
-
   const {
     server,
     lazy,
@@ -45,12 +47,19 @@ export function useKirbyData<T = any>(
     watch,
     immediate,
     headers,
+    language,
     client = false,
     cache = true,
     ...fetchOptions
   } = opts
 
-  if (!_uri.value)
+  const { kql } = useRuntimeConfig().public
+  const _uri = computed(() => {
+    const value = resolveUnref(uri).replace(/^\//, '')
+    return language ? joinURL(language, value) : value
+  })
+
+  if (!_uri.value || (language && !_uri.value.replace(new RegExp(`^${language}/`), '')))
     console.warn('[useKirbyData] Empty Kirby URI')
 
   if (client && !kql.client)
@@ -89,7 +98,7 @@ export function useKirbyData<T = any>(
   }
 
   let controller: AbortController
-  const key = computed(() => `$kirby${hash(_uri.value)}`)
+  const key = computed(() => `$kirby${hash([_uri.value, language])}`)
 
   return useAsyncData<T, FetchError>(
     key.value,
