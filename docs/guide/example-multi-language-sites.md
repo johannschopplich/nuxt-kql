@@ -7,7 +7,7 @@ To fetch language-specific content from your Kirby instance, pass a `language` o
 ```ts
 // Get the German translation of the about page
 const { data } = await useKql(
-  { query: 'page("ueber-uns")' },
+  { query: 'page("about")' },
   { language: 'de' }
 )
 ```

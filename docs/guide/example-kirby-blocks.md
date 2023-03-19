@@ -50,8 +50,11 @@ const blocks = computed<KirbyBlock<string>[]>(() => data.value?.result?.text ?? 
           :src="(block as KirbyBlock<'image'>).content.url"
         >
 
-        <!-- Output text if it exists on any other block -->
-        <div v-else v-html="block.content?.text" />
+        <!-- Handle the text block -->
+        <div v-else-if="block.type === 'text'" v-html="block.content?.text" />
+
+        <!-- Handle all other blocks -->
+        <!-- … -->
       </template>
     </div>
   </div>

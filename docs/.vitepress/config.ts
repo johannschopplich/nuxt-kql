@@ -94,11 +94,11 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
-      text: 'Examples',
+      text: 'Cookbook',
       items: [
-        { text: 'Multi-Language Sites', link: '/guide/example-multi-language-sites' },
-        { text: 'Typed Responses', link: '/guide/example-typed-query-results' },
         { text: 'Kirby Blocks', link: '/guide/example-kirby-blocks' },
+        { text: 'Typed Responses', link: '/guide/example-typed-query-results' },
+        { text: 'Multi-Language Sites', link: '/guide/example-multi-language-sites' },
       ],
     },
     {
