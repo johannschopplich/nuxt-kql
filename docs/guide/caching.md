@@ -2,7 +2,7 @@
 
 ## Client-side Caching
 
-Query responses using the built-in [composables](api/#composables) are cached by default. Meaning, if you call the same query multiple times, the response will be cached and returned from the cache on subsequent calls.
+Query responses using the built-in [composables](/api/#composables) are cached by default. Meaning, if you call the same query multiple times, the response will be cached and returned from the cache on subsequent calls.
 
 For each query, a hash is calculated based on the query string and the requested language (in multi-language setups).
 
