@@ -89,7 +89,7 @@ const { data } = await useKql(
 
 This requires the `client` option to be `true` in your `nuxt-kql` module configuration:
 
-```ts{9}
+```ts{6}
 // `nuxt.config.ts`
 export default defineNuxtConfig({
   modules: ['nuxt-kql'],
