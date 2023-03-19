@@ -1,6 +1,6 @@
 # Caching
 
-## Client-side Caching
+## Client-Side Caching
 
 Query responses using the built-in [composables](/api/#composables) are cached by default. Meaning, if you call the same query multiple times, the response will be cached and returned from the cache on subsequent calls.
 
@@ -18,7 +18,7 @@ const { data } = await useKql(
 )
 ```
 
-## Server-side Caching
+## Server-Side Caching
 
 `nuxt-kql` lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory. For short concurrent requests on your website, it will make a great performance difference, as the query response will be served from the cache instead of being fetched from the server again.
 

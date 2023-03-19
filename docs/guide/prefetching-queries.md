@@ -1,6 +1,6 @@
 # Prefetching Queries
 
-`nuxt-kql` allows you to prefetch custom queries **at build-time** (during development and in production), recommended for infrequently changing data to increase performance in production. You can prefetch as many queries as you like. The query results as well as their TypeScript type will be importable globally.
+`nuxt-kql` allows you to prefetch custom queries **at build-time** (during development and in production), recommended for infrequently changing data to increase performance in production. You can prefetch as many queries as you like. The query results as well as their TypeScript type will be importable from `#build/kql`.
 
 To get started, define a **key** for your query as well as the actual query request. Let's use `site` as an example key and fetch the site title solely:
 

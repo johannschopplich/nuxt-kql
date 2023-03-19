@@ -6,7 +6,7 @@ The [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-star
 
 Consider the following Nuxt page below, illustrating how to query [Kirby Blocks](https://getkirby.com/docs/reference/panel/fields/blocks).
 
-For demonstration purposes, only `heading` and `image` blocks are parsed. Using a `v-for` directive we iterate over each block and read out its `content` property – like `content.level` and `content.text` of a heading. For every other block, existence of the `text` content key is assumed.
+For demonstration purposes, only `heading`, `image` and `text` blocks are parsed. Using a `v-for` directive, we iterate over each block and read out its `content` property – i.e. `content.level` and `content.text` of a heading.
 
 Typings are optional to use, but will improve your editor suggestions and reduce type errors.
 

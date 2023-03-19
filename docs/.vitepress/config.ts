@@ -88,7 +88,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
     {
       text: 'Configuration',
       items: [
-        { text: 'Authentication Methods', link: '/guide/authentication-methods' },
+        { text: 'Authentication', link: '/guide/authentication-methods' },
         { text: 'Caching', link: '/guide/caching' },
         { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
       ],

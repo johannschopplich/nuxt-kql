@@ -29,7 +29,7 @@ features:
     details: A Nuxt server route proxies your queries. No CORS issues!
   - title: Various Authentication Methods
     icon: 🪢
-    details: Basic or bearer authentication with <code>kirby-headless-starter</code>.
+    details: Basic or bearer authentication with the Kirby Headless Starter.
   - title: Familiar Data Handling
     icon: 🤹
     details: Handle query requests just like with Nuxt's <code>useFetch</code> composable. Caching included.

@@ -8,6 +8,7 @@ Adapt `nuxt-kql` to your needs by setting module options in your `nuxt.config.ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
   modules: ['nuxt-kql'],
+
   kql: {
     // ... your options
   }
@@ -89,12 +90,27 @@ interface ModuleOptions {
    */
   server?: {
     /**
-     * Enable server-side caching of queries using the Nitro storage layer
-     * (in-memory cache)
+     * Enable server-side caching of queries using the Nitro cache API (in-memory cache)
      *
-     * @see https://nitro.unjs.io/guide/introduction/storage
+     * @see https://nitro.unjs.io/guide/cache
      */
     cache?: boolean
+
+    /**
+     * Enable stale-while-revalidate behavior (cache is served while a new request is made)
+     *
+     * @see https://nitro.unjs.io/guide/cache#options
+     * @default true
+     */
+    swr?: boolean
+
+    /**
+     * Maximum age that cache is valid in seconds
+     *
+     * @see https://nitro.unjs.io/guide/cache#options
+     * @default 60 * 60
+     */
+    maxAge?: number
   }
 }
 ```

@@ -12,7 +12,7 @@ Most importantly, your Kirby authentication credentials are protected when fetch
 
 ## Kirby Headless Starter
 
-This module works best with the [kirby-headless-starter](https://github.com/johannschopplich/kirby-headless-starter). You don't have to use it, but it's suited best for using Kirby as a headless CMS and avoids common pitfalls like CORS issues.
+This module works best with the [Kirby Headless Starter](https://github.com/johannschopplich/kirby-headless-starter). You don't have to use it, but it's suited best for using Kirby as a headless CMS and avoids common pitfalls like CORS issues.
 
 With it, you will get out of the box:
 
@@ -20,8 +20,8 @@ With it, you will get out of the box:
 - 🔒 **public** or **private** API
 - 🧩 [KQL](https://github.com/getkirby/kql) with bearer token support via new `/api/kql` route
 - ⚡️ Cached KQL queries
-- 😵‍💫 No CORS issues!
+- 🌐 Multi-lang support for KQL queries
 - 🗂 [Templates](https://github.com/johannschopplich/kirby-headless-starter/tree/main/site/templates) present JSON instead of HTML
-  - Fetch either `/example` or `/example.json`
-  - You decide, which data you share
-- 🦾 Express-esque [API builder](https://github.com/johannschopplich/kirby-headless-starter#api-builder) with middleware support
+- 😵‍💫 No CORS issues!
+- 🍢 Build your own [API chain](https://github.com/johannschopplich/kirby-headless/blob/main/src/extensions/routes.php)
+- 🦾 Express-esque [API builder](https://github.com/johannschopplich/kirby-headless#api-builder) with middleware support

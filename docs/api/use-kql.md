@@ -72,31 +72,30 @@ const { data, pending, error, refresh } = await useKql({
 </template>
 ```
 
-### Public Requests in Client
-
-To fetch data directly from the Kirby instance, set the option `{ client: true }`. Requires `kql.client` option to be `true` in `nuxt.config.ts` as well.
+## Allow Client Requests
 
 ::: warning
 Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly.
 :::
 
-```vue
-<script setup lang="ts">
-const { data, pending, error, refresh } = await useKql(
-  {
-    query: 'site',
-    select: ['title', 'children']
-  },
+To fetch data directly from your Kirby instance, without the Nuxt proxy, set the option `client` to `true`:
+
+```ts{3}
+const { data } = await useKql(
+  query,
   { client: true }
 )
-</script>
+```
 
-<template>
-  <div>
-    <h1>{{ data?.result?.title }}</h1>
-    <button @click="refresh()">
-      Refresh
-    </button>
-  </div>
-</template>
+This requires the `client` option to be `true` in your `nuxt-kql` module configuration:
+
+```ts{9}
+// `nuxt.config.ts`
+export default defineNuxtConfig({
+  modules: ['nuxt-kql'],
+
+  kql: {
+    client: true
+  }
+})
 ```

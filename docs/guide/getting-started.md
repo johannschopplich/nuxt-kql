@@ -31,7 +31,7 @@ export default defineNuxtConfig({
 
 Without a backend, `nuxt-kql` won't be able to fetch queries. In order to do so, you have to point to a Kirby instance with the official [Kirby KQL](https://github.com/getkirby/kql) plugin installed.
 
-It's recommended to use the [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter), which is a customized Kirby project template that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
+It's recommended to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter), which is a customized Kirby project template that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
 
 Enable the `bearer` authentication method in your Nuxt config:
 
@@ -41,7 +41,7 @@ export default defineNuxtConfig({
   modules: ['nuxt-kql'],
 
   kql: {
-    // Enable token-based authentication for the `kirby-headless-starter`,
+    // Enable token-based authentication for the Kirby Headless Starter,
     // which includes a custom KQL endpoint `api/kql`
     auth: 'bearer'
   }
@@ -57,7 +57,7 @@ KIRBY_API_TOKEN=your-token
 ```
 
 :::tip
-If you have reasons not to use the [kirby-headless-starter](/guide/what-is-nuxt-kql#kirby-headless-starter) and want to use basic authentication, follow the [basic authentication method](/guide/authentication-methods#basic-authentication) guide.
+If you have reasons not to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter) and want to use basic authentication, follow the [basic authentication method](/guide/authentication-methods#basic-authentication) guide.
 :::
 
 ## Step 4: Send Queries
