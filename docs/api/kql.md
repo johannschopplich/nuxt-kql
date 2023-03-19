@@ -59,7 +59,7 @@ const data = await $kql(
     },
     async onResponseError({ error }) {
       console.log(error)
-    },
+    }
   }
 )
 </script>
@@ -87,7 +87,7 @@ const data = await $kql(
     select: ['title', 'children']
   },
   {
-    client: true,
+    client: true
   }
 )
 </script>

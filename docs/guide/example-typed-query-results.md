@@ -40,10 +40,10 @@ const { data } = await useKql<KirbyQueryResponse<KirbySite>>({
       select: {
         id: true,
         title: true,
-        isListed: true,
-      },
-    },
-  },
+        isListed: true
+      }
+    }
+  }
 })
 </script>
 

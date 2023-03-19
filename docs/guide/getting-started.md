@@ -1,8 +1,8 @@
 # Getting Started
 
-Follow these steps to add `nuxt-kql` to your Nuxt project.
+This guide will walk you through the steps to get started with `nuxt-kql`.
 
-## Step 1: Install nuxt-kql
+## Step 1: Install `nuxt-kql`
 
 Using [pnpm](https://pnpm.io):
 
@@ -16,14 +16,14 @@ Using npm:
 $ npm i -D nuxt-kql
 ```
 
-## Step 2: Add nuxt-kql to Nuxt
+## Step 2: Add `nuxt-kql` to Nuxt
 
 Add `nuxt-kql` to your Nuxt config:
 
 ```ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['nuxt-kql'],
+  modules: ['nuxt-kql']
 })
 ```
 
@@ -41,17 +41,17 @@ export default defineNuxtConfig({
   modules: ['nuxt-kql'],
 
   kql: {
-    // Enable token-based authentication for the kirby-headless-starter,
+    // Enable token-based authentication for the `kirby-headless-starter`,
     // which includes a custom KQL endpoint `api/kql`
-    auth: 'bearer',
-  },
+    auth: 'bearer'
+  }
 })
 ```
 
 `nuxt-kql` automatically reads your environment variables. Set the following environment variables in your project's `.env` file:
 
 ```
-# Origin of your Kirby instance (without any path)
+# Base URL of your Kirby instance (without a path)
 KIRBY_BASE_URL=https://kirby.example.com
 KIRBY_API_TOKEN=your-token
 ```
@@ -70,8 +70,8 @@ const { data, pending, refresh, error } = await useKql({
   query: 'site',
   select: {
     title: true,
-    children: true,
-  },
+    children: true
+  }
 })
 </script>
 

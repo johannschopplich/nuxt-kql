@@ -22,8 +22,8 @@ const { data } = await useKql({
     id: true,
     title: true,
     // That is where the magic happens
-    text: 'page.text.toBlocks',
-  },
+    text: 'page.text.toBlocks'
+  }
 })
 
 // Shorthand getter for the nested `text` object key inside the query result

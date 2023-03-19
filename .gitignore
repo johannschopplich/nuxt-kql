@@ -8,7 +8,7 @@ node_modules
 .temp
 .tmp
 .cache
-.vitepress/cache
+**/.vitepress/cache
 
 # Yarn
 **/.yarn/cache

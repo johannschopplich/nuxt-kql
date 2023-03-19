@@ -18,8 +18,8 @@ export default defineNuxtConfig({
   kql: {
     // Enable token-based authentication for the kirby-headless-starter,
     // which includes a custom KQL endpoint `api/kql`
-    auth: 'bearer',
-  },
+    auth: 'bearer'
+  }
 })
 ```
 
