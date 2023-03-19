@@ -1,4 +1,5 @@
 import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
+import destr from 'destr'
 import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
@@ -12,7 +13,7 @@ type FetcherOptions = {
   kql: Required<ModuleOptions>
 } & ServerFetchOptions
 
-const fetcher = async ({ key, kql, query, uri, headers }: FetcherOptions) => {
+async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
   const isQueryRequest = key.startsWith('$kql')
 
   try {
@@ -42,14 +43,19 @@ const fetcher = async ({ key, kql, query, uri, headers }: FetcherOptions) => {
 }
 
 const cachedFetcher = defineCachedFunction(fetcher, {
-  // Disable serving stale responses
-  swr: false,
-  maxAge: 15 * 60,
+  swr: useRuntimeConfig().kql.server.swr,
+  maxAge: useRuntimeConfig().kql.server.maxAge,
   getKey: (opts: FetcherOptions) => opts.key,
 })
 
 export default defineEventHandler(async (event): Promise<any> => {
-  const body = await readBody<ServerFetchOptions>(event)
+  let body = await readBody<ServerFetchOptions>(event)
+
+  // Inconsistent `readBody` behavior in some Nitro presets
+  // https://github.com/unjs/nitro/issues/912
+  if (Buffer.isBuffer(body))
+    body = destr((body as Buffer).toString())
+
   const key = decodeURIComponent(getRouterParam(event, 'key'))
 
   if (key.startsWith('$kql') && !body.query?.query) {

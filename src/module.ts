@@ -75,12 +75,27 @@ export interface ModuleOptions {
    */
   server?: {
     /**
-     * Enable server-side caching of queries using the Nitro storage layer
-     * (in-memory cache)
+     * Enable server-side caching of queries using the Nitro cache API (in-memory cache)
      *
-     * @see https://nitro.unjs.io/guide/introduction/storage
+     * @see https://nitro.unjs.io/guide/cache
      */
     cache?: boolean
+
+    /**
+     * Enable stale-while-revalidate behavior (cache is served while a new request is made)
+     *
+     * @see https://nitro.unjs.io/guide/cache#options
+     * @default true
+     */
+    swr?: boolean
+
+    /**
+     * Maximum age that cache is valid in seconds
+     *
+     * @see https://nitro.unjs.io/guide/cache#options
+     * @default 60 * 60
+     */
+    maxAge?: number
   }
 }
 
@@ -105,6 +120,8 @@ export default defineNuxtModule<ModuleOptions>({
     prefetch: {},
     server: {
       cache: false,
+      swr: true,
+      maxAge: 60 * 60,
     },
   },
   async setup(options, nuxt) {
@@ -150,9 +167,9 @@ export default defineNuxtModule<ModuleOptions>({
     // Inline module runtime in Nitro bundle
     // Needed to circumvent "cannot find module" error in `server.ts` for the `utils` import
     nuxt.hook('nitro:config', (config) => {
-      config.externals = config.externals || {}
-      config.externals.inline = config.externals.inline || []
-      config.externals.inline.push(resolve('runtime/utils'))
+      config.externals = defu(config.externals, {
+        inline: [resolve('runtime/utils')],
+      })
     })
 
     // Add KQL proxy endpoint to send queries server-side
@@ -179,6 +196,16 @@ declare module '#nuxt-kql' {
     // Add global `#nuxt-kql` type import path
     nuxt.hook('prepare:types', (options) => {
       options.references.push({ path: join(nuxt.options.buildDir, 'types/nuxt-kql.d.ts') })
+    })
+
+    // Load options template
+    addTemplate({
+      filename: 'kql.options.ts',
+      getContents() {
+        return `
+export const options = ${JSON.stringify(options)};
+`.trimStart()
+      },
     })
 
     // Prefetch custom KQL queries at build-time

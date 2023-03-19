@@ -39,7 +39,7 @@ Add `nuxt-kql` to your Nuxt config:
 ```ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['nuxt-kql'],
+  modules: ['nuxt-kql']
 })
 ```
 
