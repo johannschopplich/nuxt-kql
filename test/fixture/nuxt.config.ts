@@ -4,6 +4,10 @@ export default defineNuxtConfig({
   modules: ['../src/module.ts'],
 
   kql: {
+    // URL and token to the Kirby instance
+    url: 'https://kirby-headless-starter.jhnn.dev',
+    token: 'test',
+
     // Enable token-based authentication
     auth: 'bearer',
 
