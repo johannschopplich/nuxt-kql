@@ -1,3 +1,5 @@
+import { isCI } from 'std-env'
+
 export default defineNuxtConfig({
   modules: ['../src/module.ts'],
 
@@ -5,7 +7,7 @@ export default defineNuxtConfig({
     // Enable token-based authentication
     auth: 'bearer',
 
-    // Enable client-side query requests with `useKql(query, { client: true })`
+    // Enable client-side query requests with `useKql({}, { client: true })`
     client: true,
 
     // Prefetch queries at build-time
@@ -32,6 +34,7 @@ export default defineNuxtConfig({
   },
 
   typescript: {
+    typeCheck: !isCI,
     shim: false,
   },
 })

@@ -6,36 +6,36 @@ import { $fetch, setup } from '@nuxt/test-utils'
 describe('nuxt-kql', async () => {
   await setup({
     server: true,
-    rootDir: fileURLToPath(new URL('../playground', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixture', import.meta.url)),
   })
 
   it('fetches queries with $kql', async () => {
-    const html = await $fetch('/test/$kql')
+    const html = await $fetch('/$kql')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('fetches queries with $kql (client requests)', async () => {
-    const html = await $fetch('/test/$kql_client')
+    const html = await $fetch('/$kql_client')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('fetches queries with useKql (client requests)', async () => {
-    const html = await $fetch('/test/useKql_client')
+    const html = await $fetch('/useKql_client')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('fetches Kirby data useKirbyData', async () => {
-    const html = await $fetch('/test/useKirbyData')
+    const html = await $fetch('/useKirbyData')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('fetches Kirby data useKirbyData (client requests)', async () => {
-    const html = await $fetch('/test/useKirbyData_client')
+    const html = await $fetch('/useKirbyData_client')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('can prefetch KQL queries', async () => {
-    const html = await $fetch('/test/prefetch')
+    const html = await $fetch('/prefetch')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 })
