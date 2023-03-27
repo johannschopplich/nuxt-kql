@@ -1,4 +1,4 @@
-[![nuxt-kql](./docs/public/og.png)](https://nuxt-kql.jhnn.dev)
+[![nuxt-kql](./docs/public/og.png)](https://nuxt-kql.byjohann.dev)
 
 # nuxt-kql
 
@@ -7,7 +7,7 @@
 > [Nuxt 3](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
 
 - [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
-- [📖 &nbsp;Read the documentation](https://nuxt-kql.jhnn.dev)
+- [📖 &nbsp;Read the documentation](https://nuxt-kql.byjohann.dev)
 
 ## Features
 
@@ -20,7 +20,7 @@
 
 ## Setup
 
-> [📖 Read the documentation](https://nuxt-kql.jhnn.dev)
+> [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
 
 ```bash
 # pnpm
@@ -32,7 +32,7 @@ npm i -D nuxt-kql
 
 ## Basic Usage
 
-> [📖 Read the documentation](https://nuxt-kql.jhnn.dev)
+> [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
 
 Add `nuxt-kql` to your Nuxt config:
 

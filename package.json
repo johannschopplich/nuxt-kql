@@ -6,7 +6,7 @@
   "description": "Nuxt 3 module for Kirby's Query Language API",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
   "license": "MIT",
-  "homepage": "https://nuxt-kql.jhnn.dev",
+  "homepage": "https://nuxt-kql.byjohann.dev",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/johannschopplich/nuxt-kql.git"

@@ -1,5 +1,5 @@
 /* VitePress head */
-export const ogUrl = 'https://nuxt-kql.jhnn.dev/'
+export const ogUrl = 'https://nuxt-kql.byjohann.dev/'
 export const ogImage = `${ogUrl}og.png`
 
 /* GitHub and social links */
