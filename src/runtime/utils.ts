@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer'
 import type { KirbyQueryRequest } from 'kirby-fest'
 import type { ModuleOptions } from '../module'
 
