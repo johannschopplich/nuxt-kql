@@ -4,8 +4,8 @@ import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import { resolveUnref } from '@vueuse/core'
-import type { MaybeComputedRef } from '@vueuse/core'
+import { toValue } from '@vueuse/core'
+import type { MaybeRefOrGetter } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
@@ -37,7 +37,7 @@ export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
 export function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
->(query: MaybeComputedRef<ReqT>, opts: UseKqlOptions<ResT> = {}) {
+>(query: MaybeRefOrGetter<ReqT>, opts: UseKqlOptions<ResT> = {}) {
   const {
     server,
     lazy,
@@ -54,7 +54,7 @@ export function useKql<
   } = opts
 
   const { kql } = useRuntimeConfig().public
-  const _query = computed(() => resolveUnref(query))
+  const _query = computed(() => toValue(query))
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')

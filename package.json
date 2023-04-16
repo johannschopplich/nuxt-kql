@@ -50,8 +50,8 @@
     "prepare": "nuxi prepare playground && nuxi prepare test/fixture"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.3.3",
-    "@vueuse/core": "^9.13.0",
+    "@nuxt/kit": "^3.4.1",
+    "@vueuse/core": "^10.0.2",
     "defu": "^6.1.2",
     "destr": "^1.2.2",
     "kirby-fest": "^0.3.3",
@@ -62,12 +62,12 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.4",
-    "@nuxt/module-builder": "^0.2.1",
-    "@nuxt/test-utils": "^3.3.3",
+    "@nuxt/module-builder": "^0.3.0",
+    "@nuxt/test-utils": "^3.4.1",
     "@types/node": "^18.15.11",
     "bumpp": "^9.1.0",
     "eslint": "^8.38.0",
-    "nuxt": "^3.3.3",
+    "nuxt": "^3.4.1",
     "nuxt-kql": "workspace:*",
     "typescript": "^5.0.4",
     "vitest": "^0.30.1",

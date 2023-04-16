@@ -4,8 +4,8 @@ import { hash } from 'ohash'
 import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
-import { resolveUnref } from '@vueuse/core'
-import type { MaybeComputedRef } from '@vueuse/core'
+import { toValue } from '@vueuse/core'
+import type { MaybeRefOrGetter } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
@@ -35,7 +35,7 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
 }
 
 export function useKirbyData<T = any>(
-  uri: MaybeComputedRef<string>,
+  uri: MaybeRefOrGetter<string>,
   opts: UseKirbyDataOptions<T> = {},
 ) {
   const {
@@ -55,7 +55,7 @@ export function useKirbyData<T = any>(
 
   const { kql } = useRuntimeConfig().public
   const _uri = computed(() => {
-    const value = resolveUnref(uri).replace(/^\//, '')
+    const value = toValue(uri).replace(/^\//, '')
     return language ? joinURL(language, value) : value
   })
 
