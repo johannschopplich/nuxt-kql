@@ -11,7 +11,7 @@ function useKql<
   ResT extends KirbyQueryResponse = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
 >(
-  query: MaybeComputedRef<ReqT>,
+  query: MaybeRefOrGetter<ReqT>,
   opts?: UseKqlOptions<ResT>,
 ): AsyncData<ResT, FetchError>
 
