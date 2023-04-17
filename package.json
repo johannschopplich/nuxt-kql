@@ -21,6 +21,7 @@
     "kql",
     "query"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
