@@ -68,7 +68,7 @@ function nav(): DefaultTheme.NavItem[] {
   return [
     {
       text: 'Guide',
-      activeMatch: '/guide/',
+      activeMatch: '^/guide/',
       items: [
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
@@ -78,6 +78,7 @@ function nav(): DefaultTheme.NavItem[] {
     },
     {
       text: 'Config',
+      activeMatch: '^/config/',
       items: [
         { text: 'Module Configuration', link: '/config/' },
         { text: 'Authentication', link: '/config/authentication-methods' },
@@ -87,7 +88,7 @@ function nav(): DefaultTheme.NavItem[] {
     },
     {
       text: 'API',
-      activeMatch: '/api/',
+      activeMatch: '^/api/',
       items: [
         {
           text: 'Overview',
