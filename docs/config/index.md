@@ -1,4 +1,4 @@
-# Module Config
+# Module Configuration
 
 ## Usage
 

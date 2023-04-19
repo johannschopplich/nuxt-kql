@@ -13,21 +13,25 @@ const url = new URL(ogUrl)
 export default defineConfig({
   lang: 'en-US',
   title: name,
-  description: 'Nuxt 3 module for Kirby\'s Query Language API',
+  description,
   head: [
-    ['meta', { name: 'theme-color', content: '#ffffff' }],
     ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
+    ['meta', { name: 'author', content: 'Johann Schopplich' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:url', content: ogUrl }],
     ['meta', { property: 'og:title', content: name }],
     ['meta', { property: 'og:description', content: description }],
-    ['meta', { property: 'og:url', content: ogUrl }],
     ['meta', { property: 'og:image', content: ogImage }],
     ['meta', { name: 'twitter:title', content: name }],
     ['meta', { name: 'twitter:description', content: description }],
     ['meta', { name: 'twitter:image', content: ogImage }],
+    ['meta', { name: 'twitter:site', content: '@jschopplich' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     // Plausible analytics
     ['script', { 'src': 'https://plausible.io/js/script.js', 'defer': '', 'data-domain': url.hostname }],
   ],
+
+  lastUpdated: true,
 
   themeConfig: {
     logo: '/logo.svg',
@@ -41,7 +45,7 @@ export default defineConfig({
 
     sidebar: {
       '/guide/': sidebarGuide(),
-      '/config/': sidebarConfig(),
+      '/config/': sidebarGuide(),
       '/api/': sidebarApi(),
     },
 
@@ -62,9 +66,42 @@ export default defineConfig({
 
 function nav(): DefaultTheme.NavItem[] {
   return [
-    { text: 'Guide', link: '/guide/what-is-nuxt-kql', activeMatch: '/guide/' },
-    { text: 'Config', link: '/config/' },
-    { text: 'API', link: '/api/', activeMatch: '/api/' },
+    {
+      text: 'Guide',
+      activeMatch: '/guide/',
+      items: [
+        { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
+        { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'How It Works', link: '/guide/how-it-works' },
+        { text: 'Playground', link: '/guide/playground' },
+      ],
+    },
+    {
+      text: 'Config',
+      items: [
+        { text: 'Module Configuration', link: '/config/' },
+        { text: 'Authentication', link: '/config/authentication-methods' },
+        { text: 'Caching', link: '/config/caching' },
+        { text: 'Prefetching Queries', link: '/config/prefetching-queries' },
+      ],
+    },
+    {
+      text: 'API',
+      activeMatch: '/api/',
+      items: [
+        {
+          text: 'Overview',
+          link: '/api/',
+        },
+        {
+          text: 'Composables',
+          items: [
+            { text: 'useKql', link: '/api/use-kql' },
+            { text: '$kql', link: '/api/kql' },
+          ],
+        },
+      ],
+    },
     { text: 'Starter Kit', link: 'https://github.com/johannschopplich/kirby-nuxt-starterkit' },
     {
       text: `v${version}`,
@@ -81,7 +118,7 @@ function nav(): DefaultTheme.NavItem[] {
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: 'Introduction',
+      text: 'Guides',
       items: [
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
@@ -92,9 +129,10 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
     {
       text: 'Configuration',
       items: [
-        { text: 'Authentication', link: '/guide/authentication-methods' },
-        { text: 'Caching', link: '/guide/caching' },
-        { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
+        { text: 'Module Configuration', link: '/config/' },
+        { text: 'Authentication', link: '/config/authentication-methods' },
+        { text: 'Caching', link: '/config/caching' },
+        { text: 'Prefetching Queries', link: '/config/prefetching-queries' },
       ],
     },
     {
@@ -116,24 +154,11 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function sidebarConfig(): DefaultTheme.SidebarItem[] {
-  return [
-    {
-      text: 'Config',
-      items: [
-        { text: 'Module Config', link: '/config/' },
-      ],
-    },
-  ]
-}
-
 function sidebarApi(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: 'API Reference',
-      items: [
-        { text: 'Overview', link: '/api/' },
-      ],
+      text: 'Overview',
+      link: '/api/',
     },
     {
       text: 'Composables',
