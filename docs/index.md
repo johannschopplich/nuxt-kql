@@ -27,12 +27,18 @@ features:
   - title: Protect Your Kirby Credentials
     icon: 🔒
     details: A Nuxt server route proxies your queries. No CORS issues!
+    link: /guide/how-it-works
+    linkText: How It Works
   - title: Various Authentication Methods
     icon: 🪢
     details: Basic or bearer authentication with the Kirby Headless Starter.
+    link: /config/authentication-methods
+    linkText: Authentication Methods
   - title: Familiar Data Handling
     icon: 🤹
     details: Handle query requests just like with Nuxt's <code>useFetch</code> composable. Caching included.
+    link: /api/use-kql
+    linkText: useKql
   - title: TypeScript
     icon: 🦾
     details: Bring your own query response typings. Otherwise, <code>nuxt-kql</code> will provide defaults for you.
