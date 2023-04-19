@@ -4,6 +4,7 @@ import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
 import type { ServerFetchOptions } from './utils'
+
 // @ts-expect-error: Will be resolved by Nitro
 import { defineCachedFunction } from '#internal/nitro'
 import { useRuntimeConfig } from '#imports'
