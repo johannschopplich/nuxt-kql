@@ -33,5 +33,10 @@ export default defineNuxtConfig({
 
   typescript: {
     shim: false,
+    tsConfig: {
+      compilerOptions: {
+        moduleResolution: 'bundler',
+      },
+    },
   },
 })
