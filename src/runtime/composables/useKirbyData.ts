@@ -97,7 +97,7 @@ export function useKirbyData<T = any>(
     },
   }
 
-  let controller: AbortController
+  let controller: AbortController | undefined
   const key = computed(() => `$kirby${hash([_uri.value, language])}`)
 
   return useAsyncData<T, FetchError>(
@@ -110,9 +110,7 @@ export function useKirbyData<T = any>(
       if ((nuxt!.isHydrating || cache) && key.value in nuxt!.payload.data)
         return nuxt!.payload.data[key.value]
 
-      controller = typeof AbortController !== 'undefined'
-        ? new AbortController()
-        : ({} as AbortController)
+      controller = new AbortController()
 
       const result = (await globalThis.$fetch<T>(
         client ? _uri.value : getProxyPath(key.value),

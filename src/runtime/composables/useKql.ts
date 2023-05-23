@@ -99,7 +99,7 @@ export function useKql<
     },
   })
 
-  let controller: AbortController
+  let controller: AbortController | undefined
   const key = computed(() => `$kql${hash([_query.value, language])}`)
 
   return useAsyncData<ResT, FetchError>(
@@ -112,9 +112,7 @@ export function useKql<
       if ((nuxt!.isHydrating || cache) && key.value in nuxt!.payload.data)
         return nuxt!.payload.data[key.value]
 
-      controller = typeof AbortController !== 'undefined'
-        ? new AbortController()
-        : ({} as AbortController)
+      controller = new AbortController()
 
       const result = (await globalThis.$fetch<ResT>(
         client ? kql.prefix : getProxyPath(key.value),
