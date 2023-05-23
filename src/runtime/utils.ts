@@ -15,8 +15,7 @@ export function getProxyPath(key: string) {
 }
 
 export function headersToObject(headers: HeadersInit = {}): Record<string, string> {
-  // SSR compatibility for `Headers` prototype
-  if (typeof Headers !== 'undefined' && headers instanceof Headers)
+  if (headers instanceof Headers)
     return Object.fromEntries([...headers.entries()])
 
   if (Array.isArray(headers))
