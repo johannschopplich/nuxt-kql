@@ -13,9 +13,6 @@ importers:
       defu:
         specifier: ^6.1.2
         version: 6.1.2
-      destr:
-        specifier: ^1.2.2
-        version: 1.2.2
       kirby-fest:
         specifier: ^0.3.3
         version: 0.3.3
@@ -47,6 +44,9 @@ importers:
       bumpp:
         specifier: ^9.1.0
         version: 9.1.0
+      destr:
+        specifier: ^1.2.2
+        version: 1.2.2
       eslint:
         specifier: ^8.41.0
         version: 8.41.0

@@ -1,5 +1,4 @@
 import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
-import destr from 'destr'
 import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
@@ -50,12 +49,7 @@ const cachedFetcher = defineCachedFunction(fetcher, {
 })
 
 export default defineEventHandler(async (event): Promise<any> => {
-  let body = await readBody<ServerFetchOptions>(event)
-
-  // Inconsistent `readBody` behavior in some Nitro presets
-  // https://github.com/unjs/nitro/issues/912
-  if (Buffer.isBuffer(body))
-    body = destr((body as Buffer).toString())
+  const body = await readBody<ServerFetchOptions>(event)
 
   const key = decodeURIComponent(getRouterParam(event, 'key'))
 
