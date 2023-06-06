@@ -1,4 +1,4 @@
-import { $fetch } from 'ofetch'
+import { ofetch } from 'ofetch'
 import { useLogger } from '@nuxt/kit'
 import type { KirbyQueryResponse } from 'kirby-fest'
 import { getAuthHeader } from './runtime/utils'
@@ -30,7 +30,7 @@ export async function prefetchQueries(
     try {
       results.set(
         key,
-        await $fetch<KirbyQueryResponse>(options.prefix!, {
+        await ofetch<KirbyQueryResponse>(options.prefix!, {
           baseURL: options.url,
           method: 'POST',
           body: language ? query.query : query,

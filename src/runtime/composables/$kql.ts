@@ -74,7 +74,7 @@ export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
     },
   }
 
-  const request = $fetch(client ? kql.prefix : getProxyPath(key), {
+  const request = globalThis.$fetch(client ? kql.prefix : getProxyPath(key), {
     ...fetchOptions,
     ...(client ? _clientFetchOptions : _serverFetchOptions),
   }).then((response) => {

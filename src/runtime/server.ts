@@ -17,7 +17,7 @@ async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
   const isQueryRequest = key.startsWith('$kql')
 
   try {
-    const result = await $fetch<any>(isQueryRequest ? kql.prefix : uri!, {
+    const result = await globalThis.$fetch<any>(isQueryRequest ? kql.prefix : uri!, {
       baseURL: kql.url,
       ...(isQueryRequest && {
         method: 'POST',
