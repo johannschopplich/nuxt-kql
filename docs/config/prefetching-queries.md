@@ -41,3 +41,31 @@ import type { Site } from '#build/kql'
 ::: info
 The actual **type** for the key will be pascal cased, e.g. the key `somePageKey` will result in the type `SomePageKey`.
 :::
+
+## Multi-Language Queries
+
+If you have a [multi-language](/guide/example-multi-language-sites) Kirby instance, you can define the language for each query individually. Let's use `site` as an example key and fetch the site title in German:
+
+```ts
+// `nuxt.config.ts`
+export default defineNuxtConfig({
+  modules: ['nuxt-kql'],
+
+  kql: {
+    prefetch: {
+      site: {
+        // Define a query and its language
+        query: {
+          query: 'site',
+          select: ['title']
+        },
+        language: 'de'
+      }
+    }
+  }
+})
+```
+
+::: info
+Note that the actual `query` to be fetched is nested under the `query` key.
+:::

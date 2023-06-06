@@ -18,14 +18,26 @@ export async function prefetchQueries(
   const { auth, token, credentials } = options
 
   for (const [key, query] of Object.entries(options.prefetch)) {
+    const language = 'language' in query ? query.language : undefined
+
+    if (language && !query.query) {
+      logger.error(
+        `Couldn't prefetch ${key} KQL query: \`language\` option requires a \`query\``,
+      )
+      continue
+    }
+
     try {
       results.set(
         key,
         await $fetch<KirbyQueryResponse>(options.prefix!, {
           baseURL: options.url,
           method: 'POST',
-          body: query,
-          headers: getAuthHeader({ auth, token, credentials }),
+          body: language ? query.query : query,
+          headers: {
+            ...getAuthHeader({ auth, token, credentials }),
+            ...(language && { 'X-Language': language }),
+          },
         }),
       )
     }

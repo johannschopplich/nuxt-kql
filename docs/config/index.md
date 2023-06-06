@@ -83,7 +83,10 @@ interface ModuleOptions {
    *
    * @default {}
    */
-  prefetch?: Record<string, KirbyQueryRequest>
+  prefetch?: Record<
+    string,
+    KirbyQueryRequest | { query: KirbyQueryRequest; language: string }
+  >
 
   /**
    * Server-side features
