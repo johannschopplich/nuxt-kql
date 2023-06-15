@@ -13,6 +13,8 @@ type FetcherOptions = {
   kql: Required<ModuleOptions>
 } & ServerFetchOptions
 
+const { kql } = useRuntimeConfig()
+
 async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
   const isQueryRequest = key.startsWith('$kql')
 
@@ -43,12 +45,12 @@ async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
 }
 
 const cachedFetcher = defineCachedFunction(fetcher, {
-  swr: useRuntimeConfig().kql.server.swr,
-  maxAge: useRuntimeConfig().kql.server.maxAge,
-  getKey: (opts: FetcherOptions) => opts.key,
+  swr: kql.server.swr,
+  maxAge: kql.server.maxAge,
+  getKey: ({ key }: FetcherOptions) => key,
 })
 
-export default defineEventHandler(async (event): Promise<any> => {
+export default defineEventHandler(async (event) => {
   const body = await readBody<ServerFetchOptions>(event)
 
   const key = decodeURIComponent(getRouterParam(event, 'key'))
@@ -60,15 +62,14 @@ export default defineEventHandler(async (event): Promise<any> => {
     })
   }
 
-  const { kql } = useRuntimeConfig()
-  const opts: FetcherOptions = {
+  const options: FetcherOptions = {
     key,
     kql: kql as Required<ModuleOptions>,
     ...body,
   }
 
   if (kql.server.cache && body.cache)
-    return await cachedFetcher(opts)
+    return await cachedFetcher(options)
 
-  return await fetcher(opts)
+  return await fetcher(options)
 })
