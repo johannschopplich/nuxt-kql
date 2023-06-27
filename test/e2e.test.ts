@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import destr from 'destr'
+import { destr } from 'destr'
 import { describe, expect, it } from 'vitest'
 import { $fetch, setup } from '@nuxt/test-utils'
 
