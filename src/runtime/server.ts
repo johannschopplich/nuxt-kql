@@ -53,7 +53,7 @@ const cachedFetcher = defineCachedFunction(fetcher, {
 export default defineEventHandler(async (event) => {
   const body = await readBody<ServerFetchOptions>(event)
 
-  const key = decodeURIComponent(getRouterParam(event, 'key'))
+  const key = decodeURIComponent(getRouterParam(event, 'key')!)
 
   if (key.startsWith('$kql') && !body.query?.query) {
     throw createError({
