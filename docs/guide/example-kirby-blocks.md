@@ -12,8 +12,8 @@ Typings are optional to use, but will improve your editor suggestions and reduce
 
 ```vue
 <script setup lang="ts">
-// `#nuxt-kql` may find a special place in your heart just for providing types
-import { KirbyBlock } from '#nuxt-kql'
+// `kirby-fest` may find a special place in your heart just for providing types
+import { KirbyBlock } from 'kirby-fest'
 
 // Select page content needed for a simple page
 const { data } = await useKql({

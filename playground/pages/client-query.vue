@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KirbyQueryRequest } from '#nuxt-kql'
+import type { KirbyQueryRequest } from 'kirby-fest'
 
 const refreshIndex = ref(0)
 const query = ref<KirbyQueryRequest>({
