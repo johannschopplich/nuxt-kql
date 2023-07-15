@@ -8,23 +8,31 @@ import type { ServerFetchOptions } from './utils'
 import { defineCachedFunction } from '#internal/nitro'
 import { useRuntimeConfig } from '#imports'
 
-type FetcherOptions = {
-  key: string
-  kql: Required<ModuleOptions>
-} & ServerFetchOptions
+const kql = useRuntimeConfig().kql as Required<ModuleOptions>
 
-const { kql } = useRuntimeConfig()
-
-async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
+async function fetcher({
+  key,
+  query,
+  path,
+  headers,
+  method,
+  body,
+}: { key: string } & ServerFetchOptions) {
   const isQueryRequest = key.startsWith('$kql')
 
   try {
-    const result = await globalThis.$fetch<any>(isQueryRequest ? kql.prefix : uri!, {
+    const result = await globalThis.$fetch<any>(isQueryRequest ? kql.prefix : path!, {
       baseURL: kql.url,
-      ...(isQueryRequest && {
-        method: 'POST',
-        body: query,
-      }),
+      ...(isQueryRequest
+        ? {
+            method: 'POST',
+            body: query,
+          }
+        : {
+            query,
+            method,
+            body,
+          }),
       headers: {
         ...headers,
         ...getAuthHeader(kql),
@@ -38,7 +46,7 @@ async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
       statusCode: 500,
       statusMessage: isQueryRequest
         ? 'Failed to execute KQL query'
-        : `Failed to fetch "${uri}"`,
+        : `Failed to fetch "${path}"`,
       data: (err as FetchError).message,
     })
   }
@@ -47,29 +55,33 @@ async function fetcher({ key, kql, query, uri, headers }: FetcherOptions) {
 const cachedFetcher = defineCachedFunction(fetcher, {
   swr: kql.server.swr,
   maxAge: kql.server.maxAge,
-  getKey: ({ key }: FetcherOptions) => key,
+  getKey: ({ key }: { key: string } & ServerFetchOptions) => key,
 })
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<ServerFetchOptions>(event)
-
   const key = decodeURIComponent(getRouterParam(event, 'key')!)
 
-  if (key.startsWith('$kql') && !body.query?.query) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Empty KQL query',
-    })
+  if (key.startsWith('$kql')) {
+    if (!body.query?.query) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Empty KQL query',
+      })
+    }
   }
-
-  const options: FetcherOptions = {
-    key,
-    kql: kql as Required<ModuleOptions>,
-    ...body,
+  else {
+    // Check if the path is an absolute URL
+    if (body.path && new URL(body.path, 'http://localhost').origin !== 'http://localhost') {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Absolute URLs are not allowed',
+      })
+    }
   }
 
   if (kql.server.cache && body.cache)
-    return await cachedFetcher(options)
+    return await cachedFetcher({ key, ...body })
 
-  return await fetcher(options)
+  return await fetcher({ key, ...body })
 })

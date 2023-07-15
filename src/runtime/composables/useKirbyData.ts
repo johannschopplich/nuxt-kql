@@ -15,7 +15,10 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
   | 'onRequestError'
   | 'onResponse'
   | 'onResponseError'
+  | 'query'
   | 'headers'
+  | 'method'
+  | 'body'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups
@@ -28,14 +31,14 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
    */
   client?: boolean
   /**
-   * Cache the response between function calls for the same URI
+   * Cache the response between function calls for the same path
    * @default true
    */
   cache?: boolean
 }
 
 export function useKirbyData<T = any>(
-  uri: MaybeRefOrGetter<string>,
+  path: MaybeRefOrGetter<string>,
   opts: UseKirbyDataOptions<T> = {},
 ) {
   const {
@@ -46,7 +49,10 @@ export function useKirbyData<T = any>(
     pick,
     watch,
     immediate,
+    query,
     headers,
+    method,
+    body,
     language,
     client = false,
     cache = true,
@@ -54,13 +60,13 @@ export function useKirbyData<T = any>(
   } = opts
 
   const { kql } = useRuntimeConfig().public
-  const _uri = computed(() => {
-    const value = toValue(uri).replace(/^\//, '')
+  const _path = computed(() => {
+    const value = toValue(path).replace(/^\//, '')
     return language ? joinURL(language, value) : value
   })
 
-  if (!_uri.value || (language && !_uri.value.replace(new RegExp(`^${language}/`), '')))
-    console.warn('[useKirbyData] Empty Kirby URI')
+  if (!_path.value || (language && !_path.value.replace(new RegExp(`^${language}/`), '')))
+    console.warn('[useKirbyData] Empty Kirby path')
 
   if (client && !kql.client)
     throw new Error(DEFAULT_CLIENT_ERROR)
@@ -74,7 +80,7 @@ export function useKirbyData<T = any>(
     transform,
     pick,
     watch: [
-      _uri,
+      _path,
       ...(watch || []),
     ],
     immediate,
@@ -83,22 +89,34 @@ export function useKirbyData<T = any>(
   const _serverFetchOptions = reactive<NitroFetchOptions<string>>({
     method: 'POST',
     body: {
-      uri: _uri,
-      cache,
+      path: _path,
+      query,
       headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
+      method,
+      body,
+      cache,
     },
   })
 
   const _clientFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
+    query,
     headers: {
       ...baseHeaders,
       ...getAuthHeader(kql),
     },
+    method,
+    body,
   }
 
   let controller: AbortController | undefined
-  const key = computed(() => `$kirby${hash([_uri.value, language])}`)
+  const key = computed(() => `$kirby${hash([
+    _path.value,
+    query,
+    method,
+    body,
+    language,
+  ])}`)
 
   return useAsyncData<T, FetchError>(
     key.value,
@@ -113,7 +131,7 @@ export function useKirbyData<T = any>(
       controller = new AbortController()
 
       const result = (await globalThis.$fetch<T>(
-        client ? _uri.value : getProxyPath(key.value),
+        client ? _path.value : getProxyPath(key.value),
         {
           ...fetchOptions,
           signal: controller.signal,
