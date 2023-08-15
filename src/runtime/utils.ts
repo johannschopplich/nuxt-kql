@@ -26,7 +26,7 @@ export function headersToObject(headers: HeadersInit = {}): Record<string, strin
   if (Array.isArray(headers))
     return Object.fromEntries(headers)
 
-  return headers as Record<string, string>
+  return headers
 }
 
 export function getAuthHeader({
