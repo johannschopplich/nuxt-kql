@@ -190,7 +190,6 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'types/nuxt-kql.d.ts',
       getContents: async () => `
 declare module '#nuxt-kql' {
-  // TODO: Update docs to import types from \`kirby-fest\` instead
   export * from 'kirby-fest'
 }
 `.trimStart(),
