@@ -2,7 +2,7 @@ import { hash } from 'ohash'
 import type { FetchOptions } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
-import type { ServerFetchOptions } from '../utils'
+import type { ServerFetchOptions } from '../types'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 

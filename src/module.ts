@@ -1,8 +1,9 @@
-import { join } from 'node:path'
+import { join } from 'pathe'
 import { defu } from 'defu'
 import { pascalCase } from 'scule'
 import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-fest'
+import { extendTypes } from './kit'
 import { logger, prefetchQueries } from './prefetch'
 
 export interface ModuleOptions {
@@ -167,14 +168,6 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('runtime'))
 
-    // Inline server handler into Nitro bundle
-    // Needed to circumvent "cannot find module" error in `server.ts` for the `utils` import
-    nuxt.hook('nitro:config', (config) => {
-      config.externals = defu(config.externals, {
-        inline: [resolve('runtime/utils')],
-      })
-    })
-
     // Add KQL proxy endpoint to send queries server-side
     addServerHandler({
       route: '/api/__kql/:key',
@@ -185,36 +178,43 @@ export default defineNuxtModule<ModuleOptions>({
     // Add KQL composables
     addImportsDir(resolve('runtime/composables'))
 
-    // Provide global KQL type helpers
-    addTemplate({
-      filename: 'types/nuxt-kql.d.ts',
-      getContents: async () => `
-declare module '#nuxt-kql' {
-  export * from 'kirby-fest'
-}
-`.trimStart(),
+    nuxt.hook('nitro:config', (config) => {
+      // Inline server handler into Nitro bundle
+      // Needed to circumvent "cannot find module" error in `server.ts` for the `utils` import
+      config.externals ||= {}
+      config.externals.inline ||= []
+      config.externals.inline.push(resolve('runtime/utils'))
     })
 
-    // Add global `#nuxt-kql` type import path
-    nuxt.hook('prepare:types', (options) => {
-      options.references.push({ path: join(nuxt.options.buildDir, 'types/nuxt-kql.d.ts') })
-    })
+    // Add `#nuxt-kql` module alias
+    nuxt.options.alias['#nuxt-kql'] = join(nuxt.options.buildDir, 'module/nuxt-kql.mjs')
 
-    // Load options template
+    // Add `#nuxt-kql` module template
     addTemplate({
-      filename: 'kql.options.ts',
+      filename: 'module/nuxt-kql.mjs',
       getContents() {
         return `
-export const options = ${JSON.stringify(options)};
+export * from '#build/kql'
 `.trimStart()
       },
     })
+
+    // Add global `#nuxt-kql` types
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    extendTypes('nuxt-kql', async ({ typesPath }) => `
+declare module '#nuxt-kql' {
+  export * from 'kirby-fest'
+  export * from '#build/kql'
+}
+`.trimStart(),
+    )
 
     // Prefetch custom KQL queries at build-time
     const prefetchResults = await prefetchQueries(options)
 
     // Add template for prefetched query data
     addTemplate({
+      // TODO: Move to `module/kql.ts`?
       filename: 'kql.ts',
       write: true,
       getContents() {

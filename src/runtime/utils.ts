@@ -1,17 +1,4 @@
-import type { NitroFetchOptions } from 'nitropack'
-import type { KirbyQueryRequest } from 'kirby-fest'
 import type { ModuleOptions } from '../module'
-
-export type ServerFetchOptions = Pick<
-  NitroFetchOptions<string>,
-  'query' | 'headers' | 'method' | 'body'
-> & {
-  // Either fetch a KQL query
-  query?: Partial<KirbyQueryRequest>
-  // Or from a Kirby path
-  path?: string
-  cache?: boolean
-}
 
 export const DEFAULT_CLIENT_ERROR = 'Fetching from Kirby client-side isn\'t allowed. Enable it by setting the module option "client" to "true" in your "nuxt.config.ts".'
 

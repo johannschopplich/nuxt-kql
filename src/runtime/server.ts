@@ -2,7 +2,7 @@ import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
-import type { ServerFetchOptions } from './utils'
+import type { ServerFetchOptions } from './types'
 
 // @ts-expect-error: Will be resolved by Nitro
 import { defineCachedFunction } from '#internal/nitro'

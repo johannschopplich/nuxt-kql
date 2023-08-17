@@ -1,7 +1,7 @@
 import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
-import type { ServerFetchOptions } from '../utils'
+import type { ServerFetchOptions } from '../types'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 

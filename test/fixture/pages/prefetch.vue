@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { site } from '#build/kql'
+import { site } from '#nuxt-kql'
 
 useTestResult(site)
 </script>

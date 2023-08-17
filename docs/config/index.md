@@ -79,7 +79,7 @@ interface ModuleOptions {
    * Prefetch custom KQL queries at build-time
    *
    * @remarks
-   * The queries will be fully typed and importable from `#build/kql`
+   * The queries will be fully typed and importable from `#nuxt-kql`
    *
    * @default {}
    */
