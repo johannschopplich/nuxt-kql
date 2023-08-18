@@ -129,6 +129,8 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   async setup(options, nuxt) {
+    const moduleName = 'nuxt-kql'
+
     // Make sure Kirby URL and KQL endpoint are set
     if (!options.url)
       logger.error('Missing `KIRBY_BASE_URL` in `.env`')
@@ -187,11 +189,11 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // Add `#nuxt-kql` module alias
-    nuxt.options.alias['#nuxt-kql'] = join(nuxt.options.buildDir, 'module/nuxt-kql.mjs')
+    nuxt.options.alias[`#${moduleName}`] = join(nuxt.options.buildDir, `module/${moduleName}.mjs`)
 
     // Add `#nuxt-kql` module template
     addTemplate({
-      filename: 'module/nuxt-kql.mjs',
+      filename: `module/${moduleName}.mjs`,
       getContents() {
         return `
 export * from '#build/kql'
@@ -201,8 +203,8 @@ export * from '#build/kql'
 
     // Add global `#nuxt-kql` types
     // eslint-disable-next-line unused-imports/no-unused-vars
-    extendTypes('nuxt-kql', async ({ typesPath }) => `
-declare module '#nuxt-kql' {
+    extendTypes(moduleName, async ({ typesPath }) => `
+declare module '#${moduleName}' {
   export * from 'kirby-fest'
   export * from '#build/kql'
 }
