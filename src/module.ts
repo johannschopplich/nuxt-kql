@@ -180,7 +180,7 @@ export default defineNuxtModule<ModuleOptions>({
     addImportsDir(resolve('runtime/composables'))
 
     nuxt.hook('nitro:config', (config) => {
-      // Inline server handler into Nitro bundle
+      // Inline local server handler dependencies into Nitro bundle
       // Needed to circumvent "cannot find module" error in `server.ts` for the `utils` import
       config.externals ||= {}
       config.externals.inline ||= []
