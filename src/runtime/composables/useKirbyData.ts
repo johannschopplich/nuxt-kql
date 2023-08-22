@@ -130,19 +130,28 @@ export function useKirbyData<T = any>(
 
       controller = new AbortController()
 
-      const result = (await globalThis.$fetch<T>(
-        client ? _path.value : getProxyPath(key.value),
-        {
-          ...fetchOptions,
-          signal: controller.signal,
-          ...(client ? _clientFetchOptions : _serverFetchOptions),
-        },
-      )) as T
+      try {
+        const result = (await globalThis.$fetch<T>(
+          client ? _path.value : getProxyPath(key.value),
+          {
+            ...fetchOptions,
+            signal: controller.signal,
+            ...(client ? _clientFetchOptions : _serverFetchOptions),
+          },
+        )) as T
 
-      if (cache)
-        nuxt!.payload.data[key.value] = result
+        if (cache)
+          nuxt!.payload.data[key.value] = result
 
-      return result
+        return result
+      }
+      catch (error) {
+        // Invalidate cache if request fails
+        if (key.value in nuxt!.payload.data)
+          delete nuxt!.payload.data[key.value]
+
+        throw error
+      }
     },
     asyncDataOptions,
   ) as AsyncData<T, FetchError>

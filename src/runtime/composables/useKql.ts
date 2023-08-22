@@ -114,19 +114,28 @@ export function useKql<
 
       controller = new AbortController()
 
-      const result = (await globalThis.$fetch<ResT>(
-        client ? kql.prefix : getProxyPath(key.value),
-        {
-          ...fetchOptions,
-          signal: controller.signal,
-          ...(client ? _clientFetchOptions : _serverFetchOptions),
-        },
-      )) as ResT
+      try {
+        const result = (await globalThis.$fetch<ResT>(
+          client ? kql.prefix : getProxyPath(key.value),
+          {
+            ...fetchOptions,
+            signal: controller.signal,
+            ...(client ? _clientFetchOptions : _serverFetchOptions),
+          },
+        )) as ResT
 
-      if (cache)
-        nuxt!.payload.data[key.value] = result
+        if (cache)
+          nuxt!.payload.data[key.value] = result
 
-      return result
+        return result
+      }
+      catch (error) {
+        // Invalidate cache if request fails
+        if (key.value in nuxt!.payload.data)
+          delete nuxt!.payload.data[key.value]
+
+        throw error
+      }
     },
     asyncDataOptions,
   ) as AsyncData<ResT, FetchError>

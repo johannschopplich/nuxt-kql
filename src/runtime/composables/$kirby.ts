@@ -90,12 +90,20 @@ export function $kirby<T = any>(
   const request = globalThis.$fetch(client ? path : getProxyPath(key), {
     ...fetchOptions,
     ...(client ? _clientFetchOptions : _serverFetchOptions),
-  }).then((response) => {
-    if (process.server || cache)
-      nuxt.payload.data[key] = response
-    promiseMap.delete(key)
-    return response
-  }) as Promise<T>
+  })
+    .then((response) => {
+      if (process.server || cache)
+        nuxt.payload.data[key] = response
+      promiseMap.delete(key)
+      return response
+    })
+    // Invalidate cache if request fails
+    .catch((error) => {
+      if (key in nuxt.payload.data)
+        delete nuxt.payload.data[key]
+      promiseMap.delete(key)
+      throw error
+    }) as Promise<T>
 
   promiseMap.set(key, request)
 
