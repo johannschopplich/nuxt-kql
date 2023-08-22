@@ -31,7 +31,7 @@ export type KqlOptions = Pick<
   cache?: boolean
 }
 
-export function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
+export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   opts: KqlOptions = {},
 ): Promise<T> {

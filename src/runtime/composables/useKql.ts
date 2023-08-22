@@ -35,7 +35,7 @@ export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
 }
 
 export function useKql<
-  ResT extends KirbyQueryResponse = KirbyQueryResponse,
+  ResT extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse,
   ReqT extends KirbyQueryRequest = KirbyQueryRequest,
 >(query: MaybeRefOrGetter<ReqT>, opts: UseKqlOptions<ResT> = {}) {
   const {
