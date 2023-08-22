@@ -9,7 +9,7 @@
 
 ## Type Declarations
 
-Common types are importable from the special `kirby-fest` module alias:
+Common types are importable from the special `#nuxt-kql` module alias:
 
 - [`KirbyQueryRequest`](/api/types-query-request)
 - [`KirbyQueryResponse`](/api/types-query-response)

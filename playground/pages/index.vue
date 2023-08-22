@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
+import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
 
 // Typed response
 interface KirbySite {

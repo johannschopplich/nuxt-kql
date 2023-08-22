@@ -1,9 +1,9 @@
 # `KirbyQueryRequest`
 
-Importable from `kirby-fest`.
+Importable from `#nuxt-kql`.
 
 ```ts
-import type { KirbyQueryRequest } from 'kirby-fest'
+import type { KirbyQueryRequest } from '#nuxt-kql'
 ```
 
 ## Type Declarations
