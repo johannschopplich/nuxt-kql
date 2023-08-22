@@ -2,7 +2,7 @@
 
 Check out the [playground](https://github.com/johannschopplich/nuxt-kql/tree/main/playground) of this module for an example Nuxt project setup. To spin up your Nuxt dev server quickly, use the following Kirby instance and credentials for your `.env` file:
 
-```
+```ini
 KIRBY_BASE_URL=https://kirby-headless-starter.jhnn.dev
 KIRBY_API_TOKEN=test
 ```

@@ -50,7 +50,7 @@ export default defineNuxtConfig({
 
 `nuxt-kql` automatically reads your environment variables. Set the following environment variables in your project's `.env` file:
 
-```
+```ini
 # Base URL of your Kirby instance (without a path)
 KIRBY_BASE_URL=https://kirby.example.com
 KIRBY_API_TOKEN=your-token
