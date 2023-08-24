@@ -1,5 +1,5 @@
 import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
-import type { FetchError } from 'ofetch'
+import type { IFetchError } from 'ofetch'
 import type { ModuleOptions } from '../module'
 import { getAuthHeader } from './utils'
 import type { ServerFetchOptions } from './types'
@@ -47,7 +47,7 @@ async function fetcher({
       statusMessage: isQueryRequest
         ? 'Failed to execute KQL query'
         : `Failed to fetch "${path}"`,
-      data: (err as FetchError).message,
+      data: (err as IFetchError).message,
     })
   }
 }
