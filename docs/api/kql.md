@@ -19,6 +19,9 @@ type KqlOptions = Pick<
   | 'onResponse'
   | 'onResponseError'
   | 'headers'
+  | 'retry'
+  | 'retryDelay'
+  | 'timeout'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups

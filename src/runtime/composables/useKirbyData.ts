@@ -19,6 +19,9 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
   | 'headers'
   | 'method'
   | 'body'
+  | 'retry'
+  | 'retryDelay'
+  | 'timeout'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups

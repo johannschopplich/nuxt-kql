@@ -15,6 +15,9 @@ export type KirbyFetchOptions = Pick<
   | 'headers'
   | 'method'
   | 'body'
+  | 'retry'
+  | 'retryDelay'
+  | 'timeout'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups
@@ -39,7 +42,16 @@ export function $kirby<T = any>(
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const promiseMap = (nuxt._promiseMap = nuxt._promiseMap || new Map()) as Map<string, Promise<T>>
-  const { query, headers, method, body, language, client = false, cache = true, ...fetchOptions } = opts
+  const {
+    query,
+    headers,
+    method,
+    body,
+    language,
+    client = false,
+    cache = true,
+    ...fetchOptions
+  } = opts
   const { kql } = useRuntimeConfig().public
 
   if (language)
