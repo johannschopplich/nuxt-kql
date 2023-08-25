@@ -13,19 +13,28 @@ Types are re-exported from the [`kirby-fest`](https://github.com/johannschopplic
 :::
 
 ```ts
- type KirbyQueryModel<CustomModel extends string = never> =
+type KirbyQueryModel<CustomModel extends string = never> =
   | 'collection'
   | 'file'
   | 'kirby'
   | 'page'
   | 'site'
   | 'user'
+  | 'arrayItem'
+  | 'structureItem'
+  | 'block'
   | CustomModel
 
- type KirbyQuery<CustomModel extends string = never> =
+type KirbyQueryChain =
+  // Allows for `site.title` but also `site.title.upper`, etc.
+  | `${string}.${string}`
+  // Allows for `page("id")<string>`, etc.
+  | `${string}(${string})${string}`
+
+export type KirbyQuery<CustomModel extends string = never> =
   | KirbyQueryModel<CustomModel>
-  | `${KirbyQueryModel<CustomModel>}.${string}`
-  | `${KirbyQueryModel<CustomModel>}(${string})${string}`
+  // Ensures that it must match the pattern exactly, but not more broadly
+  | (string extends KirbyQueryChain ? never : KirbyQueryChain)
 
 interface KirbyQuerySchema {
   query: KirbyQuery
