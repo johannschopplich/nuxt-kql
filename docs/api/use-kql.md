@@ -13,7 +13,7 @@ function useKql<
 >(
   query: MaybeRefOrGetter<ReqT>,
   opts?: UseKqlOptions<ResT>,
-): AsyncData<ResT, IFetchError>
+): AsyncData<ResT, FetchError>
 
 type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   FetchOptions,

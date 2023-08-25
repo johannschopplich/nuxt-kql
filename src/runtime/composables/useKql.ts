@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
-import type { IFetchError } from 'ofetch'
+import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-fest'
@@ -105,7 +105,7 @@ export function useKql<
   let controller: AbortController | undefined
   const key = computed(() => `$kql${hash([_query.value, language])}`)
 
-  return useAsyncData<ResT, IFetchError>(
+  return useAsyncData<ResT, FetchError>(
     key.value,
     async (nuxt) => {
       controller?.abort?.()
@@ -141,5 +141,5 @@ export function useKql<
       }
     },
     asyncDataOptions,
-  ) as AsyncData<ResT, IFetchError>
+  ) as AsyncData<ResT, FetchError>
 }

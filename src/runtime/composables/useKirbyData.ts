@@ -1,7 +1,7 @@
 import { computed, reactive } from 'vue'
 import { joinURL } from 'ufo'
 import { hash } from 'ohash'
-import type { IFetchError } from 'ofetch'
+import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { toValue } from '@vueuse/core'
@@ -121,7 +121,7 @@ export function useKirbyData<T = any>(
     language,
   ])}`)
 
-  return useAsyncData<T, IFetchError>(
+  return useAsyncData<T, FetchError>(
     key.value,
     async (nuxt) => {
       controller?.abort?.()
@@ -157,5 +157,5 @@ export function useKirbyData<T = any>(
       }
     },
     asyncDataOptions,
-  ) as AsyncData<T, IFetchError>
+  ) as AsyncData<T, FetchError>
 }
