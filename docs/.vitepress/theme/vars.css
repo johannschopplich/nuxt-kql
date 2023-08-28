@@ -4,11 +4,10 @@
 
 :root {
   --vp-c-accent: #2b86eb;
-  --vp-c-brand: #ff9320;
-  --vp-c-brand-light: #ffa749;
-  --vp-c-brand-lighter: #ffbb72;
-  --vp-c-brand-dark: #e77700;
-  --vp-c-brand-darker: #af5a00;
+  --vp-c-brand-1: #ff9320;
+  --vp-c-brand-2: #ff9320;
+  --vp-c-brand-3: #e77700;
+  --vp-c-brand-soft: #ff932014;
 }
 
 /**
