@@ -57,7 +57,7 @@ KIRBY_API_TOKEN=your-token
 ```
 
 :::tip
-If you have reasons not to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter) and want to use basic authentication, follow the [basic authentication method](/guide/authentication-methods#basic-authentication) guide.
+If you have reasons not to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter) and want to use basic authentication, follow the [basic authentication method](/config/authentication-methods#basic-authentication) guide.
 :::
 
 ## Step 4: Send Queries
