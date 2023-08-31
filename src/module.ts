@@ -221,14 +221,18 @@ export * from '#build/kql'
       filename: 'kql.ts',
       write: true,
       getContents() {
-        return [...prefetchResults.entries()]
-          .map(
-            ([key, response]) =>
-              `export const ${key} = ${
-                response?.result
-                  ? JSON.stringify(response.result, undefined, 2)
-                  : '{} as Record<string, any>'
-              }\n` + `export type ${pascalCase(key)} = typeof ${key}\n`,
+        const results = [...prefetchResults.entries()]
+
+        if (!results.length)
+          return 'export {}\n'
+
+        return results
+          .map(([key, response]) =>
+            `export const ${key} = ${
+              response?.result
+                ? JSON.stringify(response.result, undefined, 2)
+                : '{} as Record<string, any>'
+            }\n` + `export type ${pascalCase(key)} = typeof ${key}\n`,
           )
           .join('\n')
       },
