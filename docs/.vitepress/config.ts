@@ -32,6 +32,7 @@ export default defineConfig({
   ],
 
   lastUpdated: true,
+  appearance: 'dark',
 
   themeConfig: {
     logo: '/logo.svg',
