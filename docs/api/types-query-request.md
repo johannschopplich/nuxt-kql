@@ -9,7 +9,7 @@ import type { KirbyQueryRequest } from '#nuxt-kql'
 ## Type Declarations
 
 ::: info
-Types are re-exported from the [`kirby-fest`](https://github.com/johannschopplich/kirby-fest) package.
+Types are re-exported from the [`kirby-types`](https://github.com/johannschopplich/kirby-types) package.
 :::
 
 ```ts

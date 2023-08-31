@@ -1,6 +1,6 @@
 import { ofetch } from 'ofetch'
 import { useLogger } from '@nuxt/kit'
-import type { KirbyQueryResponse } from 'kirby-fest'
+import type { KirbyQueryResponse } from 'kirby-types'
 import { getAuthHeader } from './runtime/utils'
 import type { ModuleOptions } from './module'
 
