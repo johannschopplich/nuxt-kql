@@ -1,4 +1,4 @@
-[![nuxt-kql](./docs/public/og.png)](https://nuxt-kql.byjohann.dev)
+[![nuxt-kql](./docs/public/og.jpg)](https://nuxt-kql.byjohann.dev)
 
 # nuxt-kql
 
