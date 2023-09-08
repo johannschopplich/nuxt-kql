@@ -1,7 +1,7 @@
 import { join } from 'pathe'
 import { defu } from 'defu'
 import { pascalCase } from 'scule'
-import { addImportsDir, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-types'
 import { logger, prefetchQueries } from './prefetch'
 
@@ -177,7 +177,13 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     // Add KQL composables
-    addImportsDir(resolve('runtime/composables'))
+    addImports(
+      ['$kirby', '$kql', 'useKirbyData', 'useKql'].map(name => ({
+        name,
+        as: name,
+        from: resolve(`runtime/composables/${name}`),
+      })),
+    )
 
     nuxt.hook('nitro:config', (config) => {
       // Inline local server handler dependencies into Nitro bundle
