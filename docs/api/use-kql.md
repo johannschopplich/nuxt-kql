@@ -16,7 +16,7 @@ function useKql<
 ): AsyncData<ResT, FetchError>
 
 type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
-  FetchOptions,
+  NitroFetchOptions<string>,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'

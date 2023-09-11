@@ -13,7 +13,7 @@ function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
 ): Promise<T>
 
 type KqlOptions = Pick<
-  FetchOptions,
+  NitroFetchOptions<string>,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'
