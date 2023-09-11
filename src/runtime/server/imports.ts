@@ -40,7 +40,7 @@ export function $kirby<T = any>(
   if (language)
     path = joinURL(language, path)
 
-  return globalThis.$fetch(path, {
+  return globalThis.$fetch<T, string>(path, {
     ...fetchOptions,
     baseURL: kql.url,
     headers: {
@@ -57,7 +57,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const { headers, language, ...fetchOptions } = opts
   const { kql } = useRuntimeConfig()
 
-  return globalThis.$fetch(kql.prefix, {
+  return globalThis.$fetch<T, string>(kql.prefix, {
     ...fetchOptions,
     baseURL: kql.url,
     method: 'POST',
