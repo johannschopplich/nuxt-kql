@@ -3,11 +3,11 @@ layout: home
 sidebar: false
 
 title: nuxt-kql
-titleTemplate: Nuxt 3 module for Kirby's Query Language API
+titleTemplate: Kirby's Query Language API for Nuxt
 
 hero:
   name: nuxt-kql
-  text: Nuxt 3 module for Kirby's Query Language API
+  text: Kirby's Query Language API for Nuxt
   tagline: Retrieve data from Kirby CMS safely.
   image:
     src: /logo-shadow.svg
