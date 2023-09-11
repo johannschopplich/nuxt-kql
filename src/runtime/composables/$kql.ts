@@ -1,5 +1,4 @@
 import { hash } from 'ohash'
-import type { FetchOptions } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import type { ServerFetchOptions } from '../types'
@@ -7,7 +6,7 @@ import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } fr
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KqlOptions = Pick<
-  FetchOptions,
+  NitroFetchOptions<string>,
   | 'onRequest'
   | 'onRequestError'
   | 'onResponse'
