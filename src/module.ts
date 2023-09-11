@@ -173,7 +173,7 @@ export default defineNuxtModule<ModuleOptions>({
     addServerHandler({
       route: '/api/__kql/:key',
       method: 'post',
-      handler: resolve('runtime/server'),
+      handler: resolve('runtime/server/handler'),
     })
 
     // Add KQL composables
@@ -191,6 +191,14 @@ export default defineNuxtModule<ModuleOptions>({
       config.externals ||= {}
       config.externals.inline ||= []
       config.externals.inline.push(resolve('runtime/utils'))
+
+      // Add Nitro auto-imports for composables
+      config.imports = defu(config.imports, {
+        presets: [{
+          from: resolve('runtime/server/imports'),
+          imports: ['$kirby', '$kql'],
+        }],
+      })
     })
 
     // Add `#nuxt-kql` module alias
