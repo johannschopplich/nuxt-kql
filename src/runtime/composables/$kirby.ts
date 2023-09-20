@@ -20,7 +20,7 @@ export type KirbyFetchOptions = Pick<
   | 'timeout'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
   /**
@@ -30,7 +30,7 @@ export type KirbyFetchOptions = Pick<
    */
   client?: boolean
   /**
-   * Cache the response between function calls for the same path
+   * Cache the response between function calls for the same path.
    * @default true
    */
   cache?: boolean

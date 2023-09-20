@@ -7,9 +7,9 @@ Query responses are cached by default between function calls for the same query 
 ## Type Declarations
 
 ```ts
-function $kql<T extends KirbyQueryResponse = KirbyQueryResponse>(
+function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
   query: KirbyQueryRequest,
-  opts: KqlOptions = {},
+  opts: KqlOptions = {}
 ): Promise<T>
 
 type KqlOptions = Pick<
@@ -24,7 +24,7 @@ type KqlOptions = Pick<
   | 'timeout'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
   /**
@@ -34,7 +34,7 @@ type KqlOptions = Pick<
    */
   client?: boolean
   /**
-   * Cache the response between function calls for the same query
+   * Cache the response between function calls for the same query.
    * @default true
    */
   cache?: boolean

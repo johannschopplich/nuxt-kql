@@ -24,7 +24,7 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
   | 'timeout'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
   /**
@@ -34,7 +34,7 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
    */
   client?: boolean
   /**
-   * Cache the response between function calls for the same path
+   * Cache the response between function calls for the same path.
    * @default true
    */
   cache?: boolean

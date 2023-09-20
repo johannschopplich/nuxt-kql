@@ -8,7 +8,7 @@ export type KirbyFetchOptions = Omit<
   NitroFetchOptions<string>, 'baseURL'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
 }
@@ -25,7 +25,7 @@ export type KqlFetchOptions = Pick<
   | 'timeout'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
 }

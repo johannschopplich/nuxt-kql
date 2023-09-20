@@ -8,11 +8,11 @@ Query responses are cached by default between function calls for the same query 
 
 ```ts
 function useKql<
-  ResT extends KirbyQueryResponse = KirbyQueryResponse,
-  ReqT extends KirbyQueryRequest = KirbyQueryRequest,
+  ResT extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse,
+  ReqT extends KirbyQueryRequest = KirbyQueryRequest
 >(
   query: MaybeRefOrGetter<ReqT>,
-  opts?: UseKqlOptions<ResT>,
+  opts?: UseKqlOptions<ResT>
 ): AsyncData<ResT, FetchError>
 
 type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
@@ -27,7 +27,7 @@ type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   | 'timeout'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
   /**
@@ -37,7 +37,7 @@ type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
    */
   client?: boolean
   /**
-   * Cache the response between function calls for the same query
+   * Cache the response between function calls for the same query.
    * @default true
    */
   cache?: boolean

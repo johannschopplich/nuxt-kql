@@ -21,7 +21,7 @@ export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   | 'timeout'
 > & {
   /**
-   * Language code to fetch data for in multi-language Kirby setups
+   * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: string
   /**
@@ -31,7 +31,7 @@ export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
    */
   client?: boolean
   /**
-   * Cache the response between function calls for the same query
+   * Cache the response between function calls for the same query.
    * @default true
    */
   cache?: boolean
