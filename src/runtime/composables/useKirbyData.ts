@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { FetchError } from 'ofetch'
@@ -70,11 +70,16 @@ export function useKirbyData<T = any>(
   } = opts
 
   const { kql } = useRuntimeConfig().public
+  const _language = computed(() => toValue(language))
   const _path = computed(() => {
     const value = toValue(path).replace(/^\//, '')
-    return language ? joinURL(toValue(language), value) : value
+    return _language.value ? joinURL(_language.value, value) : value
   })
-  const _language = computed(() => toValue(language))
+  const key = computed(() => `$kirby${hash([
+    _path.value,
+    query,
+    method,
+  ])}`)
 
   if (!_path.value || (_language.value && !_path.value.replace(new RegExp(`^${_language.value}/`), '')))
     console.warn('[useKirbyData] Empty Kirby path')
@@ -97,35 +102,7 @@ export function useKirbyData<T = any>(
     immediate,
   }
 
-  const _serverFetchOptions = reactive<NitroFetchOptions<string>>({
-    method: 'POST',
-    body: {
-      path: _path,
-      query,
-      headers: headersToObject(headers),
-      method,
-      body,
-      cache,
-    },
-  })
-
-  const _clientFetchOptions: NitroFetchOptions<string> = {
-    baseURL: kql.url,
-    query,
-    headers: {
-      ...headersToObject(headers),
-      ...getAuthHeader(kql),
-    },
-    method,
-    body,
-  }
-
   let controller: AbortController | undefined
-  const key = computed(() => `$kirby${hash([
-    _path.value,
-    query,
-    method,
-  ])}`)
 
   return useAsyncData<T, FetchError>(
     key.value,
@@ -140,14 +117,37 @@ export function useKirbyData<T = any>(
       controller = new AbortController()
 
       try {
-        const result = (await globalThis.$fetch<T>(
-          client ? _path.value : getProxyPath(key.value),
-          {
+        let result: T | undefined
+
+        if (client) {
+          result = (await globalThis.$fetch<T>(_path.value, {
             ...fetchOptions,
             signal: controller.signal,
-            ...(client ? _clientFetchOptions : _serverFetchOptions),
-          },
-        )) as T
+            baseURL: kql.url,
+            query,
+            headers: {
+              ...headersToObject(headers),
+              ...getAuthHeader(kql),
+            },
+            method,
+            body,
+          })) as T
+        }
+        else {
+          result = (await globalThis.$fetch<T>(getProxyPath(key.value), {
+            ...fetchOptions,
+            signal: controller.signal,
+            method: 'POST',
+            body: {
+              path: _path,
+              query,
+              headers: headersToObject(headers),
+              method,
+              body,
+              cache,
+            },
+          })) as T
+        }
 
         if (cache)
           nuxt!.payload.data[key.value] = result

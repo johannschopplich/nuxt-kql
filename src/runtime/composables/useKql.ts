@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { hash } from 'ohash'
 import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
@@ -66,6 +66,7 @@ export function useKql<
   const { kql } = useRuntimeConfig().public
   const _query = computed(() => toValue(query))
   const _language = computed(() => toValue(language))
+  const key = computed(() => `$kql${hash([_query.value, _language.value])}`)
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
@@ -82,39 +83,14 @@ export function useKql<
     watch: watch === false
       ? []
       : [
-          _query,
-          _language,
+          // Key contains query and language
+          key,
           ...(watch || []),
         ],
     immediate,
   }
 
-  const _serverFetchOptions = reactive<NitroFetchOptions<string>>({
-    method: 'POST',
-    body: {
-      query: _query,
-      cache,
-      headers: computed(() => ({
-        ...headersToObject(headers),
-        ...(_language.value && { 'X-Language': _language.value }),
-      })),
-    },
-  })
-
-  const _clientFetchOptions = reactive<NitroFetchOptions<string>>({
-    baseURL: kql.url,
-    method: 'POST',
-    body: _query,
-    // @ts-expect-error: Reactive value
-    headers: computed(() => ({
-      ...headersToObject(headers),
-      ...(_language.value && { 'X-Language': _language.value }),
-      ...getAuthHeader(kql),
-    })),
-  })
-
   let controller: AbortController | undefined
-  const key = computed(() => `$kql${hash([_query.value, _language.value])}`)
 
   return useAsyncData<ResT, FetchError>(
     key.value,
@@ -129,14 +105,37 @@ export function useKql<
       controller = new AbortController()
 
       try {
-        const result = (await globalThis.$fetch<ResT>(
-          client ? kql.prefix : getProxyPath(key.value),
-          {
+        let result: ResT | undefined
+
+        if (client) {
+          result = (await globalThis.$fetch<ResT>(kql.prefix, {
             ...fetchOptions,
             signal: controller.signal,
-            ...(client ? _clientFetchOptions : _serverFetchOptions),
-          },
-        )) as ResT
+            baseURL: kql.url,
+            method: 'POST',
+            body: _query,
+            headers: {
+              ...headersToObject(headers),
+              ...(_language.value && { 'X-Language': _language.value }),
+              ...getAuthHeader(kql),
+            },
+          })) as ResT
+        }
+        else {
+          result = (await globalThis.$fetch<ResT>(getProxyPath(key.value), {
+            ...fetchOptions,
+            signal: controller.signal,
+            method: 'POST',
+            body: {
+              query: _query,
+              cache,
+              headers: {
+                ...headersToObject(headers),
+                ...(_language.value && { 'X-Language': _language.value }),
+              },
+            },
+          })) as ResT
+        }
 
         if (cache)
           nuxt!.payload.data[key.value] = result
