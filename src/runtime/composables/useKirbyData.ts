@@ -139,7 +139,7 @@ export function useKirbyData<T = any>(
             signal: controller.signal,
             method: 'POST',
             body: {
-              path: _path,
+              path: _path.value,
               query,
               headers: headersToObject(headers),
               method,
