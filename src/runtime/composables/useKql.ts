@@ -113,7 +113,7 @@ export function useKql<
             signal: controller.signal,
             baseURL: kql.url,
             method: 'POST',
-            body: _query,
+            body: _query.value,
             headers: {
               ...headersToObject(headers),
               ...(_language.value && { 'X-Language': _language.value }),
@@ -127,7 +127,7 @@ export function useKql<
             signal: controller.signal,
             method: 'POST',
             body: {
-              query: _query,
+              query: _query.value,
               cache,
               headers: {
                 ...headersToObject(headers),
