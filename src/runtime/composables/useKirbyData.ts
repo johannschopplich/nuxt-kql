@@ -3,13 +3,14 @@ import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
+import type { WatchSource } from 'vue'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
-type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
+type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   NitroFetchOptions<string>,
   | 'onRequest'
   | 'onRequestError'
@@ -26,7 +27,7 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
   /**
    * Language code to fetch data for in multi-language Kirby setups.
    */
-  language?: string
+  language?: MaybeRefOrGetter<string>
   /**
    * Skip the Nuxt server proxy and fetch directly from the API.
    * Requires `client` to be enabled in the module options as well.
@@ -38,6 +39,12 @@ type UseKirbyDataOptions<T> = AsyncDataOptions<T> & Pick<
    * @default true
    */
   cache?: boolean
+  /**
+   * Watch an array of reactive sources and auto-refresh the fetch result when they change.
+   * Path and language are watched by default. You can completely ignore reactive sources by using `watch: false`.
+   * @default undefined
+   */
+  watch?: (WatchSource<unknown> | object)[] | false
 }
 
 export function useKirbyData<T = any>(
@@ -65,16 +72,15 @@ export function useKirbyData<T = any>(
   const { kql } = useRuntimeConfig().public
   const _path = computed(() => {
     const value = toValue(path).replace(/^\//, '')
-    return language ? joinURL(language, value) : value
+    return language ? joinURL(toValue(language), value) : value
   })
+  const _language = computed(() => toValue(language))
 
-  if (!_path.value || (language && !_path.value.replace(new RegExp(`^${language}/`), '')))
+  if (!_path.value || (_language.value && !_path.value.replace(new RegExp(`^${_language.value}/`), '')))
     console.warn('[useKirbyData] Empty Kirby path')
 
   if (client && !kql.client)
     throw new Error(DEFAULT_CLIENT_ERROR)
-
-  const baseHeaders = headersToObject(headers)
 
   const asyncDataOptions: AsyncDataOptions<T> = {
     server,
@@ -82,10 +88,12 @@ export function useKirbyData<T = any>(
     default: defaultFn,
     transform,
     pick,
-    watch: [
-      _path,
-      ...(watch || []),
-    ],
+    watch: watch === false
+      ? []
+      : [
+          _path,
+          ...(watch || []),
+        ],
     immediate,
   }
 
@@ -94,7 +102,7 @@ export function useKirbyData<T = any>(
     body: {
       path: _path,
       query,
-      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
+      headers: headersToObject(headers),
       method,
       body,
       cache,
@@ -105,7 +113,7 @@ export function useKirbyData<T = any>(
     baseURL: kql.url,
     query,
     headers: {
-      ...baseHeaders,
+      ...headersToObject(headers),
       ...getAuthHeader(kql),
     },
     method,
@@ -117,8 +125,6 @@ export function useKirbyData<T = any>(
     _path.value,
     query,
     method,
-    body,
-    language,
   ])}`)
 
   return useAsyncData<T, FetchError>(

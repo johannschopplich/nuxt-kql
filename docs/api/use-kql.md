@@ -29,7 +29,7 @@ type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   /**
    * Language code to fetch data for in multi-language Kirby setups.
    */
-  language?: string
+  language?: MaybeRefOrGetter<string>
   /**
    * Skip the Nuxt server proxy and fetch directly from the API.
    * Requires `client` to be enabled in the module options as well.
@@ -41,6 +41,12 @@ type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
    * @default true
    */
   cache?: boolean
+  /**
+   * Watch an array of reactive sources and auto-refresh the fetch result when they change.
+   * Query and language are watched by default. You can completely ignore reactive sources by using `watch: false`.
+   * @default undefined
+   */
+  watch?: (WatchSource<unknown> | object)[] | false
 }
 ```
 

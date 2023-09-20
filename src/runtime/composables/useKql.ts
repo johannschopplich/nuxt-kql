@@ -2,6 +2,7 @@ import { computed, reactive } from 'vue'
 import { hash } from 'ohash'
 import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
+import type { WatchSource } from 'vue'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import { toValue } from '@vueuse/core'
@@ -9,7 +10,7 @@ import type { MaybeRefOrGetter } from '@vueuse/core'
 import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
-export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
+export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   NitroFetchOptions<string>,
   | 'onRequest'
   | 'onRequestError'
@@ -23,7 +24,7 @@ export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   /**
    * Language code to fetch data for in multi-language Kirby setups.
    */
-  language?: string
+  language?: MaybeRefOrGetter<string>
   /**
    * Skip the Nuxt server proxy and fetch directly from the API.
    * Requires `client` to be enabled in the module options as well.
@@ -35,6 +36,12 @@ export type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
    * @default true
    */
   cache?: boolean
+  /**
+   * Watch an array of reactive sources and auto-refresh the fetch result when they change.
+   * Query and language are watched by default. You can completely ignore reactive sources by using `watch: false`.
+   * @default undefined
+   */
+  watch?: (WatchSource<unknown> | object)[] | false
 }
 
 export function useKql<
@@ -58,6 +65,7 @@ export function useKql<
 
   const { kql } = useRuntimeConfig().public
   const _query = computed(() => toValue(query))
+  const _language = computed(() => toValue(language))
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
@@ -71,16 +79,14 @@ export function useKql<
     default: defaultFn,
     transform,
     pick,
-    watch: [
-      _query,
-      ...(watch || []),
-    ],
+    watch: watch === false
+      ? []
+      : [
+          _query,
+          _language,
+          ...(watch || []),
+        ],
     immediate,
-  }
-
-  const baseHeaders = {
-    ...headersToObject(headers),
-    ...(language && { 'X-Language': language }),
   }
 
   const _serverFetchOptions = reactive<NitroFetchOptions<string>>({
@@ -88,7 +94,10 @@ export function useKql<
     body: {
       query: _query,
       cache,
-      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
+      headers: computed(() => ({
+        ...headersToObject(headers),
+        ...(_language.value && { 'X-Language': _language.value }),
+      })),
     },
   })
 
@@ -96,14 +105,16 @@ export function useKql<
     baseURL: kql.url,
     method: 'POST',
     body: _query,
-    headers: {
-      ...baseHeaders,
+    // @ts-expect-error: Reactive value
+    headers: computed(() => ({
+      ...headersToObject(headers),
+      ...(_language.value && { 'X-Language': _language.value }),
       ...getAuthHeader(kql),
-    },
+    })),
   })
 
   let controller: AbortController | undefined
-  const key = computed(() => `$kql${hash([_query.value, language])}`)
+  const key = computed(() => `$kql${hash([_query.value, _language.value])}`)
 
   return useAsyncData<ResT, FetchError>(
     key.value,
