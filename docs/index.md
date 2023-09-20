@@ -39,7 +39,9 @@ features:
     details: Handle query requests just like with Nuxt's <code>useFetch</code> composable. Caching included.
     link: /api/use-kql
     linkText: useKql
-  - title: TypeScript
-    icon: 🦾
-    details: Bring your own query response typings. Otherwise, <code>nuxt-kql</code> will provide defaults for you.
+  - title: Multiple Starter Kits
+    icon: 🦦
+    details: Don't know where to start? Choose from three starter kits.
+    link: /guide/starters
+    linkText: Starter Kits
 ---

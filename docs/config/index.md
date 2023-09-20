@@ -67,9 +67,9 @@ interface ModuleOptions {
    * Enable client-side requests besides server-side ones
    *
    * @remarks
-   * By default, KQL data is fetched safely with a server-side proxy
-   * If enabled, you can fetch data directly from the Kirby instance
-   * Note: This means your token or user credentials will be publicly visible
+   * By default, KQL data is fetched safely with a server-side proxy.
+   * If enabled, query requests are allowed to be sent directly from the client.
+   * Note: This means your token or user credentials will be publicly visible.
    *
    * @default false
    */
@@ -79,7 +79,7 @@ interface ModuleOptions {
    * Prefetch custom KQL queries at build-time
    *
    * @remarks
-   * The queries will be fully typed and importable from `#nuxt-kql`
+   * The queries will be fully typed and importable from `#nuxt-kql`.
    *
    * @default {}
    */

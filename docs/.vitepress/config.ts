@@ -104,7 +104,7 @@ function nav(): DefaultTheme.NavItem[] {
         },
       ],
     },
-    { text: 'Starter Kit', link: 'https://github.com/johannschopplich/kirby-nuxt-starterkit' },
+    { text: 'Starter Kits', link: '/guide/starters' },
     {
       text: `v${version}`,
       items: [

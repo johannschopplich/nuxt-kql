@@ -2,6 +2,10 @@
 
 This guide will walk you through the steps to get started with `nuxt-kql`.
 
+::: tip
+Choose your favorite from the [starter kits](/guide/starters) page and get started with `nuxt-kql` in no time!
+:::
+
 ## Step 1: Install `nuxt-kql`
 
 Using [pnpm](https://pnpm.io):

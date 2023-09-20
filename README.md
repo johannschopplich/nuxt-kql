@@ -16,6 +16,7 @@
 - 🤹 No CORS issues!
 - 🍱 Handle request just like with the [`useFetch`](https://nuxt.com/docs/getting-started/data-fetching/#usefetch) composable
 - 🗃 Cached query responses
+- 🦦 [Multiple starter kits](https://nuxt-kql.byjohann.dev/guide/starters) available
 - 🦾 Strongly typed
 
 ## Setup
@@ -48,7 +49,7 @@ And send queries in your template:
 ```vue
 <script setup lang="ts">
 const { data, pending, refresh, error } = await useKql({
-  query: 'site',
+  query: 'site'
 })
 </script>
 
