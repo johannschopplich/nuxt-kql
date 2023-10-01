@@ -112,13 +112,13 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    url: process.env.KIRBY_BASE_URL as string,
+    url: process.env.KIRBY_BASE_URL || '',
     prefix: '',
     auth: 'basic',
-    token: process.env.KIRBY_API_TOKEN as string,
+    token: process.env.KIRBY_API_TOKEN || '',
     credentials: {
-      username: process.env.KIRBY_API_USERNAME as string,
-      password: process.env.KIRBY_API_PASSWORD as string,
+      username: process.env.KIRBY_API_USERNAME || '',
+      password: process.env.KIRBY_API_PASSWORD || '',
     },
     client: false,
     prefetch: {},
@@ -163,7 +163,6 @@ export default defineNuxtModule<ModuleOptions>({
     )
 
     // Write data to public runtime config if client requests are enabled
-    // @ts-expect-error: prefetch queries of playground break assignment
     nuxt.options.runtimeConfig.public.kql = defu(
       nuxt.options.runtimeConfig.public.kql,
       options.client

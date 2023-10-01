@@ -7,6 +7,7 @@ import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
+import type { ModuleOptions } from '../../module'
 import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
@@ -56,7 +57,7 @@ export function useKql<
     ...fetchOptions
   } = opts
 
-  const { kql } = useRuntimeConfig().public
+  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
   const _query = computed(() => toValue(query))
   const _language = computed(() => toValue(language))
   const key = computed(() => `$kql${hash([_query.value, _language.value])}`)

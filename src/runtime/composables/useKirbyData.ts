@@ -7,6 +7,7 @@ import type { WatchSource } from 'vue'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
+import type { ModuleOptions } from '../../module'
 import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
@@ -62,7 +63,7 @@ export function useKirbyData<T = any>(
     ...fetchOptions
   } = opts
 
-  const { kql } = useRuntimeConfig().public
+  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
   const _language = computed(() => toValue(language))
   const _path = computed(() => {
     const value = toValue(path).replace(/^\//, '')

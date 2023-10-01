@@ -1,6 +1,7 @@
 import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
+import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
 import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
@@ -34,7 +35,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const nuxt = useNuxtApp()
   const promiseMap = (nuxt._promiseMap = nuxt._promiseMap || new Map()) as Map<string, Promise<T>>
   const { headers, language, cache = true, ...fetchOptions } = opts
-  const { kql } = useRuntimeConfig().public
+  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
   const key = `$kql${hash([query, language])}`
 
   if ((nuxt.isHydrating || cache) && key in nuxt.payload.data)

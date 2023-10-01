@@ -1,6 +1,7 @@
 import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
+import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
 import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
@@ -45,7 +46,7 @@ export function $kirby<T = any>(
     cache = true,
     ...fetchOptions
   } = opts
-  const { kql } = useRuntimeConfig().public
+  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
 
   if (language)
     path = joinURL(language, path)
