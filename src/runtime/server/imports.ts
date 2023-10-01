@@ -5,7 +5,8 @@ import { getAuthHeader, headersToObject } from '../utils'
 import { useRuntimeConfig } from '#imports'
 
 export type KirbyFetchOptions = Omit<
-  NitroFetchOptions<string>, 'baseURL'
+  NitroFetchOptions<string>,
+  'baseURL'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups.
