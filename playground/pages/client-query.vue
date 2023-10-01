@@ -10,7 +10,7 @@ const query = ref<KirbyQueryRequest>({
   },
 })
 
-const { data } = await useKql(query, { client: true })
+const { data } = await useKql(query)
 
 function updateQuery() {
   query.value = {

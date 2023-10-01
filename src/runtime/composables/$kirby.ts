@@ -2,7 +2,7 @@ import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
 import type { ServerFetchOptions } from '../types'
-import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KirbyFetchOptions = Pick<
@@ -24,12 +24,6 @@ export type KirbyFetchOptions = Pick<
    */
   language?: string
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API.
-   * Requires `client` to be enabled in the module options as well.
-   * @default false
-   */
-  client?: boolean
-  /**
    * Cache the response between function calls for the same path.
    * @default true
    */
@@ -48,7 +42,6 @@ export function $kirby<T = any>(
     method,
     body,
     language,
-    client = false,
     cache = true,
     ...fetchOptions
   } = opts
@@ -64,9 +57,6 @@ export function $kirby<T = any>(
     body,
     language,
   ])}`
-
-  if (client && !kql.client)
-    throw new Error(DEFAULT_CLIENT_ERROR)
 
   if ((nuxt.isHydrating || cache) && key in nuxt.payload.data)
     return Promise.resolve(nuxt.payload.data[key])
@@ -99,9 +89,9 @@ export function $kirby<T = any>(
     body,
   }
 
-  const request = globalThis.$fetch(client ? path : getProxyPath(key), {
+  const request = globalThis.$fetch(kql.client ? path : getProxyPath(key), {
     ...fetchOptions,
-    ...(client ? _clientFetchOptions : _serverFetchOptions),
+    ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })
     .then((response) => {
       if (process.server || cache)

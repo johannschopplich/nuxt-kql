@@ -1,6 +1,6 @@
 # What is nuxt-kql?
 
-`nuxt-kql` is a lightweight module for [Nuxt](https://nuxt.com) to reliably fetch data from your Kirby instance using the **Kirby Query Language API**. It works on the server and client-side (the latter has to be enabled explicitly).
+`nuxt-kql` is a lightweight module for [Nuxt](https://nuxt.com) to reliably fetch data from your Kirby instance using the **Kirby Query Language API**, while keeping your authentication credentials safe. It works on the server and the client.
 
 ## Motivation
 

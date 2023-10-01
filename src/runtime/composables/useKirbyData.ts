@@ -7,7 +7,7 @@ import type { WatchSource } from 'vue'
 import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
-import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
@@ -28,12 +28,6 @@ type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
    * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: MaybeRefOrGetter<string>
-  /**
-   * Skip the Nuxt server proxy and fetch directly from the API.
-   * Requires `client` to be enabled in the module options as well.
-   * @default false
-   */
-  client?: boolean
   /**
    * Cache the response between function calls for the same path.
    * @default true
@@ -64,7 +58,6 @@ export function useKirbyData<T = any>(
     method,
     body,
     language,
-    client = false,
     cache = true,
     ...fetchOptions
   } = opts
@@ -83,9 +76,6 @@ export function useKirbyData<T = any>(
 
   if (!_path.value || (_language.value && !_path.value.replace(new RegExp(`^${_language.value}/`), '')))
     console.warn('[useKirbyData] Empty Kirby path')
-
-  if (client && !kql.client)
-    throw new Error(DEFAULT_CLIENT_ERROR)
 
   const asyncDataOptions: AsyncDataOptions<T> = {
     server,
@@ -119,7 +109,7 @@ export function useKirbyData<T = any>(
       try {
         let result: T | undefined
 
-        if (client) {
+        if (kql.client) {
           result = (await globalThis.$fetch<T>(_path.value, {
             ...fetchOptions,
             signal: controller.signal,

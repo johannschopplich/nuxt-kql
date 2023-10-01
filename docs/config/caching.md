@@ -12,7 +12,7 @@ If you want to disable caching, you can do so by setting the `cache` option to `
 const { data } = await useKql(
   query,
   {
-    // Disable caching
+    // Disable in-memory caching
     cache: false
   }
 )

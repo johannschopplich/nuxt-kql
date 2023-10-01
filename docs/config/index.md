@@ -64,12 +64,13 @@ interface ModuleOptions {
   }
 
   /**
-   * Enable client-side requests besides server-side ones
+   * Send client-side requests instead of using the server-side proxy
    *
    * @remarks
    * By default, KQL data is fetched safely with a server-side proxy.
-   * If enabled, query requests are allowed to be sent directly from the client.
+   * If enabled, query requests will be be sent directly from the client.
    * Note: This means your token or user credentials will be publicly visible.
+   * If Nuxt SSR is disabled, this option is enabled by default.
    *
    * @default false
    */

@@ -5,8 +5,8 @@ export default defineNuxtConfig({
     // Enable token-based authentication
     auth: 'bearer',
 
-    // Enable client-side query requests with `useKql(query, { client: true })`
-    client: true,
+    // Send client-side query requests to Kirby instead of the KQL proxy
+    // client: true,
 
     // Prefetch queries at build-time
     prefetch: {

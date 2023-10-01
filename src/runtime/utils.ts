@@ -1,7 +1,5 @@
 import type { ModuleOptions } from '../module'
 
-export const DEFAULT_CLIENT_ERROR = 'Fetching from Kirby client-side isn\'t allowed. Enable it by setting the module option "client" to "true" in your "nuxt.config.ts".'
-
 export function getProxyPath(key: string) {
   return `/api/__kql/${encodeURIComponent(key)}`
 }

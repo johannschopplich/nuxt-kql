@@ -7,7 +7,7 @@ import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
-import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
@@ -25,12 +25,6 @@ export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
    * Language code to fetch data for in multi-language Kirby setups.
    */
   language?: MaybeRefOrGetter<string>
-  /**
-   * Skip the Nuxt server proxy and fetch directly from the API.
-   * Requires `client` to be enabled in the module options as well.
-   * @default false
-   */
-  client?: boolean
   /**
    * Cache the response between function calls for the same query.
    * @default true
@@ -58,7 +52,6 @@ export function useKql<
     immediate,
     headers,
     language,
-    client = false,
     cache = true,
     ...fetchOptions
   } = opts
@@ -70,9 +63,6 @@ export function useKql<
 
   if (Object.keys(_query.value).length === 0 || !_query.value.query)
     console.error('[useKql] Empty KQL query')
-
-  if (client && !kql.client)
-    throw new Error(DEFAULT_CLIENT_ERROR)
 
   const asyncDataOptions: AsyncDataOptions<ResT> = {
     server,
@@ -107,7 +97,7 @@ export function useKql<
       try {
         let result: ResT | undefined
 
-        if (client) {
+        if (kql.client) {
           result = (await globalThis.$fetch<ResT>(kql.prefix, {
             ...fetchOptions,
             signal: controller.signal,

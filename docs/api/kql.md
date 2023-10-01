@@ -28,12 +28,6 @@ type KqlOptions = Pick<
    */
   language?: string
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API.
-   * Requires `client` to be enabled in the module options as well.
-   * @default false
-   */
-  client?: boolean
-  /**
    * Cache the response between function calls for the same query.
    * @default true
    */
@@ -80,16 +74,7 @@ const data = await $kql(
 Authorization credentials will be publicly visible. Also, possible CORS issues ahead if the backend is not configured properly.
 :::
 
-To fetch data directly from your Kirby instance, without the Nuxt proxy, set the option `client` to `true`:
-
-```ts{3}
-const data = await $kql(
-  query,
-  { client: true }
-)
-```
-
-This requires the `client` option to be `true` in your `nuxt-kql` module configuration:
+To fetch data directly from your Kirby instance without the Nuxt proxy, set the module option `client` to `true`:
 
 ```ts{6}
 // `nuxt.config.ts`
@@ -100,4 +85,10 @@ export default defineNuxtConfig({
     client: true
   }
 })
+```
+
+Now, every `$kql` call will be directly use the Kirby instance by sending requests from the client:
+
+```ts{3}
+const data = await $kql(query)
 ```

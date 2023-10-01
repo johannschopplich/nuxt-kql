@@ -2,7 +2,7 @@ import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import type { ServerFetchOptions } from '../types'
-import { DEFAULT_CLIENT_ERROR, getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KqlOptions = Pick<
@@ -21,12 +21,6 @@ export type KqlOptions = Pick<
    */
   language?: string
   /**
-   * Skip the Nuxt server proxy and fetch directly from the API.
-   * Requires `client` to be enabled in the module options as well.
-   * @default false
-   */
-  client?: boolean
-  /**
    * Cache the response between function calls for the same query.
    * @default true
    */
@@ -39,12 +33,9 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const promiseMap = (nuxt._promiseMap = nuxt._promiseMap || new Map()) as Map<string, Promise<T>>
-  const { headers, language, client = false, cache = true, ...fetchOptions } = opts
+  const { headers, language, cache = true, ...fetchOptions } = opts
   const { kql } = useRuntimeConfig().public
   const key = `$kql${hash([query, language])}`
-
-  if (client && !kql.client)
-    throw new Error(DEFAULT_CLIENT_ERROR)
 
   if ((nuxt.isHydrating || cache) && key in nuxt.payload.data)
     return Promise.resolve(nuxt.payload.data[key])
@@ -76,9 +67,9 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
     },
   }
 
-  const request = globalThis.$fetch(client ? kql.prefix : getProxyPath(key), {
+  const request = globalThis.$fetch(kql.client ? kql.prefix : getProxyPath(key), {
     ...fetchOptions,
-    ...(client ? _clientFetchOptions : _serverFetchOptions),
+    ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })
     .then((response) => {
       if (process.server || cache)
