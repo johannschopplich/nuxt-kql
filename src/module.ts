@@ -3,7 +3,8 @@ import { defu } from 'defu'
 import { pascalCase } from 'scule'
 import { addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-types'
-import { logger, prefetchQueries } from './prefetch'
+import { logger } from './kit'
+import { prefetchQueries } from './prefetch'
 
 export interface ModuleOptions {
   /**
@@ -151,7 +152,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (!nuxt.options.ssr) {
-      logger.warn('SSR is disabled, enabling KQL client requests by default')
+      logger.info('SSR is disabled, enabling KQL client requests by default')
       options.client = true
     }
 

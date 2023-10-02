@@ -1,5 +1,7 @@
 import { relative } from 'pathe'
-import { addTemplate, createResolver, useNuxt } from '@nuxt/kit'
+import { addTemplate, createResolver, useLogger, useNuxt } from '@nuxt/kit'
+
+export const logger = useLogger('nuxt-kql')
 
 export function extendTypes(
   module: string,

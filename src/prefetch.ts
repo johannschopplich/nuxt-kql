@@ -1,10 +1,8 @@
 import { ofetch } from 'ofetch'
-import { useLogger } from '@nuxt/kit'
 import type { KirbyQueryResponse } from 'kirby-types'
+import { logger } from './kit'
 import { getAuthHeader } from './runtime/utils'
 import type { ModuleOptions } from './module'
-
-export const logger = useLogger('nuxt-kql')
 
 export async function prefetchQueries(
   options: ModuleOptions,
