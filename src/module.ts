@@ -152,7 +152,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (!nuxt.options.ssr) {
-      logger.info('SSR is disabled, enabling KQL client requests by default')
+      logger.info('Enabling KQL client requests by default, because `ssr: false` is set')
       options.client = true
     }
 
