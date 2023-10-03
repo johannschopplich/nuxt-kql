@@ -8,7 +8,7 @@ import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
 import type { ModuleOptions } from '../../module'
-import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
@@ -107,8 +107,8 @@ export function useKql<
             body: _query.value,
             headers: {
               ...headersToObject(headers),
+              ...createAuthHeader(kql),
               ...(_language.value && { 'X-Language': _language.value }),
-              ...getAuthHeader(kql),
             },
           })) as ResT
         }

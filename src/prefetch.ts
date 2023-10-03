@@ -1,7 +1,7 @@
 import { ofetch } from 'ofetch'
 import type { KirbyQueryResponse } from 'kirby-types'
 import { logger } from './kit'
-import { getAuthHeader } from './runtime/utils'
+import { createAuthHeader } from './runtime/utils'
 import type { ModuleOptions } from './module'
 
 export async function prefetchQueries(
@@ -13,7 +13,6 @@ export async function prefetchQueries(
     return results
 
   const start = Date.now()
-  const { auth, token, credentials } = options
 
   for (const [key, query] of Object.entries(options.prefetch)) {
     const language = 'language' in query ? query.language : undefined
@@ -33,7 +32,7 @@ export async function prefetchQueries(
           method: 'POST',
           body: language ? query.query : query,
           headers: {
-            ...getAuthHeader({ auth, token, credentials }),
+            ...createAuthHeader(options),
             ...(language && { 'X-Language': language }),
           },
         }),

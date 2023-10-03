@@ -8,7 +8,7 @@ import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
 import type { ModuleOptions } from '../../module'
-import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 
 type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
@@ -118,7 +118,7 @@ export function useKirbyData<T = any>(
             query,
             headers: {
               ...headersToObject(headers),
-              ...getAuthHeader(kql),
+              ...createAuthHeader(kql),
             },
             method,
             body,

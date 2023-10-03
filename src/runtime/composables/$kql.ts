@@ -3,7 +3,7 @@ import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
-import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KqlOptions = Pick<
@@ -64,7 +64,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
     body: query,
     headers: {
       ...baseHeaders,
-      ...getAuthHeader(kql),
+      ...createAuthHeader(kql),
     },
   }
 

@@ -1,7 +1,7 @@
 import { joinURL } from 'ufo'
 import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
-import { getAuthHeader, headersToObject } from '../utils'
+import { createAuthHeader, headersToObject } from '../utils'
 import { useRuntimeConfig } from '#imports'
 
 export type KirbyFetchOptions = Omit<
@@ -46,7 +46,7 @@ export function $kirby<T = any>(
     baseURL: kql.url,
     headers: {
       ...headersToObject(headers),
-      ...getAuthHeader(kql),
+      ...createAuthHeader(kql),
     },
   }) as Promise<T>
 }
@@ -65,8 +65,8 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
     body: query,
     headers: {
       ...headersToObject(headers),
+      ...createAuthHeader(kql),
       ...(language && { 'X-Language': language }),
-      ...getAuthHeader(kql),
     },
   }) as Promise<T>
 }

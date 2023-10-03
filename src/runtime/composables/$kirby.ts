@@ -3,7 +3,7 @@ import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
 import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
-import { getAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type KirbyFetchOptions = Pick<
@@ -84,7 +84,7 @@ export function $kirby<T = any>(
     query,
     headers: {
       ...baseHeaders,
-      ...getAuthHeader(kql),
+      ...createAuthHeader(kql),
     },
     method,
     body,

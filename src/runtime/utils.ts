@@ -11,20 +11,23 @@ export function headersToObject(headers: HeadersInit = {}): Record<string, strin
   return headers
 }
 
-export function getAuthHeader({
+export function createAuthHeader({
   auth,
   token,
   credentials,
 }: Pick<ModuleOptions, 'token' | 'credentials'> & { auth?: string }) {
-  const headers: Record<string, string> = {}
-
   if (auth === 'basic' && credentials) {
     const { username, password } = credentials
-    headers.Authorization = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
+    let encoded = ''
+
+    if (process.server)
+      encoded = Buffer.from(`${username}:${password}`).toString('base64')
+    else if (process.client)
+      encoded = btoa(`${username}:${password}`)
+
+    return { Authorization: `Basic ${encoded}` }
   }
 
   if (auth === 'bearer')
-    headers.Authorization = `Bearer ${token}`
-
-  return headers
+    return { Authorization: `Bearer ${token}` }
 }
