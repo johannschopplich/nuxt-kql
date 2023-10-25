@@ -225,7 +225,7 @@ export type { KirbyBlock, KirbyDefaultBlockType, KirbyDefaultBlocks, KirbyLayout
 ${[...prefetchedQueries.entries()].map(([key, response]) => `
 export const ${key} = ${JSON.stringify(response?.result || null, undefined, 2)}
 export type ${pascalCase(key)} = typeof ${key}
-`.trimStart()).join('')}`.trimStart()
+`.trimStart()).join('') || `export {}\n`}`.trimStart()
       },
     })
   },
