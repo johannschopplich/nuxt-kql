@@ -38,7 +38,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
   const key = `$kql${hash([query, language])}`
 
-  if ((nuxt.isHydrating || cache) && key in nuxt.payload.data)
+  if ((nuxt.isHydrating || cache) && nuxt.payload.data[key])
     return Promise.resolve(nuxt.payload.data[key])
 
   if (promiseMap.has(key))
@@ -80,8 +80,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
     })
     // Invalidate cache if request fails
     .catch((error) => {
-      if (key in nuxt.payload.data)
-        delete nuxt.payload.data[key]
+      nuxt.payload.data[key] = undefined
       promiseMap.delete(key)
       throw error
     }) as Promise<T>

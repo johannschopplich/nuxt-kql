@@ -102,7 +102,7 @@ export function useKirbyData<T = any>(
 
       // Workaround to persist response client-side
       // https://github.com/nuxt/nuxt/issues/15445
-      if ((nuxt!.isHydrating || cache) && key.value in nuxt!.payload.data)
+      if ((nuxt!.isHydrating || cache) && nuxt!.payload.data[key.value])
         return nuxt!.payload.data[key.value]
 
       controller = new AbortController()
@@ -147,8 +147,7 @@ export function useKirbyData<T = any>(
       }
       catch (error) {
         // Invalidate cache if request fails
-        if (key.value in nuxt!.payload.data)
-          delete nuxt!.payload.data[key.value]
+        nuxt!.payload.data[key.value] = undefined
 
         throw error
       }
