@@ -53,6 +53,7 @@ async function fetcher({
 }
 
 const cachedFetcher = defineCachedFunction(fetcher, {
+  base: kql.server.storage,
   swr: kql.server.swr,
   maxAge: kql.server.maxAge,
   getKey: ({ key }: { key: string } & ServerFetchOptions) => key,

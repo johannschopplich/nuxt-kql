@@ -80,14 +80,22 @@ export interface ModuleOptions {
    */
   server?: {
     /**
-     * Enable server-side caching of queries using the Nitro cache API (in-memory cache)
+     * Enable server-side caching of queries using the Nitro cache API
      *
      * @see https://nitro.unjs.io/guide/cache
      */
     cache?: boolean
 
     /**
-     * Enable stale-while-revalidate behavior (cache is served while a new request is made)
+     * Name of the storage mountpoint to use for caching
+     *
+     * @see https://nitro.unjs.io/guide/cache#options
+     * @default 'cache'
+     */
+    storage?: string
+
+    /**
+     * Enable stale-while-revalidate behavior (cache is returned while it is being updated)
      *
      * @see https://nitro.unjs.io/guide/cache#options
      * @default true
@@ -125,6 +133,7 @@ export default defineNuxtModule<ModuleOptions>({
     prefetch: {},
     server: {
       cache: false,
+      storage: 'cache',
       swr: true,
       maxAge: 60 * 60,
     },

@@ -20,9 +20,9 @@ const { data } = await useKql(
 
 ## Server-Side Caching
 
-`nuxt-kql` lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory. For short concurrent requests on your website, it will make a great performance difference, as the query response will be served from the cache instead of being fetched from the server again.
+`nuxt-kql` lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory by default, but you can use any storage mountpoints supported by Nitro. The full list of built-in storage mountpoints can be found in the [unstorage documentation](https://unstorage.unjs.io).
 
-The default expiration time is set to 60 minutes. This limit will probably never be hit in serverless deployment environments.
+For short concurrent requests on your website, caching will make a great performance difference, as the query response will be served from the cache instead of being fetched from the server again. The default expiration time is set to 60 minutes.
 
 You can enable server-side caching by setting the `server.cache` module option to `true`. You can also set a custom expiration time in seconds by setting the `server.maxAge` option or disable stale-while-revalidate behavior by setting the `server.swr` option to `false`:
 
@@ -36,12 +36,33 @@ export default defineNuxtConfig({
       // Enable server-side caching
       // @default false
       cache: true,
+      // Name of the storage mountpoint to use for caching
+      // @default 'cache'
+      storage: 'kql',
       // Control stale-while-revalidate behavior
       // @default true
       swr: true,
       // Set a custom expiration time in seconds
       // @default 60 * 60
       maxAge: 60 * 60
+    }
+  }
+})
+```
+
+If we want to use a custom storage mountpoint, use the `storage` option. In the example above, we use the `kql` storage mountpoint to store the query responses.
+
+But this custom storage mountpoint is not defined yet. To make it available, we need to mount it in the `nitro` section of our `nuxt.config.ts`:
+
+```ts
+// `nuxt.config.ts`
+export default defineNuxtConfig({
+  nitro: {
+    storage: {
+      kql: {
+        driver: 'redis',
+        // Redis connector options
+      }
     }
   }
 })
