@@ -73,7 +73,7 @@ export default defineNuxtConfig({
     devStorage: {
       kql: {
         driver: 'fs',
-        base: './data/kql',
+        base: 'data/kql',
       },
     },
   }
