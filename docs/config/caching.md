@@ -61,7 +61,7 @@ export default defineNuxtConfig({
     storage: {
       kql: {
         // https://unstorage.unjs.io/drivers/cloudflare-kv-binding
-        driver: 'cloudflare-kv-binding',
+        driver: 'cloudflareKVBinding',
         binding: 'my-namespace'
       }
     }
