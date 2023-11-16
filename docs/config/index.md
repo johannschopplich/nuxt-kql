@@ -117,10 +117,10 @@ interface ModuleOptions {
     swr?: boolean
 
     /**
-     * Maximum age that cache is valid in seconds
+     * Number of seconds to cache the query response
      *
      * @see https://nitro.unjs.io/guide/cache#options
-     * @default 60 * 60
+     * @default 1
      */
     maxAge?: number
   }

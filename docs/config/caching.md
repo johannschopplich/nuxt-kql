@@ -42,9 +42,9 @@ export default defineNuxtConfig({
       // Control stale-while-revalidate behavior
       // @default true
       swr: true,
-      // Set a custom expiration time in seconds
-      // @default 60 * 60
-      maxAge: 60 * 60
+      // Number of seconds to cache the query response
+      // @default 1
+      maxAge: 1
     }
   }
 })
