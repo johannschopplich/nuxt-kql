@@ -50,7 +50,9 @@ export default defineNuxtConfig({
 })
 ```
 
-If we want to use a custom storage mountpoint, use the `storage` option. In the example above, we use the `kql` storage mountpoint to store the query responses.
+A custom storage mountpoint is suitable for production environments. For example, if you deploy to Cloudflare, the Clouflare KV storage mountpoint is a good choice. For development, you can use the built-in `fs` storage mountpoint.
+
+To define a custom storage mountpoint, use the `storage` option of the `nuxt-kql` module. In the example above, we use the `kql` storage mountpoint to store the query responses.
 
 But this custom storage mountpoint is not defined yet. To make it available, we need to mount it in the `nitro` section of our `nuxt.config.ts`:
 
@@ -64,7 +66,16 @@ export default defineNuxtConfig({
         driver: 'cloudflareKVBinding',
         binding: 'my-namespace'
       }
-    }
+    },
+    // Make sure to define a fallback storage mountpoint for
+    // local development, since the Cloudflare KV binding is
+    // not available locally
+    devStorage: {
+      kql: {
+        driver: 'fs',
+        base: './data/kql',
+      },
+    },
   }
 })
 ```
