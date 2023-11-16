@@ -64,7 +64,8 @@ export default defineNuxtConfig({
       kql: {
         // https://unstorage.unjs.io/drivers/cloudflare-kv-binding
         driver: 'cloudflareKVBinding',
-        binding: 'my-namespace'
+        // Make sure to link the namespace in your Cf worker settings
+        binding: '__MY_NAMESPACE'
       }
     },
     // Make sure to define a fallback storage mountpoint for
