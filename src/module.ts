@@ -89,7 +89,7 @@ export interface ModuleOptions {
     /**
      * Name of the storage mountpoint to use for caching
      *
-     * @see https://nitro.unjs.io/guide/cache#options
+     * @see https://nitro.unjs.io/guide/cache
      * @default 'cache'
      */
     storage?: string
@@ -161,8 +161,16 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (!nuxt.options.ssr) {
-      logger.info('Enabling KQL client requests by default, because `ssr: false` is set')
+      logger.info('Enabling KQL client requests by default because SSR is disabled')
       options.client = true
+    }
+
+    if (options.server) {
+      // The Nitro storage mountpoint requires a leading slash
+      options.server.storage ||= 'cache'
+      options.server.storage = options.server.storage.startsWith('/')
+        ? options.server.storage
+        : `/${options.server.storage}`
     }
 
     // Private runtime config

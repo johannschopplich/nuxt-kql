@@ -103,10 +103,10 @@ interface ModuleOptions {
     /**
      * Name of the storage mountpoint to use for caching
      *
-     * @see https://nitro.unjs.io/guide/cache#options
+     * @see https://nitro.unjs.io/guide/cache
      * @default 'cache'
      */
-    base?: string
+    storage?: string
 
     /**
      * Enable stale-while-revalidate behavior (cache is returned while it is being updated)

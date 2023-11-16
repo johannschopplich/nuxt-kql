@@ -60,8 +60,9 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       kql: {
-        driver: 'redis',
-        // Redis connector options
+        // https://unstorage.unjs.io/drivers/cloudflare-kv-binding
+        driver: 'cloudflare-kv-binding',
+        binding: 'my-namespace'
       }
     }
   }
