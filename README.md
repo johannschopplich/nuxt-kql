@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
-> [Nuxt](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
+[Nuxt](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
 
 - [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
 - [📖 &nbsp;Read the documentation](https://nuxt-kql.byjohann.dev)
@@ -21,6 +21,7 @@
 
 ## Setup
 
+> [!TIP]
 > [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
 
 ```bash
@@ -33,6 +34,7 @@ npm i -D nuxt-kql
 
 ## Basic Usage
 
+> [!TIP]
 > [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
 
 Add `nuxt-kql` to your Nuxt config:
@@ -71,4 +73,4 @@ const { data, pending, refresh, error } = await useKql({
 
 ## License
 
-[MIT](./LICENSE) License © 2022-2023 [Johann Schopplich](https://github.com/johannschopplich)
+[MIT](./LICENSE) License © 2022-PRESENT [Johann Schopplich](https://github.com/johannschopplich)
