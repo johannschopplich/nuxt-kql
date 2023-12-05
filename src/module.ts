@@ -72,7 +72,7 @@ export interface ModuleOptions {
    */
   prefetch?: Record<
     string,
-    KirbyQueryRequest | { query: KirbyQueryRequest; language: string }
+    KirbyQueryRequest | { query: KirbyQueryRequest, language: string }
   >
 
   /**
@@ -174,15 +174,14 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Private runtime config
-    // @ts-expect-error: prefetch queries of playground break assignment
     nuxt.options.runtimeConfig.kql = defu(
-      nuxt.options.runtimeConfig.kql,
+      nuxt.options.runtimeConfig.kql as Required<ModuleOptions>,
       options,
     )
 
     // Write data to public runtime config if client requests are enabled
     nuxt.options.runtimeConfig.public.kql = defu(
-      nuxt.options.runtimeConfig.public.kql,
+      nuxt.options.runtimeConfig.public.kql as Required<ModuleOptions>,
       options.client
         ? options
         : { client: false },

@@ -64,7 +64,10 @@ jobs:
         run: cp playground/.env.example playground/.env
 
       - name: Install
-        run: pnpm i
+        run: pnpm install
+
+      - name: Build type stubs
+        run: pnpm dev:prepare
 
       - name: Test
         run: pnpm run test

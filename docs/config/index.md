@@ -86,7 +86,7 @@ interface ModuleOptions {
    */
   prefetch?: Record<
     string,
-    KirbyQueryRequest | { query: KirbyQueryRequest; language: string }
+    KirbyQueryRequest | { query: KirbyQueryRequest, language: string }
   >
 
   /**

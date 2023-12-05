@@ -2,6 +2,7 @@ import { joinURL } from 'ufo'
 import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import { createAuthHeader, headersToObject } from '../utils'
+import type { ModuleOptions } from '../../module'
 import { useRuntimeConfig } from '#imports'
 
 export type KirbyFetchOptions = Omit<
@@ -36,7 +37,7 @@ export function $kirby<T = any>(
   opts: KirbyFetchOptions = {},
 ): Promise<T> {
   const { headers, language, ...fetchOptions } = opts
-  const { kql } = useRuntimeConfig()
+  const kql = useRuntimeConfig().kql as Required<ModuleOptions>
 
   if (language)
     path = joinURL(language, path)
@@ -56,7 +57,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   opts: KqlFetchOptions = {},
 ): Promise<T> {
   const { headers, language, ...fetchOptions } = opts
-  const { kql } = useRuntimeConfig()
+  const kql = useRuntimeConfig().kql as Required<ModuleOptions>
 
   return globalThis.$fetch<T, string>(kql.prefix, {
     ...fetchOptions,
