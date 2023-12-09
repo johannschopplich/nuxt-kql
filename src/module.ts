@@ -174,6 +174,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Private runtime config
+    // @ts-expect-error: Server option types are incompatible
     nuxt.options.runtimeConfig.kql = defu(
       nuxt.options.runtimeConfig.kql as Required<ModuleOptions>,
       options,
