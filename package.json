@@ -52,7 +52,7 @@
     "@nuxt/kit": "^3.8.2",
     "@vueuse/core": "^10.7.0",
     "defu": "^6.1.3",
-    "kirby-types": "^0.6.5",
+    "kirby-types": "^0.6.6",
     "ofetch": "^1.3.3",
     "ohash": "^1.1.3",
     "pathe": "^1.1.1",
@@ -71,6 +71,6 @@
     "nuxt-kql": "workspace:*",
     "typescript": "^5.3.3",
     "vitest": "^1.1.0",
-    "vue-tsc": "^1.8.25"
+    "vue-tsc": "^1.8.26"
   }
 }
