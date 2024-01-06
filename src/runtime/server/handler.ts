@@ -1,8 +1,8 @@
 import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
-import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
+import type { NuxtError } from '#app'
 
 // @ts-expect-error: Will be resolved by Nitro
 import { defineCachedFunction } from '#internal/nitro'
@@ -47,7 +47,7 @@ async function fetcher({
       statusMessage: isQueryRequest
         ? 'Failed to execute KQL query'
         : `Failed to fetch "${path}"`,
-      data: (err as FetchError).message,
+      data: (err as NuxtError).message,
     })
   }
 }

@@ -1,10 +1,9 @@
 import { computed } from 'vue'
 import { joinURL } from 'ufo'
 import { hash } from 'ohash'
-import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { WatchSource } from 'vue'
-import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
+import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
 import type { ModuleOptions } from '../../module'
@@ -95,7 +94,7 @@ export function useKirbyData<T = any>(
 
   let controller: AbortController | undefined
 
-  return useAsyncData<T, FetchError>(
+  return useAsyncData<T, NuxtError>(
     key.value,
     async (nuxt) => {
       controller?.abort?.()
@@ -153,5 +152,5 @@ export function useKirbyData<T = any>(
       }
     },
     asyncDataOptions,
-  ) as AsyncData<T, FetchError>
+  ) as AsyncData<T, NuxtError>
 }

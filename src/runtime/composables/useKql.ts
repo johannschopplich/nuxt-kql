@@ -1,9 +1,8 @@
 import { computed } from 'vue'
 import { hash } from 'ohash'
-import type { FetchError } from 'ofetch'
 import type { NitroFetchOptions } from 'nitropack'
 import type { WatchSource } from 'vue'
-import type { AsyncData, AsyncDataOptions } from 'nuxt/app'
+import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import { toValue } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/core'
@@ -83,7 +82,7 @@ export function useKql<
 
   let controller: AbortController | undefined
 
-  return useAsyncData<ResT, FetchError>(
+  return useAsyncData<ResT, NuxtError>(
     key.value,
     async (nuxt) => {
       controller?.abort?.()
@@ -141,5 +140,5 @@ export function useKql<
       }
     },
     asyncDataOptions,
-  ) as AsyncData<ResT, FetchError>
+  ) as AsyncData<ResT, NuxtError>
 }
