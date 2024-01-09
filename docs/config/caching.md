@@ -40,8 +40,8 @@ export default defineNuxtConfig({
       // @default 'cache'
       storage: 'kql',
       // Control stale-while-revalidate behavior
-      // @default true
-      swr: true,
+      // @default false
+      swr: false,
       // Number of seconds to cache the query response
       // @default 1
       maxAge: 1
