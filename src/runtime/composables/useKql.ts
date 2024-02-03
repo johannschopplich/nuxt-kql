@@ -82,7 +82,7 @@ export function useKql<
 
   let controller: AbortController | undefined
 
-  return useAsyncData<ResT, NuxtError>(
+  return useAsyncData<ResT, unknown>(
     key.value,
     async (nuxt) => {
       controller?.abort?.()

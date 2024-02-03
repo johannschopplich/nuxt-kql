@@ -94,7 +94,7 @@ export function useKirbyData<T = any>(
 
   let controller: AbortController | undefined
 
-  return useAsyncData<T, NuxtError>(
+  return useAsyncData<T, unknown>(
     key.value,
     async (nuxt) => {
       controller?.abort?.()
