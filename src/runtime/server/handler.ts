@@ -1,3 +1,4 @@
+import { consola } from 'consola'
 import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
@@ -42,6 +43,12 @@ async function fetcher({
     return result
   }
   catch (err) {
+    if (kql.server.verboseErrors) {
+      if (isQueryRequest)
+        consola.error('Failed to execute KQL query:', query)
+      else consola.error(`Failed to fetch "${path}" with options:`, { headers, method, query, body })
+    }
+
     throw createError({
       statusCode: 500,
       statusMessage: isQueryRequest

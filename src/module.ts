@@ -109,6 +109,16 @@ export interface ModuleOptions {
      * @default 1
      */
     maxAge?: number
+
+    /**
+     * Log verbose errors to the console if a query fails
+     *
+     * @remarks
+     * This will log the full query to the console, which may contain sensitive data.
+     *
+     * @default false
+     */
+    verboseErrors?: boolean
   }
 }
 
@@ -136,6 +146,7 @@ export default defineNuxtModule<ModuleOptions>({
       storage: 'cache',
       swr: false,
       maxAge: 1,
+      verboseErrors: false,
     },
   },
   async setup(options, nuxt) {

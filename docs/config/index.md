@@ -123,6 +123,16 @@ interface ModuleOptions {
      * @default 1
      */
     maxAge?: number
+
+    /**
+     * Log verbose errors to the console if a query fails
+     *
+     * @remarks
+     * This will log the full query to the console, which may contain sensitive data.
+     *
+     * @default false
+     */
+    verboseErrors?: boolean
   }
 }
 ```
