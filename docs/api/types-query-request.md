@@ -15,11 +15,13 @@ Types are re-exported from the [`kirby-types`](https://github.com/johannschoppli
 ```ts
 type KirbyQueryModel<CustomModel extends string = never> =
   | 'collection'
-  | 'file'
   | 'kirby'
-  | 'page'
   | 'site'
+  | 'page'
   | 'user'
+  | 'file'
+  | 'content'
+  | 'item'
   | 'arrayItem'
   | 'structureItem'
   | 'block'
@@ -34,11 +36,11 @@ type FunctionNotationQuery<M extends string = never> =
   `${KirbyQueryModel<M>}(${string})${string}`
 
 // Combines the two types above to allow for either dot or function notation
-export type KirbyQueryChain<M extends string = never> =
+type KirbyQueryChain<M extends string = never> =
   | DotNotationQuery<M>
   | FunctionNotationQuery<M>
 
-export type KirbyQuery<CustomModel extends string = never> =
+type KirbyQuery<CustomModel extends string = never> =
   | KirbyQueryModel<CustomModel>
   // Ensures that it must match the pattern exactly, but not more broadly
   | (string extends KirbyQueryChain<CustomModel>
