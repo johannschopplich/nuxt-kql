@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   modules: ['nuxt-kql'],
 
   kql: {
-    // ... your options
+    // ... Your options here
   }
 })
 ```
