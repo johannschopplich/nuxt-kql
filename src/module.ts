@@ -114,7 +114,7 @@ export interface ModuleOptions {
      * Log verbose errors to the console if a query fails
      *
      * @remarks
-     * This will log the full query to the console. Depending on the length of the query, this could be a security risk.
+     * This will log the full query to the console. Depending on the content of the query, this could be a security risk.
      *
      * @default false
      */
