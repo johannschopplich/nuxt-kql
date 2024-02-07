@@ -13,7 +13,7 @@ function useKql<
 >(
   query: MaybeRefOrGetter<ReqT>,
   opts?: UseKqlOptions<ResT>
-): AsyncData<ResT, NuxtError>
+): AsyncData<ResT | null, NuxtError>
 
 type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   NitroFetchOptions<string>,

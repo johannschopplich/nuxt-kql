@@ -140,5 +140,5 @@ export function useKql<
       }
     },
     asyncDataOptions,
-  ) as AsyncData<ResT, NuxtError>
+  ) as AsyncData<ResT | null, NuxtError>
 }
