@@ -52,7 +52,7 @@
     "@nuxt/kit": "^3.10.1",
     "@vueuse/core": "^10.7.2",
     "defu": "^6.1.4",
-    "kirby-types": "^0.6.6",
+    "kirby-types": "^0.7.0",
     "ofetch": "^1.3.3",
     "ohash": "^1.1.3",
     "pathe": "^1.1.2",

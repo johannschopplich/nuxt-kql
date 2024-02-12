@@ -18,8 +18,8 @@ importers:
         specifier: ^6.1.4
         version: 6.1.4
       kirby-types:
-        specifier: ^0.6.6
-        version: 0.6.6
+        specifier: ^0.7.0
+        version: 0.7.0
       ofetch:
         specifier: ^1.3.3
         version: 1.3.3
@@ -5362,8 +5362,8 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
-  /kirby-types@0.6.6:
-    resolution: {integrity: sha512-yRRx9fQLMGCoKHoNgqQSuCHPzT8nbq9xSWdpkyNSi2f4BLS9WWsmhkVygVJ66kDQ9JTbv9b+G3ukyNsh222j/A==}
+  /kirby-types@0.7.0:
+    resolution: {integrity: sha512-0jvewv9d/ynAquAyqfTs2DNHilolWi9OB4wOtShLGkWv8toZ6WecJrj3IM6IRnHRZ8uKl1FGzIpHL14Y8hXmtA==}
     dev: false
 
   /kleur@3.0.3:
