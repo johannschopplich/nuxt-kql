@@ -31,8 +31,8 @@ interface ModuleOptions {
   /**
    * Kirby KQL API route path
    *
-   * @default 'api/query' for `basic` authentication
-   * @default 'api/kql' for `bearer` authentication
+   * @default 'api/query' // for `basic` authentication
+   * @default 'api/kql' // for `bearer` authentication
    */
   prefix?: string
 

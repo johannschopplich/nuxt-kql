@@ -17,8 +17,8 @@ export interface ModuleOptions {
   /**
    * Kirby KQL API route path
    *
-   * @default 'api/query' for `basic` authentication
-   * @default 'api/kql' for `bearer` authentication
+   * @default 'api/query' // for `basic` authentication
+   * @default 'api/kql' // for `bearer` authentication
    */
   prefix?: string
 
@@ -155,14 +155,14 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Make sure Kirby URL and KQL endpoint are set
     if (!options.url)
-      logger.error('Missing `KIRBY_BASE_URL` in `.env`')
+      logger.error('Missing `KIRBY_BASE_URL` environment variable')
 
     // Make sure authentication credentials are set
     if (options.auth === 'basic' && (!options.credentials || !options.credentials.username || !options.credentials.password))
-      logger.error('Missing `KIRBY_API_USERNAME` and `KIRBY_API_PASSWORD` in `.env` for basic authentication')
+      logger.error('Missing `KIRBY_API_USERNAME` and `KIRBY_API_PASSWORD` environment variable for basic authentication')
 
     if (options.auth === 'bearer' && !options.token)
-      logger.error('Missing `KIRBY_API_TOKEN` in `.env` for bearer authentication')
+      logger.error('Missing `KIRBY_API_TOKEN` environment variable for bearer authentication')
 
     if (!options.prefix) {
       if (options.auth === 'basic')

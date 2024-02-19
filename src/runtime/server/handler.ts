@@ -42,7 +42,7 @@ async function fetcher({
 
     return result
   }
-  catch (err) {
+  catch (error) {
     if (kql.server.verboseErrors) {
       if (isQueryRequest)
         consola.error('Failed to execute KQL query:', query)
@@ -54,7 +54,7 @@ async function fetcher({
       statusMessage: isQueryRequest
         ? 'Failed to execute KQL query'
         : `Failed to fetch "${path}"`,
-      data: (err as NuxtError).message,
+      data: (error as NuxtError).message,
     })
   }
 }

@@ -19,7 +19,7 @@ export async function prefetchQueries(
 
     if (language && !query.query) {
       logger.error(
-        `Couldn't prefetch ${key} KQL query: \`language\` option requires a \`query\``,
+        `Failed to prefetch ${key} multi-language KQL query: \`query\` is required`,
       )
       continue
     }
@@ -38,8 +38,8 @@ export async function prefetchQueries(
         }),
       )
     }
-    catch (e) {
-      logger.error(`Couldn't prefetch ${key} KQL query:`, e)
+    catch (error) {
+      logger.error(`Failed to prefetch ${key} KQL query:`, error)
     }
   }
 
