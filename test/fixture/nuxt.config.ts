@@ -2,17 +2,9 @@ export default defineNuxtConfig({
   modules: ['../src/module.ts'],
 
   kql: {
-    // URL and token to the Kirby instance
     url: 'https://kirby-headless-starter.jhnn.dev',
     token: 'test',
-
-    // Enable token-based authentication
     auth: 'bearer',
-
-    // Send client-side query requests to Kirby instead of the KQL proxy
-    // client: true,
-
-    // Prefetch queries at build-time
     prefetch: {
       site: {
         query: 'site',
@@ -28,10 +20,6 @@ export default defineNuxtConfig({
           },
         },
       },
-    },
-
-    server: {
-      cache: true,
     },
   },
 
