@@ -207,7 +207,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add KQL proxy endpoint to send queries server-side
     addServerHandler({
-      route: '/api/__kql/:key',
+      route: '/api/__kirby__/:key',
       method: 'post',
       handler: resolve('runtime/server/handler'),
     })

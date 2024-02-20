@@ -1,7 +1,7 @@
 import type { ModuleOptions } from '../module'
 
 export function getProxyPath(key: string) {
-  return `/api/__kql/${encodeURIComponent(key)}`
+  return `/api/__kirby__/${encodeURIComponent(key)}`
 }
 
 export function headersToObject(headers: HeadersInit = {}): Record<string, string> {
