@@ -1,10 +1,6 @@
 ---
 layout: home
-sidebar: false
-
-title: nuxt-kql
 titleTemplate: Kirby's Query Language API for Nuxt
-
 hero:
   name: nuxt-kql
   text: Kirby's Query Language API for Nuxt
