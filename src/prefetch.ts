@@ -1,4 +1,5 @@
 import { ofetch } from 'ofetch'
+import type { FetchError } from 'ofetch'
 import type { KirbyQueryResponse } from 'kirby-types'
 import { logger } from './kit'
 import { createAuthHeader } from './runtime/utils'
@@ -39,7 +40,10 @@ export async function prefetchQueries(
       )
     }
     catch (error) {
-      logger.error(`Failed to prefetch ${key} KQL query:`, error)
+      logger.error(
+        `Failed "${key}" prefetch query with status code ${(error as FetchError).status}:\n`,
+        JSON.stringify((error as FetchError).data, undefined, 2),
+      )
     }
   }
 

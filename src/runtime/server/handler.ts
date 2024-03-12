@@ -1,3 +1,4 @@
+import { joinURL } from 'ufo'
 import { consola } from 'consola'
 import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
 import type { ModuleOptions } from '../../module'
@@ -46,7 +47,10 @@ async function fetcher({
     if (kql.server.verboseErrors) {
       if (isQueryRequest)
         consola.error('Failed to execute KQL query:', query)
-      else consola.error(`Failed to fetch "${path}" with options:`, { headers, method, query, body })
+      else
+        consola.error(`Failed to ${(method || 'get')?.toUpperCase()} ${joinURL(kql.url, path!)} with options:`, { headers, query, body })
+
+      consola.error(`Error response:\n`, JSON.stringify((error as NuxtError).data, undefined, 2))
     }
 
     throw createError({
