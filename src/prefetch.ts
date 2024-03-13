@@ -39,7 +39,7 @@ export async function prefetchQueries(
     }
     catch (error) {
       logger.error(
-        `Prefetch KQL query "${key}" failed with status code ${(error as FetchError).status}:\n`,
+        `Prefetch KQL query "${key}" failed with status code ${(error as FetchError).statusCode}:\n`,
         JSON.stringify((error as FetchError).data, undefined, 2),
       )
     }
