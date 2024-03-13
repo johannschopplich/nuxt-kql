@@ -19,9 +19,7 @@ export async function prefetchQueries(
     const language = 'language' in query ? query.language : undefined
 
     if (language && !query.query) {
-      logger.error(
-        `Failed to prefetch ${key} multi-language KQL query: \`query\` is required`,
-      )
+      logger.error(`Prefetch KQL query "${key}" requires "query" property in multi-language mode`)
       continue
     }
 
@@ -41,7 +39,7 @@ export async function prefetchQueries(
     }
     catch (error) {
       logger.error(
-        `Failed "${key}" prefetch query with status code ${(error as FetchError).status}:\n`,
+        `Prefetch KQL query "${key}" failed with status code ${(error as FetchError).status}:\n`,
         JSON.stringify((error as FetchError).data, undefined, 2),
       )
     }

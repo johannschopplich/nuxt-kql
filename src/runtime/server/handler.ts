@@ -44,13 +44,16 @@ async function fetcher({
     return result
   }
   catch (error) {
-    if (kql.server.verboseErrors) {
-      if (isQueryRequest)
-        consola.error('Failed to execute KQL query:', query)
-      else
-        consola.error(`Failed to ${(method || 'get')?.toUpperCase()} ${joinURL(kql.url, path!)} with options:`, { headers, query, body })
-
-      consola.error(`Error response:\n`, JSON.stringify((error as NuxtError).data, undefined, 2))
+    if (isQueryRequest) {
+      consola.error(
+        `KQL query failed with status code ${(error as NuxtError).status}:\n`,
+        JSON.stringify((error as NuxtError).data, undefined, 2),
+      )
+      if (kql.server.verboseErrors)
+        consola.log('KQL query request:', query)
+    }
+    else {
+      consola.error(`Failed ${(method || 'get')?.toUpperCase()} request to ${joinURL(kql.url, path!)} with options:`, { headers, query, body })
     }
 
     throw createError({
