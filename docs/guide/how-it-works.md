@@ -4,6 +4,10 @@
 
 The internal `/api/__kirby__` server route proxies KQL requests to the Kirby instance.
 
+::: tip
+The proxy layer will not only pass through your API's response body to the response on the client, but also HTTP status code, HTTP status message and headers. This way, you can handle errors just like you would with a direct API call.
+:::
+
 ## Detailed Answer
 
 The [`useKql`](/api/use-kql) and [`$kql`](/api/kql) composables will initiate a POST request to the Nuxt server route `/api/__kirby__` defined by this module. The KQL query will be encoded in the request body.

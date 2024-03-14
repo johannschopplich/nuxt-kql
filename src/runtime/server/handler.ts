@@ -1,10 +1,8 @@
-import { joinURL } from 'ufo'
 import { consola } from 'consola'
-import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
+import { createError, defineEventHandler, getRouterParam, readBody, send, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
-import type { NuxtError } from '#app'
 
 // @ts-expect-error: Will be resolved by Nitro
 import { defineCachedFunction } from '#internal/nitro'
@@ -22,52 +20,40 @@ async function fetcher({
 }: { key: string } & ServerFetchOptions) {
   const isQueryRequest = key.startsWith('$kql')
 
-  try {
-    const result = await globalThis.$fetch<any>(isQueryRequest ? kql.prefix : path!, {
-      baseURL: kql.url,
-      ...(isQueryRequest
-        ? {
-            method: 'POST',
-            body: query,
-          }
-        : {
-            query,
-            method,
-            body,
-          }),
-      headers: {
-        ...headers,
-        ...createAuthHeader(kql),
-      },
-    })
+  const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kql.prefix : path!, {
+    responseType: 'arrayBuffer',
+    ignoreResponseError: true,
+    baseURL: kql.url,
+    ...(isQueryRequest
+      ? {
+          method: 'POST',
+          body: query,
+        }
+      : {
+          query,
+          method,
+          body,
+        }),
+    headers: {
+      ...headers,
+      ...createAuthHeader(kql),
+    },
+  })
 
-    return result
-  }
-  catch (error) {
-    if (isQueryRequest) {
-      consola.error(
-        `KQL query failed with status code ${(error as NuxtError).statusCode}:\n`,
-        JSON.stringify((error as NuxtError).data, undefined, 2),
-      )
-      if (kql.server.verboseErrors)
-        consola.log('KQL query request:', query)
-    }
-    else {
-      consola.error(`Failed ${(method || 'get')?.toUpperCase()} request to ${joinURL(kql.url, path!)} with options:`, { headers, query, body })
-    }
+  // Serialize the response data
+  const buffer = Buffer.from(response._data ?? ([] as unknown as ArrayBuffer))
+  const data = buffer.toString('base64')
 
-    throw createError({
-      statusCode: 500,
-      statusMessage: isQueryRequest
-        ? 'Failed to execute KQL query'
-        : `Failed to fetch "${path}"`,
-      data: (error as NuxtError).statusMessage,
-    })
+  return {
+    status: response.status,
+    statusText: response.statusText,
+    headers: [...response.headers.entries()],
+    data,
   }
 }
 
 const cachedFetcher = defineCachedFunction(fetcher, {
-  name: 'kql-fetcher',
+  name: 'kirby',
   base: kql.server.storage,
   swr: kql.server.swr,
   maxAge: kql.server.maxAge,
@@ -77,12 +63,13 @@ const cachedFetcher = defineCachedFunction(fetcher, {
 export default defineEventHandler(async (event) => {
   const body = await readBody<ServerFetchOptions>(event)
   const key = decodeURIComponent(getRouterParam(event, 'key')!)
+  const isQueryRequest = key.startsWith('$kql')
 
-  if (key.startsWith('$kql')) {
+  if (isQueryRequest) {
     if (!body.query?.query) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Empty KQL query',
+        statusMessage: 'KQL query is empty',
       })
     }
   }
@@ -96,8 +83,75 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  if (kql.server.cache && body.cache)
-    return await cachedFetcher({ key, ...body })
+  let response: Awaited<ReturnType<typeof fetcher>>
+  const queryErrorMessage = `Failed KQL query "${body.query?.query}" (...)`
+  const fetchErrorMessage = `Failed ${(body.method || 'get')?.toUpperCase()} request to "${body.path!}"`
 
-  return await fetcher({ key, ...body })
+  try {
+    response = kql.server.cache && body.cache
+      ? await cachedFetcher({ key, ...body })
+      : await fetcher({ key, ...body })
+  }
+  catch (error) {
+    consola.error(error)
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: isQueryRequest
+        ? queryErrorMessage
+        : fetchErrorMessage,
+    })
+  }
+
+  if (response.status >= 400 && response.status < 600) {
+    if (isQueryRequest) {
+      consola.error(`${queryErrorMessage} with status code ${response.status}:\n`, tryParseJSON(response.data))
+      if (kql.server.verboseErrors)
+        consola.log('Full KQL query request:', body.query)
+    }
+    else {
+      consola.error(fetchErrorMessage)
+    }
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: isQueryRequest
+        ? queryErrorMessage
+        : fetchErrorMessage,
+      data: tryParseJSON(response.data),
+    })
+  }
+
+  const cookies: string[] = []
+
+  for (const [key, value] of response.headers) {
+    if (key === 'content-encoding')
+      continue
+
+    if (key === 'content-length')
+      continue
+
+    if (key === 'set-cookie') {
+      cookies.push(...splitCookiesString(value))
+      continue
+    }
+
+    setResponseHeader(event, key, value)
+  }
+
+  if (cookies.length > 0)
+    setResponseHeader(event, 'set-cookie', cookies)
+
+  const buffer = Buffer.from(response.data, 'base64')
+  setResponseStatus(event, response.status, response.statusText)
+  return send(event, buffer)
 })
+
+function tryParseJSON(data: string) {
+  try {
+    return JSON.parse(data)
+  }
+  catch (e) {
+    return data
+  }
+}
