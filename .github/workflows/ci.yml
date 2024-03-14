@@ -14,66 +14,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
-
-      - name: Install
-        run: pnpm install
-
-      - name: Build type stubs
-        run: pnpm dev:prepare
-
-      - name: Lint
-        run: pnpm run lint
+      - run: pnpm install
+      - run: pnpm run dev:prepare
+      - run: pnpm run lint
 
   typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
-
-      - name: Install
-        run: pnpm install
-
-      - name: Build type stubs
-        run: pnpm dev:prepare
-
-      - name: Typecheck
-        run: pnpm run test:types
+      - run: pnpm install
+      - run: pnpm run dev:prepare
+      - run: pnpm run test:types
 
   test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        node: [18]
-        os: [ubuntu-latest]
-      fail-fast: false
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
-          registry-url: https://registry.npmjs.org/
+          node-version: 20
           cache: pnpm
-
-      - name: Environment Variables
-        run: cp playground/.env.example playground/.env
-
-      - name: Install
-        run: pnpm install
-
-      - name: Build type stubs
-        run: pnpm dev:prepare
-
-      - name: Test
-        run: pnpm run test
+      - run: cp playground/.env.example playground/.env
+      - run: pnpm install
+      - run: pnpm run dev:prepare
+      - run: pnpm run test
