@@ -85,7 +85,7 @@ export default defineEventHandler(async (event) => {
 
   let response: Awaited<ReturnType<typeof fetcher>>
   const queryErrorMessage = `Failed KQL query "${body.query?.query}" (...)`
-  const fetchErrorMessage = `Failed ${(body.method || 'get')?.toUpperCase()} request to "${body.path!}"`
+  const fetchErrorMessage = `Failed ${(body.method || 'get')?.toUpperCase()} request to "${body.path}"`
 
   try {
     response = kql.server.cache && body.cache
