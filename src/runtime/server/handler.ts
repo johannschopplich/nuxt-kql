@@ -15,7 +15,6 @@ const ignoredResponseHeaders = new Set([
   'content-encoding',
   'content-length',
   // Reduce information leakage
-  'access-control-allow-origin',
   'server',
   'x-powered-by',
 ])
@@ -63,7 +62,7 @@ async function fetcher({
 }
 
 const cachedFetcher = defineCachedFunction(fetcher, {
-  name: 'kirby',
+  name: 'nuxt-kql',
   base: kql.server.storage,
   swr: kql.server.swr,
   maxAge: kql.server.maxAge,
