@@ -1,5 +1,6 @@
 import { consola } from 'consola'
 import { createError, defineEventHandler, getRouterParam, readBody, send, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
+import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
@@ -50,8 +51,8 @@ async function fetcher({
   })
 
   // Serialize the response data
-  const buffer = Buffer.from(response._data ?? ([] as unknown as ArrayBuffer))
-  const data = buffer.toString('base64')
+  const buffer = new Uint8Array(response._data ?? ([] as unknown as ArrayBuffer))
+  const data = uint8ArrayToBase64(buffer)
 
   return {
     status: response.status,
@@ -97,12 +98,12 @@ export default defineEventHandler(async (event) => {
       ? await cachedFetcher({ key, ...body })
       : await fetcher({ key, ...body })
 
-    const buffer = Buffer.from(response.data, 'base64')
+    const buffer = base64ToUint8Array(response.data)
 
     if (response.status >= 400 && response.status < 600) {
       if (isQueryRequest) {
         consola.error(`Failed KQL query "${body.query?.query}" (...) with status code ${response.status}:\n`, tryParseJSON(
-          buffer.toString('utf-8'),
+          uint8ArrayToString(buffer),
         ))
         if (kql.server.verboseErrors)
           consola.log('Full KQL query request:', body.query)
