@@ -25,8 +25,6 @@ console.log(
 )
 ```
 
-See all available examples below.
-
 ## `NuxtError` Type Declaration
 
 ```ts
