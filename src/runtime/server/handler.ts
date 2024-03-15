@@ -103,23 +103,19 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const buffer = Buffer.from(response.data, 'base64')
+
   if (response.status >= 400 && response.status < 600) {
     if (isQueryRequest) {
-      consola.error(`${queryErrorMessage} with status code ${response.status}:\n`, tryParseJSON(response.data))
+      consola.error(`${queryErrorMessage} with status code ${response.status}:\n`, tryParseJSON(
+        buffer.toString('utf-8'),
+      ))
       if (kql.server.verboseErrors)
         consola.log('Full KQL query request:', body.query)
     }
     else {
       consola.error(fetchErrorMessage)
     }
-
-    // throw createError({
-    //   statusCode: 500,
-    //   statusMessage: isQueryRequest
-    //     ? queryErrorMessage
-    //     : fetchErrorMessage,
-    //   data: tryParseJSON(response.data),
-    // })
   }
 
   const cookies: string[] = []
@@ -142,7 +138,6 @@ export default defineEventHandler(async (event) => {
   if (cookies.length > 0)
     setResponseHeader(event, 'set-cookie', cookies)
 
-  const buffer = Buffer.from(response.data, 'base64')
   setResponseStatus(event, response.status, response.statusText)
   return send(event, buffer)
 })
