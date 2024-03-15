@@ -7,7 +7,7 @@ While the idea of this Nuxt module is to mask your Kirby API (and credentials) w
 - HTTP status message
 - Headers
 
-Thus, if a request to Kirby fails, you can still handle the error response in your Nuxt app just like you would with a direct API call. In this case, both [generated composables](/api/) will throw a `NuxtError`.
+Thus, if a request to Kirby fails, you can still handle the error response in your Nuxt app just like you would with a direct API call. In this case, both [`useKql`](/api/use-kql) and [`$kql`](/api/kql) will throw a `NuxtError`.
 
 Logging the available error properties will provide you insights on what went wrong:
 
