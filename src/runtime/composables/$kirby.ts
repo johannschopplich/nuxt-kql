@@ -95,7 +95,7 @@ export function $kirby<T = any>(
     ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })
     .then((response) => {
-      if (process.server || cache)
+      if (import.meta.server || cache)
         nuxt.payload.data[key] = response
       promiseMap.delete(key)
       return response

@@ -127,7 +127,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-kql',
     configKey: 'kql',
     compatibility: {
-      nuxt: '^3',
+      nuxt: '^3.7',
     },
   },
   defaults: {

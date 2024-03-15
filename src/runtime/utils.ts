@@ -1,3 +1,4 @@
+import { stringToBase64 } from 'uint8array-extras'
 import type { ModuleOptions } from '../module'
 
 export function getProxyPath(key: string) {
@@ -20,9 +21,9 @@ export function createAuthHeader({
     const { username, password } = credentials
     let encoded = ''
 
-    if (process.server)
-      encoded = Buffer.from(`${username}:${password}`).toString('base64')
-    else if (process.client)
+    if (import.meta.server)
+      encoded = stringToBase64(`${username}:${password}`)
+    else if (import.meta.client)
       encoded = btoa(`${username}:${password}`)
 
     return { Authorization: `Basic ${encoded}` }
