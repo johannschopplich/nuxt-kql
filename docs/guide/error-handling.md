@@ -16,8 +16,13 @@ Logging the available error properties will provide you insights on what went wr
 const { data, error } = await useKql({ query: 'site' })
 
 // Log the error if the request to Kirby failed
-console.log('Status Code', error.value.statusCode)
-console.log('Status Message', error.value.statusMessage)
+console.log(
+  'Request failed with:',
+  error.value.statusCode,
+  error.value.statusMessage,
+  // Response body
+  error.value.data
+)
 ```
 
 See all available examples below.
