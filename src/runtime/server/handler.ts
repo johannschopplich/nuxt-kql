@@ -113,13 +113,13 @@ export default defineEventHandler(async (event) => {
       consola.error(fetchErrorMessage)
     }
 
-    throw createError({
-      statusCode: 500,
-      statusMessage: isQueryRequest
-        ? queryErrorMessage
-        : fetchErrorMessage,
-      data: tryParseJSON(response.data),
-    })
+    // throw createError({
+    //   statusCode: 500,
+    //   statusMessage: isQueryRequest
+    //     ? queryErrorMessage
+    //     : fetchErrorMessage,
+    //   data: tryParseJSON(response.data),
+    // })
   }
 
   const cookies: string[] = []

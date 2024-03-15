@@ -74,6 +74,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'How It Works', link: '/guide/how-it-works' },
+        { text: 'Error Handling', link: '/guide/error-handling' },
         { text: 'Playground', link: '/guide/playground' },
       ],
     },
@@ -125,6 +126,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'How It Works', link: '/guide/how-it-works' },
+        { text: 'Error Handling', link: '/guide/error-handling' },
         { text: 'Playground', link: '/guide/playground' },
       ],
     },
@@ -149,7 +151,6 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       text: 'FAQ',
       items: [
         { text: 'Are CORS Issues Possible?', link: '/guide/faq-are-cors-issues-possible' },
-        { text: 'How to Track Errors?', link: '/guide/faq-how-to-track-errors' },
         { text: 'What Is KQL?', link: '/guide/faq-what-is-kql' },
       ],
     },

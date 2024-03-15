@@ -1,33 +1,44 @@
-# How to Track Errors?
+# Error Handling
 
-Every composable returns a [`KirbyQueryResponse`](/api/types-query-response) typed response, if the request to Kirby succeeded. Even if your request is not authenticated, a connection to the Kirby instance could be established.
+While the idea of this Nuxt module is to mask your Kirby API (and credentials) within the [server proxy](/guide/how-it-works), `nuxt-kql` will minimize the hassle of handling errors by passing through the following properties to the response on the client:
 
-Inspect the `code` and `status` property of your query response first to make sure the Kirby instance at least returns something:
+- Response body
+- HTTP status code
+- HTTP status message
+- Headers
+
+Thus, if a request to Kirby fails, you can still handle the error response in your Nuxt app just like you would with a direct API call. In this case, both [generated composables](/api/) will throw a `NuxtError`.
+
+Logging the available error properties will provide you insights on what went wrong:
 
 ```ts
 // `data` will be of type `KirbyQueryResponse` if the request to Kirby itself succeeded
-const { data } = await useKql({ query: 'site' })
-
-// Log the code and status and get information on if the request was not authenticated
-console.log('Status Code', data.code)
-console.log('Status Message', data.status)
-```
-
-If that doesn't give you relevant insights, the request to the Kirby backend was probably faulty. The [Nuxt server route to proxy KQL requests](/guide/how-it-works) used by [`useKql`](/api/use-kql) and [`$kql`](/api/kql) will return a `NuxtError`:
-
-```ts
-// See https://github.com/unjs/h3 for the full error interface
-interface NuxtError<DataT = unknown> extends H3Error<DataT> {}
-```
-
-To inspect the error thrown inside the server proxy, log its `error` variable:
-
-```ts
-// `error` will be of type `NuxtError` if the request to Kirby failed
 const { data, error } = await useKql({ query: 'site' })
 
-// Log the code and status and get information on if the request was not authenticated
-console.log('Status Code', error.statusCode)
-console.log('Status Message', error.statusMessage)
-console.log('Data', error.data)
+// Log the error if the request to Kirby failed
+console.log('Status Code', error.value.statusCode)
+console.log('Status Message', error.value.statusMessage)
+```
+
+See all available examples below.
+
+## `NuxtError` Type Declaration
+
+```ts
+export interface NuxtError<DataT = unknown> extends H3Error<DataT> {}
+
+// See https://github.com/unjs/h3
+declare class H3Error<DataT = unknown> extends Error {
+  static __h3_error__: boolean
+  statusCode: number
+  fatal: boolean
+  unhandled: boolean
+  statusMessage?: string
+  data?: DataT
+  cause?: unknown
+  constructor(message: string, opts?: {
+    cause?: unknown
+  })
+  toJSON(): Pick<H3Error<DataT>, 'data' | 'statusCode' | 'statusMessage' | 'message'>
+}
 ```
