@@ -9,6 +9,15 @@ import { defineCachedFunction } from '#internal/nitro'
 import { useRuntimeConfig } from '#imports'
 
 const kql = useRuntimeConfig().kql as Required<ModuleOptions>
+const ignoredResponseHeaders = new Set([
+  // https://github.com/unjs/h3/blob/fe9800bbbe9bda2972cc5d11db7353f4ab70f0ba/src/utils/proxy.ts#L97
+  'content-encoding',
+  'content-length',
+  // Reduce information leakage
+  'access-control-allow-origin',
+  'server',
+  'x-powered-by',
+])
 
 async function fetcher({
   key,
@@ -83,63 +92,54 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  let response: Awaited<ReturnType<typeof fetcher>>
-  const queryErrorMessage = `Failed KQL query "${body.query?.query}" (...)`
-  const fetchErrorMessage = `Failed ${(body.method || 'get')?.toUpperCase()} request to "${body.path}"`
-
   try {
-    response = kql.server.cache && body.cache
+    const response = kql.server.cache && body.cache
       ? await cachedFetcher({ key, ...body })
       : await fetcher({ key, ...body })
+
+    const buffer = Buffer.from(response.data, 'base64')
+
+    if (response.status >= 400 && response.status < 600) {
+      if (isQueryRequest) {
+        consola.error(`Failed KQL query "${body.query?.query}" (...) with status code ${response.status}:\n`, tryParseJSON(
+          buffer.toString('utf-8'),
+        ))
+        if (kql.server.verboseErrors)
+          consola.log('Full KQL query request:', body.query)
+      }
+      else {
+        consola.error(`Failed ${(body.method || 'get').toUpperCase()} request to "${body.path}"`)
+      }
+    }
+
+    const cookies: string[] = []
+
+    for (const [key, value] of response.headers) {
+      if (ignoredResponseHeaders.has(key))
+        continue
+
+      if (key === 'set-cookie') {
+        cookies.push(...splitCookiesString(value))
+        continue
+      }
+
+      setResponseHeader(event, key, value)
+    }
+
+    if (cookies.length > 0)
+      setResponseHeader(event, 'set-cookie', cookies)
+
+    setResponseStatus(event, response.status, response.statusText)
+    return send(event, buffer)
   }
   catch (error) {
     consola.error(error)
 
     throw createError({
-      statusCode: 500,
-      statusMessage: isQueryRequest
-        ? queryErrorMessage
-        : fetchErrorMessage,
+      statusCode: 503,
+      statusMessage: 'Service Unavailable',
     })
   }
-
-  const buffer = Buffer.from(response.data, 'base64')
-
-  if (response.status >= 400 && response.status < 600) {
-    if (isQueryRequest) {
-      consola.error(`${queryErrorMessage} with status code ${response.status}:\n`, tryParseJSON(
-        buffer.toString('utf-8'),
-      ))
-      if (kql.server.verboseErrors)
-        consola.log('Full KQL query request:', body.query)
-    }
-    else {
-      consola.error(fetchErrorMessage)
-    }
-  }
-
-  const cookies: string[] = []
-
-  for (const [key, value] of response.headers) {
-    if (key === 'content-encoding')
-      continue
-
-    if (key === 'content-length')
-      continue
-
-    if (key === 'set-cookie') {
-      cookies.push(...splitCookiesString(value))
-      continue
-    }
-
-    setResponseHeader(event, key, value)
-  }
-
-  if (cookies.length > 0)
-    setResponseHeader(event, 'set-cookie', cookies)
-
-  setResponseStatus(event, response.status, response.statusText)
-  return send(event, buffer)
 })
 
 function tryParseJSON(data: string) {
