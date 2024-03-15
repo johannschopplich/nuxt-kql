@@ -19,12 +19,7 @@ export function createAuthHeader({
 }: Pick<ModuleOptions, 'token' | 'credentials'> & { auth?: string }) {
   if (auth === 'basic' && credentials) {
     const { username, password } = credentials
-    let encoded = ''
-
-    if (import.meta.server)
-      encoded = stringToBase64(`${username}:${password}`)
-    else if (import.meta.client)
-      encoded = btoa(`${username}:${password}`)
+    const encoded = stringToBase64(`${username}:${password}`)
 
     return { Authorization: `Basic ${encoded}` }
   }
