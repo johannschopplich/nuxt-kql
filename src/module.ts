@@ -1,5 +1,6 @@
 import { join } from 'pathe'
 import { defu } from 'defu'
+import { withLeadingSlash } from 'ufo'
 import { pascalCase } from 'scule'
 import { addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-types'
@@ -167,22 +168,19 @@ export default defineNuxtModule<ModuleOptions>({
     if (!options.prefix) {
       if (options.auth === 'basic')
         options.prefix = 'api/query'
-
-      if (options.auth === 'bearer')
+      else if (options.auth === 'bearer')
         options.prefix = 'api/kql'
     }
 
     if (!nuxt.options.ssr) {
-      logger.info('Enabling KQL client requests by default because SSR is disabled')
+      logger.info('KQL requests will be client-only because SSR is disabled')
       options.client = true
     }
 
     if (options.server) {
       // The Nitro storage mountpoint requires a leading slash
       options.server.storage ||= 'cache'
-      options.server.storage = options.server.storage.startsWith('/')
-        ? options.server.storage
-        : `/${options.server.storage}`
+      options.server.storage = withLeadingSlash(options.server.storage)
     }
 
     // Private runtime config
