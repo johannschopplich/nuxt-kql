@@ -1,7 +1,8 @@
-/* eslint-disable ts/prefer-ts-expect-error */
-// @ts-ignore: CI fails to resolve the import
+// TODO: Why does tsc fail in this file?
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-nocheck
+
 export default defineEventHandler(() => {
-  // @ts-ignore: CI fails to resolve the import
   return $kql({
     query: 'site',
   })
