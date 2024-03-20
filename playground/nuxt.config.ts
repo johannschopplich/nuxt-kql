@@ -30,8 +30,4 @@ export default defineNuxtConfig({
       cache: true,
     },
   },
-
-  typescript: {
-    shim: false,
-  },
 })
