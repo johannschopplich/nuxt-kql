@@ -1,6 +1,7 @@
 import { consola } from 'consola'
 import { createError, defineEventHandler, getRouterParam, readBody, send, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
 import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
+import type { H3Event } from 'h3'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
@@ -19,7 +20,9 @@ const ignoredResponseHeaders = new Set([
   'x-powered-by',
 ])
 
-async function fetcher({
+// Always give `event` as first argument to make sure cached functions
+// are working as expected in edge workers
+async function fetcher(event: H3Event, {
   key,
   query,
   path,
@@ -66,7 +69,7 @@ const cachedFetcher = defineCachedFunction(fetcher, {
   base: kql.server.storage,
   swr: kql.server.swr,
   maxAge: kql.server.maxAge,
-  getKey: ({ key }: { key: string } & ServerFetchOptions) => key,
+  getKey: (event: H3Event, { key }: { key: string } & ServerFetchOptions) => key,
 })
 
 export default defineEventHandler(async (event) => {
@@ -94,8 +97,8 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = kql.server.cache && body.cache
-      ? await cachedFetcher({ key, ...body })
-      : await fetcher({ key, ...body })
+      ? await cachedFetcher(event, { key, ...body })
+      : await fetcher(event, { key, ...body })
 
     const buffer = base64ToUint8Array(response.data)
 
