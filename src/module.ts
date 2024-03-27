@@ -160,7 +160,7 @@ export default defineNuxtModule<ModuleOptions>({
     server: {
       cache: false,
       storage: 'cache',
-      swr: false,
+      swr: true,
       maxAge: 1,
       verboseErrors: false,
     },

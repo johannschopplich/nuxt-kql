@@ -36,12 +36,9 @@ export default defineNuxtConfig({
       // Enable server-side caching
       // @default false
       cache: true,
-      // Name of the storage mountpoint to use for caching
-      // @default 'cache'
-      storage: 'kql',
       // Control stale-while-revalidate behavior
-      // @default false
-      swr: false,
+      // @default true
+      swr: true,
       // Number of seconds to cache the query response
       // @default 1
       maxAge: 1
