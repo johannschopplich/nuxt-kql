@@ -25,11 +25,7 @@
 > [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
 
 ```bash
-# pnpm
-pnpm add -D nuxt-kql
-
-# npm
-npm i -D nuxt-kql
+npx nuxi@latest module add kql
 ```
 
 ## Basic Usage

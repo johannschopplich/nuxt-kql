@@ -11,13 +11,13 @@ Choose your favorite from the [starter kits](/guide/starters) page and get start
 Using [pnpm](https://pnpm.io):
 
 ```bash
-$ pnpm add -D nuxt-kql
+$ npx nuxi@latest module add kql
 ```
 
 Using npm:
 
 ```bash
-$ npm i -D nuxt-kql
+$ npx nuxi@latest module add kql
 ```
 
 ## Step 2: Add `nuxt-kql` to Nuxt
