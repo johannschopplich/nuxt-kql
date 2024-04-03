@@ -8,14 +8,6 @@ Choose your favorite from the [starter kits](/guide/starters) page and get start
 
 ## Step 1: Install `nuxt-kql`
 
-Using [pnpm](https://pnpm.io):
-
-```bash
-$ npx nuxi@latest module add kql
-```
-
-Using npm:
-
 ```bash
 $ npx nuxi@latest module add kql
 ```
