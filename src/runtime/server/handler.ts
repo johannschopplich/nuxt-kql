@@ -7,10 +7,8 @@ import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
 
 // @ts-expect-error: Will be resolved by Nitro
-import { defineCachedFunction } from '#internal/nitro'
-import { useRuntimeConfig } from '#imports'
+import { defineCachedFunction, useRuntimeConfig } from '#internal/nitro'
 
-const kql = useRuntimeConfig().kql as Required<ModuleOptions>
 const ignoredResponseHeaders = new Set([
   // https://github.com/unjs/h3/blob/fe9800bbbe9bda2972cc5d11db7353f4ab70f0ba/src/utils/proxy.ts#L97
   'content-encoding',
@@ -20,62 +18,63 @@ const ignoredResponseHeaders = new Set([
   'x-powered-by',
 ])
 
-// Always give `event` as first argument to make sure cached functions
-// are working as expected in edge workers
-async function fetcher(event: H3Event, {
-  key,
-  query,
-  path,
-  headers,
-  method,
-  body,
-}: { key: string } & ServerFetchOptions) {
-  const isQueryRequest = key.startsWith('$kql')
-
-  const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kql.prefix : path!, {
-    responseType: 'arrayBuffer',
-    ignoreResponseError: true,
-    baseURL: kql.url,
-    ...(isQueryRequest
-      ? {
-          method: 'POST',
-          body: query,
-        }
-      : {
-          query,
-          method,
-          body,
-        }),
-    headers: {
-      ...headers,
-      ...createAuthHeader(kql),
-    },
-  })
-
-  // Serialize the response data
-  const buffer = new Uint8Array(response._data ?? ([] as unknown as ArrayBuffer))
-  const data = uint8ArrayToBase64(buffer)
-
-  return {
-    status: response.status,
-    statusText: response.statusText,
-    headers: [...response.headers.entries()],
-    data,
-  }
-}
-
-const cachedFetcher = defineCachedFunction(fetcher, {
-  name: 'nuxt-kql',
-  base: kql.server.storage,
-  swr: kql.server.swr,
-  maxAge: kql.server.maxAge,
-  getKey: (event: H3Event, { key }: { key: string } & ServerFetchOptions) => key,
-})
-
 export default defineEventHandler(async (event) => {
+  const kql = useRuntimeConfig(event).kql as Required<ModuleOptions>
   const body = await readBody<ServerFetchOptions>(event)
   const key = decodeURIComponent(getRouterParam(event, 'key')!)
   const isQueryRequest = key.startsWith('$kql')
+
+  // Always give `event` as first argument to make sure cached functions
+  // are working as expected in edge workers
+  const fetcher = async (event: H3Event, {
+    key,
+    query,
+    path,
+    headers,
+    method,
+    body,
+  }: { key: string } & ServerFetchOptions) => {
+    const isQueryRequest = key.startsWith('$kql')
+
+    const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kql.prefix : path!, {
+      responseType: 'arrayBuffer',
+      ignoreResponseError: true,
+      baseURL: kql.url,
+      ...(isQueryRequest
+        ? {
+            method: 'POST',
+            body: query,
+          }
+        : {
+            query,
+            method,
+            body,
+          }),
+      headers: {
+        ...headers,
+        ...createAuthHeader(kql),
+      },
+    })
+
+    // Serialize the response data
+    const dataArray = new Uint8Array(response._data ?? ([] as unknown as ArrayBuffer))
+    const data = uint8ArrayToBase64(dataArray)
+
+    return {
+      status: response.status,
+      statusText: response.statusText,
+      headers: [...response.headers.entries()],
+      data,
+    }
+  }
+
+  const cachedFetcher = defineCachedFunction(fetcher, {
+    name: 'nuxt-kql',
+    base: kql.server.storage,
+    swr: kql.server.swr,
+    maxAge: kql.server.maxAge,
+    getKey: (event: H3Event, { key }: { key: string } & ServerFetchOptions) => key,
+  })
 
   if (isQueryRequest) {
     if (!body.query?.query) {
@@ -100,12 +99,12 @@ export default defineEventHandler(async (event) => {
       ? await cachedFetcher(event, { key, ...body })
       : await fetcher(event, { key, ...body })
 
-    const buffer = base64ToUint8Array(response.data)
+    const dataArray = base64ToUint8Array(response.data)
 
     if (response.status >= 400 && response.status < 600) {
       if (isQueryRequest) {
         consola.error(`Failed KQL query "${body.query?.query}" (...) with status code ${response.status}:\n`, tryParseJSON(
-          uint8ArrayToString(buffer),
+          uint8ArrayToString(dataArray),
         ))
         if (kql.server.verboseErrors)
           consola.log('Full KQL query request:', body.query)
@@ -133,7 +132,7 @@ export default defineEventHandler(async (event) => {
       setResponseHeader(event, 'set-cookie', cookies)
 
     setResponseStatus(event, response.status, response.statusText)
-    return send(event, buffer)
+    return send(event, dataArray)
   }
   catch (error) {
     consola.error(error)
