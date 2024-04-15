@@ -187,7 +187,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (!nuxt.options.ssr) {
-      logger.info('KQL requests will be client-only because SSR is disabled')
+      logger.info('KQL requests are client-only because SSR is disabled')
       options.client = true
     }
 
