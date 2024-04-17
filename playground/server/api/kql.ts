@@ -1,6 +1,7 @@
-// TODO: Why does tsc fail in this file?
+// TODO: Why does tsc fail for `defineEventHandler`?
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-nocheck
+import { $kql, defineEventHandler } from '#imports'
 
 export default defineEventHandler(() => {
   return $kql({

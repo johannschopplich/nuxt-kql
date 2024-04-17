@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { $kql, useTestResult } from '#imports'
+
 const data = await $kql({
   query: 'site',
   select: {
