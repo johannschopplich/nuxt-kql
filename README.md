@@ -1,6 +1,6 @@
 [![nuxt-kql](./docs/public/og.jpg)](https://nuxt-kql.byjohann.dev)
 
-# nuxt-kql
+# Nuxt KQL
 
 [![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
@@ -33,7 +33,7 @@ npx nuxi@latest module add kql
 > [!TIP]
 > [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
 
-Add `nuxt-kql` to your Nuxt config:
+Add the Nuxt KQL module to your Nuxt config:
 
 ```ts
 // `nuxt.config.ts`
