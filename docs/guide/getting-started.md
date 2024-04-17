@@ -9,10 +9,10 @@ Choose your favorite from the [starter kits](/guide/starters) page and get start
 ## Step 1: Install Nuxt KQL
 
 ```bash
-$ npx nuxi@latest module add kql
+npx nuxi@latest module add kql
 ```
 
-## Step 2: Use the `nuxt-kql` module
+## Step 2: Use the `nuxt-kql` Module
 
 Add `nuxt-kql` to your Nuxt config:
 
@@ -52,7 +52,7 @@ KIRBY_BASE_URL=https://kirby.example.com
 KIRBY_API_TOKEN=your-token
 ```
 
-:::tip
+::: tip
 If you have reasons not to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter) and want to use basic authentication, follow the [basic authentication method](/config/authentication-methods#basic-authentication) guide.
 :::
 
