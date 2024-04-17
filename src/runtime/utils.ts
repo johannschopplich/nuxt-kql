@@ -1,4 +1,3 @@
-import { stringToBase64 } from 'uint8array-extras'
 import type { ModuleOptions } from '../module'
 
 export function getProxyPath(key: string) {
@@ -19,7 +18,7 @@ export function createAuthHeader({
 }: Pick<ModuleOptions, 'token' | 'credentials'> & { auth?: string }) {
   if (auth === 'basic' && credentials) {
     const { username, password } = credentials
-    const encoded = stringToBase64(`${username}:${password}`)
+    const encoded = globalThis.btoa(`${username}:${password}`)
 
     return { Authorization: `Basic ${encoded}` }
   }

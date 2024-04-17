@@ -7,7 +7,7 @@ export type ServerFetchOptions = Pick<
 > & {
   // Either fetch a KQL query
   query?: Partial<KirbyQueryRequest>
-  // Or from a Kirby path
+  // … or from a Kirby path
   path?: string
   cache?: boolean
 }
