@@ -1,4 +1,5 @@
 /* VitePress head */
+export const name = 'Nuxt KQL'
 export const ogUrl = 'https://nuxt-kql.byjohann.dev/'
 export const ogImage = `${ogUrl}og.jpg`
 

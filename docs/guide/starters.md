@@ -1,10 +1,10 @@
 # Starter Kits
 
-To get started with `nuxt-kql`, you may choose from one of the following starter kits:
+To get started with Nuxt KQL, you may choose from one of the following starter kits:
 
 ## Kirby Nuxt Starter Kit
 
-The [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-starterkit) is a rewrite of the official Kirby Starter Kit with Nuxt and `nuxt-kql`. It's configured to use **token-based authentication**, but can be used with **basic authentication** as well.
+The [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-starterkit) is a rewrite of the official Kirby Starter Kit with Nuxt and Nuxt KQL. It's configured to use **token-based authentication**, but can be used with **basic authentication** as well.
 
 ## Cacao Kit
 

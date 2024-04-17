@@ -1,8 +1,9 @@
 import { defineConfig } from 'vitepress'
 import type { DefaultTheme } from 'vitepress'
-import { description, name, version } from '../../package.json'
+import { description, version } from '../../package.json'
 import {
   github,
+  name,
   ogImage,
   ogUrl,
   releases,
@@ -71,7 +72,7 @@ function nav(): DefaultTheme.NavItem[] {
       text: 'Guide',
       activeMatch: '^/guide/',
       items: [
-        { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
+        { text: 'What is Nuxt KQL?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'How It Works', link: '/guide/how-it-works' },
         { text: 'Error Handling', link: '/guide/error-handling' },
@@ -123,7 +124,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
     {
       text: 'Guides',
       items: [
-        { text: 'What is nuxt-kql?', link: '/guide/what-is-nuxt-kql' },
+        { text: 'What is Nuxt KQL?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'How It Works', link: '/guide/how-it-works' },
         { text: 'Error Handling', link: '/guide/error-handling' },

@@ -2,12 +2,12 @@
 layout: home
 titleTemplate: Kirby's Query Language API for Nuxt
 hero:
-  name: nuxt-kql
+  name: Nuxt KQL
   text: Kirby's Query Language API for Nuxt
   tagline: Retrieve data from Kirby CMS safely.
   image:
     src: /logo-shadow.svg
-    alt: nuxt-kql
+    alt: Nuxt KQL Logo
   actions:
     - theme: brand
       text: Get Started

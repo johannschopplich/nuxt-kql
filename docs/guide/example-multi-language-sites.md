@@ -1,6 +1,6 @@
 # Multi-Language Sites
 
-`nuxt-kql` comes with built-in support for multi-language Kirby sites. For this to work, you will have to use the [Kirby Headless Starter](https://github.com/johannschopplich/kirby-headless-starter), which provides a custom KQL endpoint to retrieve translated content.
+Nuxt KQL comes with built-in support for multi-language Kirby sites. For this to work, you will have to use the [Kirby Headless Starter](https://github.com/johannschopplich/kirby-headless-starter), which provides a custom KQL endpoint to retrieve translated content.
 
 To fetch language-specific content from your Kirby instance, pass a `language` option with your query request. (It is technically needed for non-primary languages only, but you can pass it with every KQL query.)
 

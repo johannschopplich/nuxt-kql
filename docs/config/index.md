@@ -2,7 +2,7 @@
 
 ## Usage
 
-Adapt `nuxt-kql` to your needs by setting module options in your `nuxt.config.ts`:
+Adapt Nuxt KQL to your needs by setting module options in your `nuxt.config.ts`:
 
 ```ts
 // `nuxt.config.ts`

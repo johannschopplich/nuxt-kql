@@ -1,18 +1,18 @@
 # Getting Started
 
-This guide will walk you through the steps to get started with `nuxt-kql`.
+This guide will walk you through the steps to get started with Nuxt KQL.
 
 ::: tip
-Choose your favorite from the [starter kits](/guide/starters) page and get started with `nuxt-kql` in no time!
+Choose your favorite from the [starter kits](/guide/starters) page and get started with Nuxt KQL in no time!
 :::
 
-## Step 1: Install `nuxt-kql`
+## Step 1: Install Nuxt KQL
 
 ```bash
 $ npx nuxi@latest module add kql
 ```
 
-## Step 2: Add `nuxt-kql` to Nuxt
+## Step 2: Use the `nuxt-kql` module
 
 Add `nuxt-kql` to your Nuxt config:
 
@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 
 ## Step 3: Set up the Environment
 
-Without a backend, `nuxt-kql` won't be able to fetch queries. In order to do so, you have to point to a Kirby instance with the official [Kirby KQL](https://github.com/getkirby/kql) plugin installed.
+Without a backend, Nuxt KQL won't be able to fetch queries. In order to do so, you have to point to a Kirby instance with the official [Kirby KQL](https://github.com/getkirby/kql) plugin installed.
 
 It's recommended to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter), which is a customized Kirby project template that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
 
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
 })
 ```
 
-`nuxt-kql` automatically reads your environment variables. Set the following environment variables in your project's `.env` file:
+Nuxt KQL automatically reads your environment variables. Set the following environment variables in your project's `.env` file:
 
 ```ini
 # Base URL of your Kirby instance (without a path)

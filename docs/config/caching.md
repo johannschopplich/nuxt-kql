@@ -20,7 +20,7 @@ const { data } = await useKql(
 
 ## Server-Side Caching
 
-`nuxt-kql` lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory by default, but you can use any storage mountpoints supported by Nitro. The full list of built-in storage mountpoints can be found in the [unstorage documentation](https://unstorage.unjs.io).
+Nuxt KQL lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory by default, but you can use any storage mountpoints supported by Nitro. The full list of built-in storage mountpoints can be found in the [unstorage documentation](https://unstorage.unjs.io).
 
 For short concurrent requests on your website, caching will make a great performance difference, as the query response will be served from the cache instead of being fetched from the server again. The default expiration time is set to 60 minutes.
 
@@ -49,7 +49,7 @@ export default defineNuxtConfig({
 
 A custom storage mountpoint is suitable for production environments. For example, if you deploy to Cloudflare, the Clouflare KV storage mountpoint is a good choice. For development, you can use the built-in `fs` storage mountpoint.
 
-To define a custom storage mountpoint, use the `storage` option of the `nuxt-kql` module. In the example above, we use the `kql` storage mountpoint to store the query responses.
+To define a custom storage mountpoint, use the `storage` option of the Nuxt KQL module. In the example above, we use the `kql` storage mountpoint to store the query responses.
 
 But this custom storage mountpoint is not defined yet. To make it available, we need to mount it in the `nitro` section of our `nuxt.config.ts`:
 

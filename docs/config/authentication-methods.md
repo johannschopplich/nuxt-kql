@@ -1,14 +1,14 @@
 # Authentication
 
 ::: tip
-`nuxt-kql` is suited to be used with [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter). You may use it as a base for your KQL server.
+Nuxt KQL is suited to be used with [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter). You may use it as a base for your KQL server.
 :::
 
 Depending on your Kirby setup, you can use one of the following authentication methods:
 
 ## Token-Based Authentication
 
-`nuxt-kql` supports using a bearer token for authentication. For this to work, you will have to use the [Kirby Headless Starter](https://github.com/johannschopplich/kirby-headless-starter), which supports KQL with token authentication out of the box, in contradiction to the default Kirby API that requires basic authentication for API endpoints.
+Nuxt KQL supports using a bearer token for authentication. For this to work, you will have to use the [Kirby Headless Starter](https://github.com/johannschopplich/kirby-headless-starter), which supports KQL with token authentication out of the box, in contradiction to the default Kirby API that requires basic authentication for API endpoints.
 
 ```ts
 // `nuxt.config.ts`
@@ -51,9 +51,10 @@ return [
     ]
 ];
 ```
+
 :::
 
-`nuxt-kql` automatically reads your environment variables. Create a `.env` file in your project (or edit the existing one) and add the following environment variables:
+Nuxt KQL automatically reads your environment variables. Create a `.env` file in your project (or edit the existing one) and add the following environment variables:
 
 ```ini
 KIRBY_BASE_URL=https://kirby.example.com
