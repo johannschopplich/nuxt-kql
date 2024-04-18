@@ -39,6 +39,7 @@ type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   watch?: (WatchSource<unknown> | object)[] | false
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useKirbyData<T = any>(
   path: MaybeRefOrGetter<string>,
   opts: UseKirbyDataOptions<T> = {},

@@ -28,6 +28,7 @@ export type KqlOptions = Pick<
   cache?: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   opts: KqlOptions = {},

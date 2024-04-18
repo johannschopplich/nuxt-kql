@@ -31,6 +31,7 @@ export type KirbyFetchOptions = Pick<
   cache?: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function $kirby<T = any>(
   path: string,
   opts: KirbyFetchOptions = {},
