@@ -198,8 +198,6 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Private runtime config
-    // eslint-disable-next-line ts/prefer-ts-expect-error
-    // @ts-ignore: Server option types are incompatible
     nuxt.options.runtimeConfig.kql = defu(
       nuxt.options.runtimeConfig.kql as Required<ModuleOptions>,
       options,

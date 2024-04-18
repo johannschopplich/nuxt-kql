@@ -1,7 +1,19 @@
-import antfu from '@antfu/eslint-config'
+// @ts-check
+import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
-export default await antfu({
+export default createConfigForNuxt({
+  features: {
+    tooling: true,
+    stylistic: true,
+  },
+  dirs: {
+    src: [
+      './playground',
+    ],
+  },
+}).append({
   rules: {
-    'node/prefer-global/process': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/no-v-html': 'off',
   },
 })
