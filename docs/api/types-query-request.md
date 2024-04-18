@@ -48,8 +48,10 @@ type KirbyQuery<CustomModel extends string = never> =
     : KirbyQueryChain<CustomModel>)
 
 interface KirbyQuerySchema {
-  query: KirbyQuery
-  select?: string[] | Record<string, string | number | boolean | KirbyQuerySchema>
+  query: KirbyQuery;
+  select?:
+    | string[]
+    | Record<string, string | number | boolean | KirbyQuerySchema>;
 }
 
 interface KirbyQueryRequest extends KirbyQuerySchema {

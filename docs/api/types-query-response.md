@@ -13,23 +13,27 @@ Types are re-exported from the [`kirby-types`](https://github.com/johannschoppli
 :::
 
 ```ts
-interface KirbyQueryResponse<
+interface KirbyApiResponse<T = any> {
+  code: number;
+  status: string;
+  result?: T;
+}
+
+type KirbyQueryResponse<
   T = any,
   Pagination extends boolean = false
-> {
-  code: number
-  status: string
-  result?: Pagination extends true
+> = KirbyApiResponse<
+  Pagination extends true
     ? {
-        data: T
+        data: T;
         pagination: {
-          page: number
-          pages: number
-          offset: number
-          limit: number
-          total: number
-        }
+          page: number;
+          pages: number;
+          offset: number;
+          limit: number;
+          total: number;
+        };
       }
     : T
-}
+>;
 ```
