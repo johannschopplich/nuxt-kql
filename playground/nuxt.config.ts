@@ -1,11 +1,7 @@
-import { existsSync } from 'node:fs'
-import { resolve } from 'pathe'
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  modules: [
-    existsSync(resolve(__dirname, '../dist/module.mjs')) ? 'nuxt-kql' : '../src/module',
-  ],
+  modules: ['nuxt-kql'],
 
   kql: {
     // Enable token-based authentication
