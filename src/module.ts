@@ -138,6 +138,12 @@ export interface ModuleOptions {
   }
 }
 
+declare module 'nuxt/schema' {
+  interface RuntimeConfig {
+    kql: ModuleOptions
+  }
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-kql',
@@ -198,10 +204,8 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Private runtime config
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-    // @ts-ignore: Server option types are incompatible
     nuxt.options.runtimeConfig.kql = defu(
-      nuxt.options.runtimeConfig.kql as Required<ModuleOptions>,
+      nuxt.options.runtimeConfig.kql,
       options,
     )
 
