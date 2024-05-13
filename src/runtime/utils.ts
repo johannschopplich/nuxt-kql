@@ -5,10 +5,7 @@ export function getProxyPath(key: string) {
 }
 
 export function headersToObject(headers: HeadersInit = {}): Record<string, string> {
-  if (headers instanceof Headers || Array.isArray(headers))
-    return Object.fromEntries(headers)
-
-  return headers
+  return Object.fromEntries(new Headers(headers))
 }
 
 export function createAuthHeader({
