@@ -138,7 +138,7 @@ export interface ModuleOptions {
   }
 }
 
-declare module 'nuxt/schema' {
+declare module '@nuxt/schema' {
   interface RuntimeConfig {
     kql: ModuleOptions
   }
