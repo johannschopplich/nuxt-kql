@@ -76,11 +76,7 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4(@algolia/client-search@4.23.3)(@types/node@20.12.11)(postcss@8.4.38)(search-insights@2.13.0)(terser@5.31.0)(typescript@5.4.5)
 
-  playground:
-    dependencies:
-      nuxt-kql:
-        specifier: 'workspace:'
-        version: link:..
+  playground: {}
 
 packages:
 

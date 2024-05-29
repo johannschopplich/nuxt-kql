@@ -1,7 +1,8 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import NuxtKql from '../src/module'
 
 export default defineNuxtConfig({
-  modules: ['nuxt-kql'],
+  modules: [NuxtKql],
 
   kql: {
     // Enable token-based authentication
