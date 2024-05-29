@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useServerHead } from '#imports'
+
 useServerHead({
   title: 'nuxt-kql',
   link: [
