@@ -236,7 +236,7 @@ export default defineNuxtModule<ModuleOptions>({
       })),
     )
 
-    nuxt.hook('nitro:config', (config) => {
+    nuxt.hooks.hook('nitro:config', (config) => {
       // Inline local server handler dependencies into Nitro bundle
       // Needed to circumvent "cannot find module" error in `server.ts` for the `utils` import
       config.externals ||= {}
