@@ -2,7 +2,7 @@
 import { useServerHead } from '#imports'
 
 useServerHead({
-  title: 'nuxt-kql',
+  title: 'Nuxt KQL',
   link: [
     { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css' },
   ],
