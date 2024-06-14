@@ -112,7 +112,7 @@ interface ModuleOptions {
      * Enable stale-while-revalidate behavior (cache is returned while it is being updated)
      *
      * @see https://nitro.unjs.io/guide/cache#options
-     * @default true
+     * @default false
      */
     swr?: boolean
 

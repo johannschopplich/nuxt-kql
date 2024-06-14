@@ -115,7 +115,7 @@ export interface ModuleOptions {
      * Enable stale-while-revalidate behavior (cache is returned while it is being updated)
      *
      * @see https://nitro.unjs.io/guide/cache#options
-     * @default true
+     * @default false
      */
     swr?: boolean
 
@@ -167,7 +167,7 @@ export default defineNuxtModule<ModuleOptions>({
     server: {
       cache: false,
       storage: 'cache',
-      swr: true,
+      swr: false,
       maxAge: 1,
       verboseErrors: false,
     },

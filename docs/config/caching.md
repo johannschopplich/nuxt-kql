@@ -24,7 +24,7 @@ Nuxt KQL lets you opt in to server-side caching of query responses. It does so b
 
 For short concurrent requests on your website, caching will make a great performance difference, as the query response will be served from the cache instead of being fetched from the server again. The default expiration time is set to 60 minutes.
 
-You can enable server-side caching by setting the `server.cache` module option to `true`. You can also set a custom expiration time in seconds by setting the `server.maxAge` option or disable stale-while-revalidate behavior by setting the `server.swr` option to `false`:
+You can enable server-side caching by setting the `server.cache` module option to `true`. You can also set a custom expiration time in seconds by setting the `server.maxAge` option:
 
 ```ts
 // `nuxt.config.ts`
@@ -36,9 +36,6 @@ export default defineNuxtConfig({
       // Enable server-side caching
       // @default false
       cache: true,
-      // Control stale-while-revalidate behavior
-      // @default true
-      swr: true,
       // Number of seconds to cache the query response
       // @default 1
       maxAge: 1
