@@ -10,17 +10,17 @@ describe('nuxt-kql', async () => {
   })
 
   it('fetches queries with $kql', async () => {
-    const html = await $fetch('/$kql')
+    const html = await $fetch<string>('/$kql')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('fetches Kirby data useKirbyData', async () => {
-    const html = await $fetch('/useKirbyData')
+    const html = await $fetch<string>('/useKirbyData')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 
   it('can prefetch KQL queries', async () => {
-    const html = await $fetch('/prefetch')
+    const html = await $fetch<string>('/prefetch')
     expect(getTestResult(html)).toMatchSnapshot()
   })
 })
