@@ -86,9 +86,7 @@ export function useKql<
     async (nuxt) => {
       controller?.abort?.()
 
-      // Workaround to persist response client-side
-      // https://github.com/nuxt/nuxt/issues/15445
-      if ((nuxt!.isHydrating || cache) && nuxt!.payload.data[key.value])
+      if (nuxt && (nuxt.isHydrating || cache) && nuxt.payload.data[key.value])
         return nuxt!.payload.data[key.value]
 
       controller = new AbortController()
@@ -126,14 +124,14 @@ export function useKql<
           })) as ResT
         }
 
-        if (cache)
-          nuxt!.payload.data[key.value] = result
+        if (nuxt && cache)
+          nuxt.payload.data[key.value] = result
 
         return result
       }
       catch (error) {
         // Invalidate cache if request fails
-        nuxt!.payload.data[key.value] = undefined
+        if (nuxt) nuxt.payload.data[key.value] = undefined
 
         throw error
       }
