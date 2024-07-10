@@ -87,7 +87,7 @@ export function useKql<
       controller?.abort?.()
 
       if (nuxt && (nuxt.isHydrating || cache) && nuxt.payload.data[key.value])
-        return nuxt!.payload.data[key.value]
+        return nuxt.payload.data[key.value]
 
       controller = new AbortController()
 

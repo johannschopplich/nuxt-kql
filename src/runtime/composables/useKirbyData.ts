@@ -99,7 +99,7 @@ export function useKirbyData<T = any>(
       controller?.abort?.()
 
       if (nuxt && (nuxt.isHydrating || cache) && nuxt.payload.data[key.value])
-        return nuxt!.payload.data[key.value]
+        return nuxt.payload.data[key.value]
 
       controller = new AbortController()
 
