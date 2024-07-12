@@ -1,6 +1,7 @@
 import { consola } from 'consola'
 import { createError, defineEventHandler, getRouterParam, readBody, send, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
 import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
+import { destr } from 'destr'
 import type { H3Event } from 'h3'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
@@ -103,7 +104,7 @@ export default defineEventHandler(async (event) => {
 
     if (response.status >= 400 && response.status < 600) {
       if (isQueryRequest) {
-        consola.error(`Failed KQL query "${body.query?.query}" (...) with status code ${response.status}:\n`, tryParseJSON(
+        consola.error(`Failed KQL query "${body.query?.query}" (...) with status code ${response.status}:\n`, destr(
           uint8ArrayToString(dataArray),
         ))
         if (kql.server.verboseErrors)
@@ -143,12 +144,3 @@ export default defineEventHandler(async (event) => {
     })
   }
 })
-
-function tryParseJSON(data: string) {
-  try {
-    return JSON.parse(data)
-  }
-  catch (e) {
-    return data
-  }
-}
