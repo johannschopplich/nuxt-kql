@@ -62,7 +62,7 @@ Use the globally available [`useKql`](/api/use-kql) composable to send queries:
 
 ```vue
 <script setup lang="ts">
-const { data, pending, refresh, error } = await useKql({
+const { data, refresh, error, status, clear } = await useKql({
   query: 'site',
   select: {
     title: true,

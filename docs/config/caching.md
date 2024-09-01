@@ -18,6 +18,17 @@ const { data } = await useKql(
 )
 ```
 
+## Clearing the Cache
+
+```ts
+const { data, refresh, clear } = await useKql({ query: 'site' })
+
+async function invalidateAndRefresh() {
+  clear()
+  await refresh()
+}
+```
+
 ## Server-Side Caching
 
 Nuxt KQL lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory by default, but you can use any storage mountpoints supported by Nitro. The full list of built-in storage mountpoints can be found in the [unstorage documentation](https://unstorage.unjs.io).
