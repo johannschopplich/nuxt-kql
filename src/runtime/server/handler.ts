@@ -3,11 +3,11 @@ import { createError, defineEventHandler, getRouterParam, readBody, send, setRes
 import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
 import { destr } from 'destr'
 import type { H3Event } from 'h3'
-import { defineCachedFunction } from 'nitropack/runtime'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
-import { useRuntimeConfig } from '#imports'
+// @ts-expect-error: `tsconfig.server` has the types
+import { defineCachedFunction, useRuntimeConfig } from '#imports'
 
 const ignoredResponseHeaders = new Set([
   // https://github.com/unjs/h3/blob/fe9800bbbe9bda2972cc5d11db7353f4ab70f0ba/src/utils/proxy.ts#L97
