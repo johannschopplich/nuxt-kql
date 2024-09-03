@@ -34,7 +34,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   opts: KqlOptions = {},
 ): Promise<T> {
   const nuxt = useNuxtApp()
-  const promiseMap = (nuxt._promiseMap = nuxt._promiseMap || new Map()) as Map<string, Promise<T>>
+  const promiseMap = (nuxt._kirbyPromises ||= new Map()) as Map<string, Promise<T>>
   const { headers, language, cache = true, ...fetchOptions } = opts
   const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
   const key = `$kql${hash([query, language])}`
