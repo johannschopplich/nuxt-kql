@@ -37,7 +37,7 @@ export function $kirby<T = any>(
   opts: KirbyFetchOptions = {},
 ): Promise<T> {
   const nuxt = useNuxtApp()
-  const promiseMap = (nuxt._kirbyPromises ||= new Map()) as Map<string, Promise<T>>
+  const promiseMap = (nuxt._pendingRequests ||= new Map()) as Map<string, Promise<T>>
   const {
     query,
     headers,
