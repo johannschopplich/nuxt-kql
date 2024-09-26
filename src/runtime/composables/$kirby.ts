@@ -18,6 +18,7 @@ export type KirbyFetchOptions = Pick<
   | 'body'
   | 'retry'
   | 'retryDelay'
+  | 'retryStatusCodes'
   | 'timeout'
 > & {
   /**

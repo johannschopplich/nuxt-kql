@@ -2,7 +2,7 @@ import { computed, toValue } from 'vue'
 import { joinURL } from 'ufo'
 import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
-import type { MaybeRefOrGetter, WatchSource } from 'vue'
+import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
 import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import type { ModuleOptions } from '../../module'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
@@ -20,6 +20,7 @@ type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   | 'body'
   | 'retry'
   | 'retryDelay'
+  | 'retryStatusCodes'
   | 'timeout'
 > & {
   /**
@@ -36,7 +37,7 @@ type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
    * Path and language are watched by default. You can completely ignore reactive sources by using `watch: false`.
    * @default undefined
    */
-  watch?: (WatchSource<unknown> | object)[] | false
+  watch?: MultiWatchSources | false
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

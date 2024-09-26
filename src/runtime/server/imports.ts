@@ -24,6 +24,7 @@ export type KqlFetchOptions = Pick<
   | 'headers'
   | 'retry'
   | 'retryDelay'
+  | 'retryStatusCodes'
   | 'timeout'
 > & {
   /**

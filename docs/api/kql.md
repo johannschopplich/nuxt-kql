@@ -21,6 +21,7 @@ type KqlOptions = Pick<
   | 'headers'
   | 'retry'
   | 'retryDelay'
+  | 'retryStatusCodes'
   | 'timeout'
 > & {
   /**

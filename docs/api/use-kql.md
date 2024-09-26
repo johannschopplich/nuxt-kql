@@ -24,6 +24,7 @@ type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
   | 'headers'
   | 'retry'
   | 'retryDelay'
+  | 'retryStatusCodes'
   | 'timeout'
 > & {
   /**
@@ -40,7 +41,7 @@ type UseKqlOptions<T> = AsyncDataOptions<T> & Pick<
    * Query and language are watched by default. You can completely ignore reactive sources by using `watch: false`.
    * @default undefined
    */
-  watch?: (WatchSource<unknown> | object)[] | false
+  watch?: MultiWatchSources | false
 }
 ```
 

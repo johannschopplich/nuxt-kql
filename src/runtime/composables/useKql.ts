@@ -1,7 +1,7 @@
 import { computed, toValue } from 'vue'
 import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
-import type { MaybeRefOrGetter, WatchSource } from 'vue'
+import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
 import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import type { ModuleOptions } from '../../module'
@@ -17,6 +17,7 @@ export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   | 'headers'
   | 'retry'
   | 'retryDelay'
+  | 'retryStatusCodes'
   | 'timeout'
 > & {
   /**
@@ -33,7 +34,7 @@ export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
    * Query and language are watched by default. You can completely ignore reactive sources by using `watch: false`.
    * @default undefined
    */
-  watch?: (WatchSource<unknown> | object)[] | false
+  watch?: MultiWatchSources | false
 }
 
 export function useKql<
