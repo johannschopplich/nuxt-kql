@@ -13,6 +13,11 @@ export async function prefetchQueries(
   if (!options.prefetch || Object.keys(options.prefetch).length === 0)
     return results
 
+  if (!options.url) {
+    logger.error('Skipping KQL prefetch, since no Kirby base URL is provided')
+    return results
+  }
+
   const start = Date.now()
 
   for (const [key, query] of Object.entries(options.prefetch)) {
