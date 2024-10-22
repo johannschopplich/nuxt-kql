@@ -1,8 +1,6 @@
-[![nuxt-kql](./docs/public/og.jpg)](https://nuxt-kql.byjohann.dev)
+[![Nuxt KQL module](./docs/public/og.jpg)](https://nuxt-kql.byjohann.dev)
 
 # Nuxt KQL
-
-[![npm version](https://img.shields.io/npm/v/nuxt-kql?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-kql)
 
 [Nuxt](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
 
