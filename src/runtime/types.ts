@@ -1,5 +1,5 @@
-import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest } from 'kirby-types'
+import type { NitroFetchOptions } from 'nitropack'
 
 export type ServerFetchOptions = Pick<
   NitroFetchOptions<string>,

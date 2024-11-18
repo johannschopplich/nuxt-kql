@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, useKql } from '#imports'
 import type { KirbyBlock, KirbyQueryRequest } from '#nuxt-kql'
+import { computed, ref, useKql } from '#imports'
 
 const query = ref<KirbyQueryRequest>({
   query: 'page("notes/across-the-ocean")',

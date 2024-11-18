@@ -1,9 +1,9 @@
-import { joinURL } from 'ufo'
-import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
-import { createAuthHeader, headersToObject } from '../utils'
+import type { NitroFetchOptions } from 'nitropack'
 import type { ModuleOptions } from '../../module'
 import { useRuntimeConfig } from '#imports'
+import { joinURL } from 'ufo'
+import { createAuthHeader, headersToObject } from '../utils'
 
 export type KirbyFetchOptions = Omit<
   NitroFetchOptions<string>,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, useKql } from '#imports'
 import type { KirbyQueryRequest, KirbyQueryResponse } from '#nuxt-kql'
+import { ref, useKql } from '#imports'
 
 // Typed response
 interface KirbySite {

@@ -1,10 +1,10 @@
-import { hash } from 'ohash'
-import type { NitroFetchOptions } from 'nitropack'
 import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
+import type { NitroFetchOptions } from 'nitropack'
 import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
-import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { hash } from 'ohash'
+import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 
 export type KqlOptions = Pick<
   NitroFetchOptions<string>,

@@ -1,9 +1,9 @@
-import { ofetch } from 'ofetch'
-import type { FetchError } from 'ofetch'
 import type { KirbyQueryResponse } from 'kirby-types'
+import type { FetchError } from 'ofetch'
+import type { ModuleOptions } from './module'
+import { ofetch } from 'ofetch'
 import { logger } from './kit'
 import { createAuthHeader } from './runtime/utils'
-import type { ModuleOptions } from './module'
 
 export async function prefetchQueries(
   options: ModuleOptions,

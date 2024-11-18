@@ -1,11 +1,11 @@
-import { consola } from 'consola'
-import { createError, defineEventHandler, getRouterParam, readBody, send, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
-import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
-import { destr } from 'destr'
 import type { H3Event } from 'h3'
 import type { ModuleOptions } from '../../module'
-import { createAuthHeader } from '../utils'
 import type { ServerFetchOptions } from '../types'
+import { consola } from 'consola'
+import { destr } from 'destr'
+import { createError, defineEventHandler, getRouterParam, readBody, send, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
+import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
+import { createAuthHeader } from '../utils'
 // @ts-expect-error: `tsconfig.server` has the types
 import { defineCachedFunction, useRuntimeConfig } from '#imports'
 

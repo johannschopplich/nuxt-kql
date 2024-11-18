@@ -1,9 +1,9 @@
-import { join } from 'pathe'
-import { defu } from 'defu'
-import { withLeadingSlash } from 'ufo'
-import { pascalCase } from 'scule'
-import { addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { KirbyQueryRequest } from 'kirby-types'
+import { addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { defu } from 'defu'
+import { join } from 'pathe'
+import { pascalCase } from 'scule'
+import { withLeadingSlash } from 'ufo'
 import { name } from '../package.json'
 import { logger } from './kit'
 import { prefetchQueries } from './prefetch'
@@ -225,8 +225,8 @@ export default defineNuxtModule<ModuleOptions>({
     // Add KQL proxy endpoint to send queries server-side
     addServerHandler({
       route: '/api/__kirby__/:key',
-      method: 'post',
       handler: resolve('runtime/server/handler'),
+      method: 'post',
     })
 
     // Add KQL composables

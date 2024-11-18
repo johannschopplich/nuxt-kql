@@ -1,12 +1,12 @@
-import { computed, toValue } from 'vue'
-import { joinURL } from 'ufo'
-import { hash } from 'ohash'
 import type { NitroFetchOptions } from 'nitropack'
-import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
 import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
+import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
 import type { ModuleOptions } from '../../module'
-import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 import { useAsyncData, useRuntimeConfig } from '#imports'
+import { hash } from 'ohash'
+import { joinURL } from 'ufo'
+import { computed, toValue } from 'vue'
+import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 
 type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   NitroFetchOptions<string>,
