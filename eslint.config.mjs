@@ -1,3 +1,4 @@
+// @ts-check
 import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 import perfectionist from 'eslint-plugin-perfectionist'
 
@@ -18,6 +19,7 @@ export default createConfigForNuxt({
       'vue/no-v-html': 'off',
     },
   })
+  // @ts-ignore
   .append({
     plugins: {
       perfectionist,
