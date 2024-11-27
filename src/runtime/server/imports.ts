@@ -33,7 +33,6 @@ export type KqlFetchOptions = Pick<
   language?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function $kirby<T = any>(
   path: string,
   opts: KirbyFetchOptions = {},
@@ -54,7 +53,6 @@ export function $kirby<T = any>(
   }) as Promise<T>
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   opts: KqlFetchOptions = {},

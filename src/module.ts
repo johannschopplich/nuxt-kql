@@ -1,4 +1,5 @@
 import type { KirbyQueryRequest } from 'kirby-types'
+import process from 'node:process'
 import { addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
 import { join } from 'pathe'

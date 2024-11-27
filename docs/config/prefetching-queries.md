@@ -31,11 +31,11 @@ When running your dev or build command, the `site` query result will be fetched,
 Finally, the query result will be importable from `#nuxt-kql`:
 
 ```ts
+// Import the type for the query result below
+import type { Site } from '#nuxt-kql'
+
 // Import the query result following the query's given name in `nuxt.config.ts`
 import { site } from '#nuxt-kql'
-
-// Import the type for the query result above
-import type { Site } from '#nuxt-kql'
 ```
 
 ::: info

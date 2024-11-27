@@ -1,7 +1,10 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import NuxtKql from '../../src/module'
 
 export default defineNuxtConfig({
-  modules: ['../src/module.ts'],
+  modules: [NuxtKql],
+
+  compatibilityDate: '2024-04-03',
 
   kql: {
     url: 'https://kirby-headless-starter.jhnn.dev',
