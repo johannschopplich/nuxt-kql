@@ -2,7 +2,7 @@
 
 Returns raw data from a Kirby instance for the given path.
 
-Responses are cached by default between function calls for the same path based on a calculated hash of the query and options.
+Responses are cached by default between function calls for the same path based on a calculated hash of the path and fetch options.
 
 ## Type Declarations
 
