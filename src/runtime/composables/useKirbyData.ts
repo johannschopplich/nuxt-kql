@@ -143,7 +143,8 @@ export function useKirbyData<T = any>(
       }
       catch (error) {
         // Invalidate cache if request fails
-        if (nuxt) nuxt.payload.data[key.value] = undefined
+        if (nuxt)
+          nuxt.payload.data[key.value] = undefined
 
         throw error
       }

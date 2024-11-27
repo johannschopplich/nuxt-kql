@@ -14,9 +14,9 @@ Types are re-exported from the [`kirby-types`](https://github.com/johannschoppli
 
 ```ts
 interface KirbyApiResponse<T = any> {
-  code: number;
-  status: string;
-  result?: T;
+  code: number
+  status: string
+  result?: T
 }
 
 type KirbyQueryResponse<
@@ -25,15 +25,15 @@ type KirbyQueryResponse<
 > = KirbyApiResponse<
   Pagination extends true
     ? {
-        data: T;
+        data: T
         pagination: {
-          page: number;
-          pages: number;
-          offset: number;
-          limit: number;
-          total: number;
-        };
+          page: number
+          pages: number
+          offset: number
+          limit: number
+          total: number
+        }
       }
     : T
->;
+>
 ```

@@ -7,6 +7,11 @@ Nuxt KQL offers several composables to return data from KQL queries. All composa
 - [`useKql`](/api/use-kql)
 - [`$kql`](/api/kql)
 
+If you want to make use of the Kirby API directly, you can use the following composables:
+
+- [`useKirbyData`](/api/use-kirby-data)
+- [`$kirby`](/api/kirby)
+
 ## Type Declarations
 
 Common types are importable from the special `#nuxt-kql` module alias:
