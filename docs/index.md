@@ -4,7 +4,7 @@ titleTemplate: Kirby's Query Language API for Nuxt
 hero:
   name: Nuxt KQL
   text: Kirby's Query Language API for Nuxt
-  tagline: Retrieve data from Kirby CMS safely.
+  tagline: Fetch Kirby CMS data with KQL queries
   image:
     src: /logo-shadow.svg
     alt: Nuxt KQL Logo
@@ -20,15 +20,15 @@ hero:
       link: https://github.com/johannschopplich/nuxt-kql
 
 features:
-  - title: Protect Your Kirby Credentials
+  - title: Protected Kirby Credentials
     icon: 🔒
     details: A Nuxt server route proxies your queries. No CORS issues!
-    link: /guide/how-it-works
+    link: /guide/faq-how-does-it-work
     linkText: How It Works
-  - title: Various Authentication Methods
+  - title: Authentication Methods
     icon: 🪢
-    details: Basic or bearer authentication with the Kirby Headless Starter.
-    link: /config/authentication-methods
+    details: Bearer token or basic authentication with the Kirby Headless plugin.
+    link: /guide/authentication-methods
     linkText: Authentication Methods
   - title: Familiar Data Handling
     icon: 🤹
@@ -37,7 +37,7 @@ features:
     linkText: useKql
   - title: Multiple Starter Kits
     icon: 🦦
-    details: Don't know where to start? Choose from three starter kits.
+    details: Not sure where to start? Choose from three starter kits.
     link: /guide/starters
     linkText: Starter Kits
 ---

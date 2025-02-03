@@ -1,15 +1,15 @@
 # Error Handling
 
-While the idea of this Nuxt module is to mask your Kirby API (and credentials) within the [server proxy](/guide/how-it-works), Nuxt KQL will minimize the hassle of handling errors by passing through the following properties to the response on the client:
+While the idea of this Nuxt module is to mask your Kirby API (and credentials) inside the [server proxy](/guide/faq-how-does-it-work), Nuxt KQL will minimize the hassle of handling errors by passing through the following properties to the response on the client:
 
-- Response body
-- HTTP status code
-- HTTP status message
+- Response Body
+- HTTP Status Code
+- HTTP Status Message
 - Headers
 
-Thus, if a request to Kirby fails, you can still handle the error response in your Nuxt app just like you would with a direct API call. In this case, both [`useKql`](/api/use-kql) and [`$kql`](/api/kql) will throw a `NuxtError`.
+So if a request to Kirby fails, you can still handle the error response in your Nuxt application just as you would with a direct API call. In this case, both [`useKql`](/api/use-kql) and [`$kql`](/api/kql) will throw a `NuxtError`.
 
-Logging the available error properties will provide you insights on what went wrong:
+Logging the available error properties will give you insight into what went wrong:
 
 ```ts
 // `data` will be of type `KirbyQueryResponse` if the request to Kirby itself succeeded

@@ -2,7 +2,7 @@
 
 ## Client-Side Caching
 
-Query responses using the built-in [composables](/api/#composables) are cached by default. Meaning, if you call the same query multiple times, the response will be cached and returned from the cache on subsequent calls.
+Query responses using the built-in [composables](/api/#composables) are cached by default. This means that if you call the same query multiple times, the response will be cached and returned from the cache on subsequent calls.
 
 For each query, a hash is calculated based on the query string and the requested language (in multi-language setups).
 
@@ -31,9 +31,9 @@ async function invalidateAndRefresh() {
 
 ## Server-Side Caching
 
-Nuxt KQL lets you opt in to server-side caching of query responses. It does so by utilizing the [cache API](https://nitro.unjs.io/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.unjs.io). Query responses are cached in-memory by default, but you can use any storage mountpoints supported by Nitro. The full list of built-in storage mountpoints can be found in the [unstorage documentation](https://unstorage.unjs.io).
+Nuxt KQL allows you opt-in to server-side caching of query responses. It does this by using the [cache API](https://nitro.build/guide/cache) of Nuxt's underlying server engine, [Nitro](https://nitro.build). Query responses are cached in-memory by default, but you can use any storage mountpoint supported by Nitro. The full list of built-in storage mountpoints can be found in the [unstorage documentation](https://unstorage.unjs.io).
 
-For short concurrent requests on your website, caching will make a great performance difference, as the query response will be served from the cache instead of being fetched from the server again. The default expiration time is set to 60 minutes.
+For short, concurrent requests on your site, caching will make a big difference in performance because the query response will be served from the cache rather than fetched from the server. The default expiration time is set to 60 minutes.
 
 You can enable server-side caching by setting the `server.cache` module option to `true`. You can also set a custom expiration time in seconds by setting the `server.maxAge` option:
 
@@ -55,11 +55,11 @@ export default defineNuxtConfig({
 })
 ```
 
-A custom storage mountpoint is suitable for production environments. For example, if you deploy to Cloudflare, the Clouflare KV storage mountpoint is a good choice. For development, you can use the built-in `fs` storage mountpoint.
+A custom storage mountpoint is appropriate for production environments. For example, if you are deploying to Cloudflare, the Clouflare KV storage mountpoint is a good choice. For development, you can use the built-in `fs` storage mountpoint.
 
 To define a custom storage mountpoint, use the `storage` option of the Nuxt KQL module. In the example above, we use the `kql` storage mountpoint to store the query responses.
 
-But this custom storage mountpoint is not defined yet. To make it available, we need to mount it in the `nitro` section of our `nuxt.config.ts`:
+However, this custom storage mountpoint is not yet defined. To make it available, we need to mount it in the `nitro` section of our `nuxt.config.ts`:
 
 ```ts
 // `nuxt.config.ts`
@@ -67,10 +67,10 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       kql: {
-        // https://unstorage.unjs.io/drivers/cloudflare-kv-binding
+        // https://unstorage.unjs.io/drivers/cloudflare
         driver: 'cloudflareKVBinding',
-        // Make sure to link the namespace in your Cf Pages or Cf worker settings
-        binding: '__MY_NAMESPACE'
+        // Make sure to link the namespace in your worker settings
+        binding: 'KV_BINDING'
       }
     },
     // Make sure to define a fallback storage mountpoint for

@@ -3,7 +3,7 @@
 This guide will walk you through the steps to get started with Nuxt KQL.
 
 ::: tip
-Choose your favorite from the [starter kits](/guide/starters) page and get started with Nuxt KQL in no time!
+Choose on of the [starter kits](/guide/starters) and get started with Nuxt KQL in no time instead of starting from scratch.
 :::
 
 ## Step 1: Install Nuxt KQL
@@ -25,9 +25,9 @@ export default defineNuxtConfig({
 
 ## Step 3: Set up the Environment
 
-Without a backend, Nuxt KQL won't be able to fetch queries. In order to do so, you have to point to a Kirby instance with the official [Kirby KQL](https://github.com/getkirby/kql) plugin installed.
+Without a backend, Nuxt KQL will not be able to fetch queries. In order to do so, you have to point to a Kirby instance with the official [Kirby KQL](https://github.com/getkirby/kql) plugin installed.
 
-It's recommended to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter), which is a customized Kirby project template that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
+It is recommended to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-plugin), which is a customized Kirby project template that includes the KQL plugin and a custom KQL endpoint `api/kql` that supports **token authentication**.
 
 Enable the `bearer` authentication method in your Nuxt config:
 
@@ -53,7 +53,7 @@ KIRBY_API_TOKEN=your-token
 ```
 
 ::: tip
-If you have reasons not to use the [Kirby Headless Starter](/guide/what-is-nuxt-kql#kirby-headless-starter) and want to use basic authentication, follow the [basic authentication method](/config/authentication-methods#basic-authentication) guide.
+Although not recommended, you can also use basic authentication, follow the [basic authentication method](/guide/authentication-methods#basic-authentication) guide.
 :::
 
 ## Step 4: Send Queries
@@ -81,8 +81,6 @@ const { data, refresh, error, status, clear } = await useKql({
 
 ## Step. 5: Your Turn
 
-Create something awesome! I'm eager to find out what you have built. [Drop me a line](mailto:mail@johannschopplich.com), if you want.
+Create your own Nuxt KQL project and start building your website.
 
-::: tip
-If you want to take a look at a complete solution with this module, you may check out the [Kirby Nuxt Starter Kit](https://github.com/johannschopplich/kirby-nuxt-starterkit), which is a rewrite of the official Kirby Starter Kit with this module.
-:::
+I'm curious to see what you've built. [Drop me a line at](mailto:hello@johannschopplich.com) if you like!

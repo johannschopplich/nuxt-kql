@@ -9,8 +9,8 @@
 
 ## Features
 
-- 🔒 Protect your Kirby credentials when sending queries
-- 🪢 Supports token-based authentication with [Kirby Headless Starter](https://github.com/johannschopplich/kirby-headless-starter) (recommended)
+- 🔒 Protected Kirby credentials when sending queries
+- 🪢 Supports token-based authentication with the [Kirby Headless plugin](https://github.com/johannschopplich/kirby-headless) (recommended)
 - 🤹 No CORS issues!
 - 🍱 Handle request just like with the [`useFetch`](https://nuxt.com/docs/getting-started/data-fetching/#usefetch) composable
 - 🗃 Cached query responses

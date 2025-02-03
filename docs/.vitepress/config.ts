@@ -70,19 +70,19 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: 'What is Nuxt KQL?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
-        { text: 'How It Works', link: '/guide/how-it-works' },
-        { text: 'Error Handling', link: '/guide/error-handling' },
-        { text: 'Playground', link: '/guide/playground' },
+        { text: 'Starter Kits', link: '/guide/starters' },
       ],
     },
     {
-      text: 'Config',
+      text: 'Usage',
       activeMatch: '^/config/',
       items: [
-        { text: 'Module Configuration', link: '/config/' },
-        { text: 'Authentication', link: '/config/authentication-methods' },
-        { text: 'Caching', link: '/config/caching' },
-        { text: 'Prefetching Queries', link: '/config/prefetching-queries' },
+        { text: 'Authentication', link: '/guide/authentication-methods' },
+        { text: 'Caching', link: '/guide/caching' },
+        { text: 'Error Handling', link: '/guide/error-handling' },
+        { text: 'Typed Responses', link: '/guide/typed-query-results' },
+        { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
+        { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
       ],
     },
     {
@@ -102,7 +102,6 @@ function nav(): DefaultTheme.NavItem[] {
         },
       ],
     },
-    { text: 'Starter Kits', link: '/guide/starters' },
     {
       text: `v${version}`,
       items: [
@@ -122,33 +121,32 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'What is Nuxt KQL?', link: '/guide/what-is-nuxt-kql' },
         { text: 'Getting Started', link: '/guide/getting-started' },
-        { text: 'How It Works', link: '/guide/how-it-works' },
-        { text: 'Error Handling', link: '/guide/error-handling' },
-        { text: 'Playground', link: '/guide/playground' },
+        { text: 'Starter Kits', link: '/guide/starters' },
       ],
     },
     {
       text: 'Configuration',
       items: [
-        { text: 'Module Configuration', link: '/config/' },
-        { text: 'Authentication', link: '/config/authentication-methods' },
-        { text: 'Caching', link: '/config/caching' },
-        { text: 'Prefetching Queries', link: '/config/prefetching-queries' },
+        { text: 'Module', link: '/config/' },
       ],
     },
     {
-      text: 'Cookbook',
+      text: 'Usage',
       items: [
-        { text: 'Kirby Blocks', link: '/guide/example-kirby-blocks' },
-        { text: 'Typed Responses', link: '/guide/example-typed-query-results' },
-        { text: 'Multi-Language Sites', link: '/guide/example-multi-language-sites' },
+        { text: 'Authentication', link: '/guide/authentication-methods' },
+        { text: 'Caching', link: '/guide/caching' },
+        { text: 'Error Handling', link: '/guide/error-handling' },
+        { text: 'Typed Responses', link: '/guide/typed-query-results' },
+        { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
+        { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
       ],
     },
     {
       text: 'FAQ',
       items: [
-        { text: 'Are CORS Issues Possible?', link: '/guide/faq-are-cors-issues-possible' },
+        { text: 'How Does It Work?', link: '/guide/faq-how-does-it-work' },
         { text: 'What Is KQL?', link: '/guide/faq-what-is-kql' },
+        { text: 'Can I Encounter CORS Issues?', link: '/guide/faq-cors-issues' },
       ],
     },
   ]
@@ -164,7 +162,9 @@ function sidebarApi(): DefaultTheme.SidebarItem[] {
       text: 'Composables',
       items: [
         { text: 'useKql', link: '/api/use-kql' },
+        { text: 'useKirbyData', link: '/api/use-kirby-data' },
         { text: '$kql', link: '/api/kql' },
+        { text: '$kirby', link: '/api/kirby' },
       ],
     },
     {

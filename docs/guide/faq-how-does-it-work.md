@@ -17,5 +17,5 @@ The internal server route then fetches the actual data for a given query from th
 During server-side rendering, calls to the Nuxt server route will directly call the relevant function (emulating the request), saving an additional API call. Thus, only the fetch request from Nuxt to Kirby will be performed.
 
 ::: info
-Query responses are cached (with a key calculated by hashing the query) and hydrated to the client. Subsequent calls will return cached responses, saving duplicated requests. Head over to the [caching](/config/caching) section to learn more.
+Query responses are cached (with a key calculated by hashing the query) and hydrated to the client. Subsequent calls will return cached responses, saving duplicated requests. Head over to the [caching](/guide/caching) section to learn more.
 :::
