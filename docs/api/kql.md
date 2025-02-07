@@ -4,38 +4,6 @@ Returns raw KQL query data. Uses an internal server route to proxy requests.
 
 Query responses are cached by default between function calls for the same query based on a calculated hash.
 
-## Type Declarations
-
-```ts
-function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
-  query: KirbyQueryRequest,
-  opts: KqlOptions = {}
-): Promise<T>
-
-type KqlOptions = Pick<
-  NitroFetchOptions<string>,
-  | 'onRequest'
-  | 'onRequestError'
-  | 'onResponse'
-  | 'onResponseError'
-  | 'headers'
-  | 'retry'
-  | 'retryDelay'
-  | 'retryStatusCodes'
-  | 'timeout'
-> & {
-  /**
-   * Language code to fetch data for in multi-language Kirby setups.
-   */
-  language?: string
-  /**
-   * Cache the response between function calls for the same query.
-   * @default true
-   */
-  cache?: boolean
-}
-```
-
 ## Example
 
 ```vue
@@ -92,4 +60,36 @@ Now, every `$kql` call will be directly use the Kirby instance by sending reques
 
 ```ts{3}
 const data = await $kql(query)
+```
+
+## Type Declarations
+
+```ts
+function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
+  query: KirbyQueryRequest,
+  opts: KqlOptions = {}
+): Promise<T>
+
+type KqlOptions = Pick<
+  NitroFetchOptions<string>,
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
+  | 'headers'
+  | 'retry'
+  | 'retryDelay'
+  | 'retryStatusCodes'
+  | 'timeout'
+> & {
+  /**
+   * Language code to fetch data for in multi-language Kirby setups.
+   */
+  language?: string
+  /**
+   * Cache the response between function calls for the same query.
+   * @default true
+   */
+  cache?: boolean
+}
 ```

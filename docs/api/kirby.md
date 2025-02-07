@@ -4,41 +4,6 @@ Returns raw data from a Kirby instance for the given path.
 
 Responses are cached by default between function calls for the same path based on a calculated hash of the path and fetch options.
 
-## Type Declarations
-
-```ts
-function $kirby<T = any>(
-  path: string,
-  opts: KirbyFetchOptions = {},
-): Promise<T>
-
-type KirbyFetchOptions = Pick<
-  NitroFetchOptions<string>,
-  | 'onRequest'
-  | 'onRequestError'
-  | 'onResponse'
-  | 'onResponseError'
-  | 'query'
-  | 'headers'
-  | 'method'
-  | 'body'
-  | 'retry'
-  | 'retryDelay'
-  | 'retryStatusCodes'
-  | 'timeout'
-> & {
-  /**
-   * Language code to fetch data for in multi-language Kirby setups.
-   */
-  language?: string
-  /**
-   * Cache the response between function calls for the same query.
-   * @default true
-   */
-  cache?: boolean
-}
-```
-
 ## Example
 
 ```vue
@@ -95,4 +60,39 @@ Now, every `$kirby` call will be directly use the Kirby instance by sending requ
 
 ```ts{3}
 const data = await $kirby('api/my-path')
+```
+
+## Type Declarations
+
+```ts
+function $kirby<T = any>(
+  path: string,
+  opts: KirbyFetchOptions = {},
+): Promise<T>
+
+type KirbyFetchOptions = Pick<
+  NitroFetchOptions<string>,
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
+  | 'query'
+  | 'headers'
+  | 'method'
+  | 'body'
+  | 'retry'
+  | 'retryDelay'
+  | 'retryStatusCodes'
+  | 'timeout'
+> & {
+  /**
+   * Language code to fetch data for in multi-language Kirby setups.
+   */
+  language?: string
+  /**
+   * Cache the response between function calls for the same query.
+   * @default true
+   */
+  cache?: boolean
+}
 ```

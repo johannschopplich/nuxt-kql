@@ -6,7 +6,14 @@ Nuxt KQL is a lightweight [Nuxt](https://nuxt.com) module to reliably retrieve d
 
 Kirby lends itself well to a headless CMS. Setting up [KQL](https://github.com/getkirby/kql) is fairly easy, but fetching queries can be cumbersome at times. Not to mention CORS issues. This module solves these common problems by providing easy-to-use composables to query your Kirby instance with KQL.
 
-With provided composables like [`useKql`](/api/use-kql), your KQL responses are cached and authorization is handled for you right out of the box.
+With provided composables like [`useKql`](/api/use-kql), your KQL responses are cached and authorization is handled for you right out of the box:
+
+```ts
+const { data, error } = await useKql({
+  query: 'site',
+  select: ['title', 'children']
+})
+```
 
 Most importantly, your Kirby authentication credentials are protected when fetching data, even on the client.
 
