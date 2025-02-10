@@ -83,6 +83,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'Typed Responses', link: '/guide/typed-query-results' },
         { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
         { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
+        { text: 'Batching Queries', link: '/guide/batching-queries' },
       ],
     },
     {
@@ -97,7 +98,9 @@ function nav(): DefaultTheme.NavItem[] {
           text: 'Composables',
           items: [
             { text: 'useKql', link: '/api/use-kql' },
+            { text: 'useKirbyData', link: '/api/use-kirby-data' },
             { text: '$kql', link: '/api/kql' },
+            { text: '$kirby', link: '/api/kirby' },
           ],
         },
       ],
@@ -139,6 +142,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Typed Responses', link: '/guide/typed-query-results' },
         { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
         { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
+        { text: 'Batching Queries', link: '/guide/batching-queries' },
       ],
     },
     {
