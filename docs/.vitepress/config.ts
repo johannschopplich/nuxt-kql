@@ -44,6 +44,8 @@ export default defineConfig({
     sidebar: {
       '/guide/': sidebarGuide(),
       '/config/': sidebarGuide(),
+      '/usage/': sidebarGuide(),
+      '/faq/': sidebarGuide(),
       '/api/': sidebarApi(),
     },
 
@@ -74,16 +76,20 @@ function nav(): DefaultTheme.NavItem[] {
       ],
     },
     {
+      text: 'Configuration',
+      link: '/config/',
+    },
+    {
       text: 'Usage',
-      activeMatch: '^/config/',
+      activeMatch: '^/usage/',
       items: [
-        { text: 'Authentication', link: '/guide/authentication-methods' },
-        { text: 'Caching', link: '/guide/caching' },
-        { text: 'Error Handling', link: '/guide/error-handling' },
-        { text: 'Typed Responses', link: '/guide/typed-query-results' },
-        { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
-        { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
-        { text: 'Batching Queries', link: '/guide/batching-queries' },
+        { text: 'Authentication', link: '/usage/authentication-methods' },
+        { text: 'Caching', link: '/usage/caching' },
+        { text: 'Error Handling', link: '/usage/error-handling' },
+        { text: 'Typed Responses', link: '/usage/typed-query-results' },
+        { text: 'Prefetching Queries', link: '/usage/prefetching-queries' },
+        { text: 'Multi-Language Sites', link: '/usage/multi-language-sites' },
+        { text: 'Batching Queries', link: '/usage/batching-queries' },
       ],
     },
     {
@@ -136,21 +142,21 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
     {
       text: 'Usage',
       items: [
-        { text: 'Authentication', link: '/guide/authentication-methods' },
-        { text: 'Caching', link: '/guide/caching' },
-        { text: 'Error Handling', link: '/guide/error-handling' },
-        { text: 'Typed Responses', link: '/guide/typed-query-results' },
-        { text: 'Prefetching Queries', link: '/guide/prefetching-queries' },
-        { text: 'Multi-Language Sites', link: '/guide/multi-language-sites' },
-        { text: 'Batching Queries', link: '/guide/batching-queries' },
+        { text: 'Authentication', link: '/usage/authentication-methods' },
+        { text: 'Caching', link: '/usage/caching' },
+        { text: 'Error Handling', link: '/usage/error-handling' },
+        { text: 'Typed Responses', link: '/usage/typed-query-results' },
+        { text: 'Prefetching Queries', link: '/usage/prefetching-queries' },
+        { text: 'Multi-Language Sites', link: '/usage/multi-language-sites' },
+        { text: 'Batching Queries', link: '/usage/batching-queries' },
       ],
     },
     {
       text: 'FAQ',
       items: [
-        { text: 'How Does It Work?', link: '/guide/faq-how-does-it-work' },
-        { text: 'What Is KQL?', link: '/guide/faq-what-is-kql' },
-        { text: 'Can I Encounter CORS Issues?', link: '/guide/faq-cors-issues' },
+        { text: 'How Does It Work?', link: '/faq/how-does-it-work' },
+        { text: 'What Is KQL?', link: '/faq/what-is-kql' },
+        { text: 'Can I Encounter CORS Issues?', link: '/faq/cors-issues' },
       ],
     },
   ]

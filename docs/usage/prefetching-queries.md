@@ -44,7 +44,7 @@ The actual **type** for the key will be pascal-cased, e.g. the key `somePageKey`
 
 ## Multi-Language Queries
 
-If you have a [multi-language](/guide/multi-language-sites) Kirby instance, you can specify the language for each query individually. Let's use `site` as an example key and get the site title in German:
+If you have a [multi-language](/usage/multi-language-sites) Kirby instance, you can specify the language for each query individually. Let's use `site` as an example key and get the site title in German:
 
 ```ts
 // `nuxt.config.ts`

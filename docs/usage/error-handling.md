@@ -1,6 +1,6 @@
 # Error Handling
 
-While the idea of this Nuxt module is to mask your Kirby API (and credentials) inside the [server proxy](/guide/faq-how-does-it-work), Nuxt KQL will minimize the hassle of handling errors by passing through the following properties to the response on the client:
+While the idea of this Nuxt module is to mask your Kirby API (and credentials) inside the [server proxy](/faq/how-does-it-work), Nuxt KQL will minimize the hassle of handling errors by passing through the following properties to the response on the client:
 
 - Response Body
 - HTTP Status Code

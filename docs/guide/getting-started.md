@@ -53,7 +53,7 @@ KIRBY_API_TOKEN=your-token
 ```
 
 ::: tip
-Although not recommended, you can also use basic authentication, follow the [basic authentication method](/guide/authentication-methods#basic-authentication) guide.
+Although not recommended, you can also use basic authentication, follow the [basic authentication method](/usage/authentication-methods#basic-authentication) guide.
 :::
 
 ## Step 4: Send Queries

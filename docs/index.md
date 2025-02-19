@@ -23,12 +23,12 @@ features:
   - title: Protected Kirby Credentials
     icon: 🔒
     details: A Nuxt server route proxies your queries. No CORS issues!
-    link: /guide/faq-how-does-it-work
+    link: /faq/how-does-it-work
     linkText: How It Works
   - title: Authentication Methods
     icon: 🪢
     details: Bearer token or basic authentication with the Kirby Headless plugin.
-    link: /guide/authentication-methods
+    link: /usage/authentication-methods
     linkText: Authentication Methods
   - title: Familiar Data Handling
     icon: 🤹

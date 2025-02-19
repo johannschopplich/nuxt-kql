@@ -16,7 +16,7 @@ By default, Nuxt waits until a `refresh` is finished before it can be executed a
 
 ## Caching
 
-By default, a [unique key is generated](/guide/caching) based in input parameters for each request to ensure that data fetching can be properly de-duplicated across requests. To disable caching, set the `cache` option to `false`:
+By default, a [unique key is generated](/usage/caching) based in input parameters for each request to ensure that data fetching can be properly de-duplicated across requests. To disable caching, set the `cache` option to `false`:
 
 ```ts
 const { data } = await useKirbyData('api/my-path', {
