@@ -4,10 +4,10 @@ import NuxtKql from '../../src/module'
 export default defineNuxtConfig({
   modules: [NuxtKql],
 
-  compatibilityDate: '2024-04-03',
+  compatibilityDate: '2025-01-01',
 
   kql: {
-    url: 'https://kirby-headless-starter.jhnn.dev',
+    url: 'https://kirby-headless-starter.byjohann.dev',
     token: 'test',
     auth: 'bearer',
     prefetch: {
