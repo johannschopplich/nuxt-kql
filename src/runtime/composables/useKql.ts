@@ -89,7 +89,7 @@ export function useKql<
         let result: ResT | undefined
 
         if (kql.client) {
-          result = (await useRequestFetch<ResT>(kql.prefix, {
+          result = (await useRequestFetch()<ResT>(kql.prefix, {
             ...fetchOptions,
             signal: controller.signal,
             baseURL: kql.url,
@@ -103,7 +103,7 @@ export function useKql<
           })) as ResT
         }
         else {
-          result = (await useRequestFetch<ResT>(getProxyPath(key.value), {
+          result = (await useRequestFetch()<ResT>(getProxyPath(key.value), {
             ...fetchOptions,
             signal: controller.signal,
             method: 'POST',

@@ -102,7 +102,7 @@ export function useKirbyData<T = any>(
         let result: T | undefined
 
         if (kql.client) {
-          result = (await useRequestFetch<T>(_path.value, {
+          result = (await useRequestFetch()<T>(_path.value, {
             ...fetchOptions,
             signal: controller.signal,
             baseURL: kql.url,
@@ -116,7 +116,7 @@ export function useKirbyData<T = any>(
           })) as T
         }
         else {
-          result = (await useRequestFetch<T>(getProxyPath(key.value), {
+          result = (await useRequestFetch()<T>(getProxyPath(key.value), {
             ...fetchOptions,
             signal: controller.signal,
             method: 'POST',

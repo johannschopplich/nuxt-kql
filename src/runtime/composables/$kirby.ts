@@ -91,7 +91,7 @@ export function $kirby<T = any>(
     body,
   }
 
-  const request = useRequestFetch(kql.client ? path : getProxyPath(key), {
+  const request = useRequestFetch()(kql.client ? path : getProxyPath(key), {
     ...fetchOptions,
     ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })
