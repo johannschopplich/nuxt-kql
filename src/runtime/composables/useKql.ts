@@ -3,7 +3,7 @@ import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
 import type { ModuleOptions } from '../../module'
-import { useAsyncData, useRuntimeConfig } from '#imports'
+import { useAsyncData, useRequestFetch, useRuntimeConfig } from '#imports'
 import { hash } from 'ohash'
 import { computed, toValue } from 'vue'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
@@ -47,7 +47,7 @@ export function useKql<
     default: defaultFn,
     transform,
     pick,
-    watch,
+    watch: watchSources,
     immediate,
     headers,
     language,
@@ -69,20 +69,14 @@ export function useKql<
     default: defaultFn,
     transform,
     pick,
-    watch: watch === false
-      ? []
-      : [
-          // Key contains query and language
-          key,
-          ...(watch || []),
-        ],
+    watch: watchSources === false ? [] : [...(watchSources || []), key],
     immediate,
   }
 
   let controller: AbortController | undefined
 
   return useAsyncData<ResT, unknown>(
-    key.value,
+    watchSources === false ? key.value : key,
     async (nuxt) => {
       controller?.abort?.()
 
@@ -95,7 +89,7 @@ export function useKql<
         let result: ResT | undefined
 
         if (kql.client) {
-          result = (await globalThis.$fetch<ResT>(kql.prefix, {
+          result = (await useRequestFetch<ResT>(kql.prefix, {
             ...fetchOptions,
             signal: controller.signal,
             baseURL: kql.url,
@@ -109,7 +103,7 @@ export function useKql<
           })) as ResT
         }
         else {
-          result = (await globalThis.$fetch<ResT>(getProxyPath(key.value), {
+          result = (await useRequestFetch<ResT>(getProxyPath(key.value), {
             ...fetchOptions,
             signal: controller.signal,
             method: 'POST',

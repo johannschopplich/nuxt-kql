@@ -1,7 +1,7 @@
 import type { NitroFetchOptions } from 'nitropack'
 import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
-import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { useNuxtApp, useRequestFetch, useRuntimeConfig } from '#imports'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
@@ -91,7 +91,7 @@ export function $kirby<T = any>(
     body,
   }
 
-  const request = globalThis.$fetch(kql.client ? path : getProxyPath(key), {
+  const request = useRequestFetch(kql.client ? path : getProxyPath(key), {
     ...fetchOptions,
     ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })

@@ -2,7 +2,7 @@ import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
 import type { ModuleOptions } from '../../module'
-import { useAsyncData, useRuntimeConfig } from '#imports'
+import { useAsyncData, useRequestFetch, useRuntimeConfig } from '#imports'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import { computed, toValue } from 'vue'
@@ -50,7 +50,7 @@ export function useKirbyData<T = any>(
     default: defaultFn,
     transform,
     pick,
-    watch,
+    watch: watchSources,
     immediate,
     query,
     headers,
@@ -82,19 +82,14 @@ export function useKirbyData<T = any>(
     default: defaultFn,
     transform,
     pick,
-    watch: watch === false
-      ? []
-      : [
-          _path,
-          ...(watch || []),
-        ],
+    watch: watchSources === false ? [] : [...(watchSources || []), key],
     immediate,
   }
 
   let controller: AbortController | undefined
 
   return useAsyncData<T, unknown>(
-    key.value,
+    watchSources === false ? key.value : key,
     async (nuxt) => {
       controller?.abort?.()
 
@@ -107,7 +102,7 @@ export function useKirbyData<T = any>(
         let result: T | undefined
 
         if (kql.client) {
-          result = (await globalThis.$fetch<T>(_path.value, {
+          result = (await useRequestFetch<T>(_path.value, {
             ...fetchOptions,
             signal: controller.signal,
             baseURL: kql.url,
@@ -121,7 +116,7 @@ export function useKirbyData<T = any>(
           })) as T
         }
         else {
-          result = (await globalThis.$fetch<T>(getProxyPath(key.value), {
+          result = (await useRequestFetch<T>(getProxyPath(key.value), {
             ...fetchOptions,
             signal: controller.signal,
             method: 'POST',
