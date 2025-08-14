@@ -2,7 +2,7 @@
   "name": "nuxt-kql",
   "type": "module",
   "version": "1.6.0",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.14.0",
   "description": "Kirby's Query Language API for Nuxt",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
   "license": "MIT",
@@ -35,9 +35,9 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground && nuxi prepare test/fixture",
+    "dev": "nuxt dev playground",
+    "dev:build": "nuxt build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground && nuxt prepare test/fixture",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
@@ -48,8 +48,8 @@
     "release": "bumpp"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.17.7",
-    "@vueuse/core": "^13.5.0",
+    "@nuxt/kit": "^4.0.3",
+    "@vueuse/core": "^13.6.0",
     "defu": "^6.1.4",
     "kirby-types": "^1.0.0",
     "ofetch": "^1.4.1",
@@ -57,18 +57,18 @@
     "pathe": "^2.0.3",
     "scule": "^1.3.0",
     "ufo": "^1.6.1",
-    "uint8array-extras": "^1.4.0"
+    "uint8array-extras": "^1.4.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.17.0",
-    "@nuxt/module-builder": "^1.0.1",
+    "@antfu/eslint-config": "^5.2.1",
+    "@nuxt/module-builder": "^1.0.2",
     "@nuxt/test-utils": "^3.19.2",
-    "@types/node": "^22.16.4",
-    "bumpp": "^10.2.0",
+    "@types/node": "^22.17.1",
+    "bumpp": "^10.2.3",
     "destr": "^2.0.5",
-    "eslint": "^9.31.0",
-    "nuxt": "^3.17.7",
-    "typescript": "^5.8.3",
+    "eslint": "^9.33.0",
+    "nuxt": "^4.0.3",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
 }

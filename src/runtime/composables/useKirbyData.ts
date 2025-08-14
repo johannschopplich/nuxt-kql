@@ -145,5 +145,5 @@ export function useKirbyData<T = any>(
       }
     },
     asyncDataOptions,
-  ) as AsyncData<T | null, NuxtError>
+  ) as AsyncData<T | undefined, NuxtError>
 }

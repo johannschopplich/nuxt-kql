@@ -99,7 +99,7 @@ const { data } = await useKirbyData('api/my-path')
 export function useKirbyData<T = any>(
   path: MaybeRefOrGetter<string>,
   opts: UseKirbyDataOptions<T> = {},
-): AsyncData<T | null, NuxtError>
+): AsyncData<T | undefined, NuxtError>
 
 type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   NitroFetchOptions<string>,
