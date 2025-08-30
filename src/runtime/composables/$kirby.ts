@@ -6,6 +6,7 @@ import { hash } from 'ohash'
 import { joinURL } from 'ufo'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 
+// #region options
 export type KirbyFetchOptions = Pick<
   NitroFetchOptions<string>,
   | 'onRequest'
@@ -31,6 +32,7 @@ export type KirbyFetchOptions = Pick<
    */
   cache?: boolean
 }
+// #endregion options
 
 export function $kirby<T = any>(
   path: string,

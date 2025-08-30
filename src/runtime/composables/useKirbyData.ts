@@ -8,6 +8,7 @@ import { joinURL } from 'ufo'
 import { computed, toValue } from 'vue'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 
+// #region options
 type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   NitroFetchOptions<string>,
   | 'onRequest'
@@ -39,6 +40,7 @@ type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
    */
   watch?: MultiWatchSources | false
 }
+// #endregion options
 
 export function useKirbyData<T = any>(
   path: MaybeRefOrGetter<string>,

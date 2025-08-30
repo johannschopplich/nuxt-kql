@@ -69,30 +69,6 @@ function $kirby<T = any>(
   path: string,
   opts: KirbyFetchOptions = {},
 ): Promise<T>
-
-type KirbyFetchOptions = Pick<
-  NitroFetchOptions<string>,
-  | 'onRequest'
-  | 'onRequestError'
-  | 'onResponse'
-  | 'onResponseError'
-  | 'query'
-  | 'headers'
-  | 'method'
-  | 'body'
-  | 'retry'
-  | 'retryDelay'
-  | 'retryStatusCodes'
-  | 'timeout'
-> & {
-  /**
-   * Language code to fetch data for in multi-language Kirby setups.
-   */
-  language?: string
-  /**
-   * Cache the response between function calls for the same query.
-   * @default true
-   */
-  cache?: boolean
-}
 ```
+
+<<< @/../src/runtime/composables/$kirby.ts#options

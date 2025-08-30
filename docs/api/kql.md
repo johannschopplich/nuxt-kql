@@ -69,27 +69,6 @@ function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
   query: KirbyQueryRequest,
   opts: KqlOptions = {}
 ): Promise<T>
-
-type KqlOptions = Pick<
-  NitroFetchOptions<string>,
-  | 'onRequest'
-  | 'onRequestError'
-  | 'onResponse'
-  | 'onResponseError'
-  | 'headers'
-  | 'retry'
-  | 'retryDelay'
-  | 'retryStatusCodes'
-  | 'timeout'
-> & {
-  /**
-   * Language code to fetch data for in multi-language Kirby setups.
-   */
-  language?: string
-  /**
-   * Cache the response between function calls for the same query.
-   * @default true
-   */
-  cache?: boolean
-}
 ```
+
+<<< @/../src/runtime/composables/$kql.ts#options

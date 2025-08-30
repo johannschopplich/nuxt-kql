@@ -6,6 +6,7 @@ import { useNuxtApp, useRequestFetch, useRuntimeConfig } from '#imports'
 import { hash } from 'ohash'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 
+// #region options
 export type KqlOptions = Pick<
   NitroFetchOptions<string>,
   | 'onRequest'
@@ -28,6 +29,7 @@ export type KqlOptions = Pick<
    */
   cache?: boolean
 }
+// #endregion options
 
 export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse>(
   query: KirbyQueryRequest,

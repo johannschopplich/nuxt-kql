@@ -24,6 +24,7 @@ const KIRBY_TYPES_PKG_EXPORT_NAMES = [
   'KirbyQuerySchema',
 ]
 
+// #region options
 export interface ModuleOptions {
   /**
    * Kirby base URL, like `https://kirby.example.com`
@@ -139,6 +140,7 @@ export interface ModuleOptions {
     verboseErrors?: boolean
   }
 }
+// #endregion options
 
 declare module '@nuxt/schema' {
   interface RuntimeConfig {

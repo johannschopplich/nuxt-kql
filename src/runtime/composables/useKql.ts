@@ -8,6 +8,7 @@ import { hash } from 'ohash'
 import { computed, toValue } from 'vue'
 import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
 
+// #region options
 export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   NitroFetchOptions<string>,
   | 'onRequest'
@@ -36,6 +37,7 @@ export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
    */
   watch?: MultiWatchSources | false
 }
+// #endregion options
 
 export function useKql<
   ResT extends KirbyQueryResponse<any, boolean> = KirbyQueryResponse,
