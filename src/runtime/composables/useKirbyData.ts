@@ -15,9 +15,9 @@ type UseKirbyDataOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
   | 'onRequestError'
   | 'onResponse'
   | 'onResponseError'
-  | 'query'
-  | 'headers'
   | 'method'
+  | 'headers'
+  | 'query'
   | 'body'
   | 'retry'
   | 'retryDelay'
@@ -54,9 +54,9 @@ export function useKirbyData<T = any>(
     pick,
     watch: watchSources,
     immediate,
-    query,
-    headers,
     method,
+    headers,
+    query,
     body,
     language,
     cache = true,

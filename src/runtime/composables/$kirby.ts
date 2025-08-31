@@ -13,14 +13,15 @@ export type KirbyFetchOptions = Pick<
   | 'onRequestError'
   | 'onResponse'
   | 'onResponseError'
-  | 'query'
-  | 'headers'
   | 'method'
+  | 'headers'
+  | 'query'
   | 'body'
   | 'retry'
   | 'retryDelay'
   | 'retryStatusCodes'
   | 'timeout'
+  | 'signal'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups.
@@ -42,8 +43,8 @@ export function $kirby<T = any>(
   const promiseMap = (nuxt._pendingRequests ||= new Map()) as Map<string, Promise<T>>
   const {
     query,
-    headers,
     method,
+    headers,
     body,
     language,
     cache = true,
