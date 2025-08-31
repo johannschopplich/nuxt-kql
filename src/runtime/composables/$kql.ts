@@ -4,7 +4,7 @@ import type { ModuleOptions } from '../../module'
 import type { ServerFetchOptions } from '../types'
 import { useNuxtApp, useRequestFetch, useRuntimeConfig } from '#imports'
 import { hash } from 'ohash'
-import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { buildApiProxyPath, createAuthHeader, headersToObject } from '../utils'
 
 // #region options
 export type KqlOptions = Pick<
@@ -86,7 +86,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
     },
   }
 
-  const request = useRequestFetch()(kql.client ? kql.prefix : getProxyPath(_key), {
+  const request = useRequestFetch()(kql.client ? kql.prefix : buildApiProxyPath(_key), {
     ...fetchOptions,
     ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })

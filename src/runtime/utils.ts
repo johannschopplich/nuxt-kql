@@ -1,6 +1,4 @@
-import type { ModuleOptions } from '../module'
-
-export function getProxyPath(key: string) {
+export function buildApiProxyPath(key: string) {
   return `/api/__kirby__/${encodeURIComponent(key)}`
 }
 
@@ -12,7 +10,11 @@ export function createAuthHeader({
   auth,
   token,
   credentials,
-}: Pick<ModuleOptions, 'token' | 'credentials'> & { auth?: string }) {
+}: {
+  auth?: string
+  token?: string
+  credentials?: { username: string, password: string }
+}) {
   if (auth === 'basic' && credentials) {
     const { username, password } = credentials
     const encoded = globalThis.btoa(`${username}:${password}`)

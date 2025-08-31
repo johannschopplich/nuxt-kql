@@ -4,7 +4,7 @@ import type { ServerFetchOptions } from '../types'
 import { useNuxtApp, useRequestFetch, useRuntimeConfig } from '#imports'
 import { hash } from 'ohash'
 import { joinURL } from 'ufo'
-import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { buildApiProxyPath, createAuthHeader, headersToObject } from '../utils'
 
 // #region options
 export type KirbyFetchOptions = Pick<
@@ -101,7 +101,7 @@ export function $kirby<T = any>(
     body,
   }
 
-  const request = useRequestFetch()(kql.client ? path : getProxyPath(_key), {
+  const request = useRequestFetch()(kql.client ? path : buildApiProxyPath(_key), {
     ...fetchOptions,
     ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })
