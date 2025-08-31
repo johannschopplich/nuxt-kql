@@ -5,7 +5,7 @@ import { useRuntimeConfig } from '#imports'
 import { consola } from 'consola'
 import { destr } from 'destr'
 import { createError, defineEventHandler, getRouterParam, readBody, setResponseHeader, setResponseStatus, splitCookiesString } from 'h3'
-import { defineCachedFunction } from 'nitropack/runtime'
+import { defineCachedFunction } from 'nitropack/runtime/internal/cache'
 import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToString } from 'uint8array-extras'
 import { createAuthHeader } from '../utils'
 
@@ -46,8 +46,8 @@ export default defineEventHandler(async (event) => {
             body: query,
           }
         : {
-            query,
             method,
+            query,
             body,
           }),
       headers: {
@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
     })
 
     // Serialize the response data
-    const dataArray = new Uint8Array(response._data ?? ([] as unknown as ArrayBuffer))
+    const dataArray = new Uint8Array(response._data ?? [])
     const data = uint8ArrayToBase64(dataArray)
 
     return {

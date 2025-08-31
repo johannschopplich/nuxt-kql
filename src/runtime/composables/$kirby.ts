@@ -82,10 +82,10 @@ export function $kirby<T = any>(
     method: 'POST',
     body: {
       path,
-      query,
-      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
       method,
+      query,
       body,
+      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
       cache,
     } satisfies ServerFetchOptions,
   }
@@ -93,12 +93,12 @@ export function $kirby<T = any>(
   const _clientFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     query,
+    method,
+    body,
     headers: {
       ...baseHeaders,
       ...createAuthHeader(kql),
     },
-    method,
-    body,
   }
 
   const request = useRequestFetch()(kql.client ? path : buildApiProxyPath(_key), {

@@ -70,9 +70,9 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const _serverFetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
     body: {
+      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
       query,
       cache,
-      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
     } satisfies ServerFetchOptions,
   }
 
