@@ -2,11 +2,10 @@ import type { KirbyQueryRequest, KirbyQueryResponse } from 'kirby-types'
 import type { NitroFetchOptions } from 'nitropack'
 import type { AsyncData, AsyncDataOptions, NuxtError } from 'nuxt/app'
 import type { MaybeRefOrGetter, MultiWatchSources } from 'vue'
-import type { ModuleOptions } from '../../module'
-import { useAsyncData, useRequestFetch, useRuntimeConfig } from '#imports'
+import { useAsyncData } from '#imports'
 import { hash } from 'ohash'
 import { computed, toValue } from 'vue'
-import { createAuthHeader, getProxyPath, headersToObject } from '../utils'
+import { $kql } from './$kql'
 
 // #region options
 export type UseKqlOptions<T> = Omit<AsyncDataOptions<T>, 'watch'> & Pick<
@@ -57,7 +56,6 @@ export function useKql<
     ...fetchOptions
   } = opts
 
-  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
   const _query = computed(() => toValue(query))
   const _language = computed(() => toValue(language))
   const key = computed(() => `$kql${hash([_query.value, _language.value])}`)
@@ -79,59 +77,16 @@ export function useKql<
 
   return useAsyncData<ResT, unknown>(
     watchSources === false ? key.value : key,
-    async (nuxt) => {
+    () => {
       controller?.abort?.()
-
-      if (nuxt && (nuxt.isHydrating || cache) && nuxt.payload.data[key.value])
-        return nuxt.payload.data[key.value]
-
       controller = new AbortController()
 
-      try {
-        let result: ResT | undefined
-
-        if (kql.client) {
-          result = (await useRequestFetch()<ResT>(kql.prefix, {
-            ...fetchOptions,
-            signal: controller.signal,
-            baseURL: kql.url,
-            method: 'POST',
-            body: _query.value,
-            headers: {
-              ...headersToObject(headers),
-              ...createAuthHeader(kql),
-              ...(_language.value && { 'X-Language': _language.value }),
-            },
-          })) as ResT
-        }
-        else {
-          result = (await useRequestFetch()<ResT>(getProxyPath(key.value), {
-            ...fetchOptions,
-            signal: controller.signal,
-            method: 'POST',
-            body: {
-              query: _query.value,
-              cache,
-              headers: {
-                ...headersToObject(headers),
-                ...(_language.value && { 'X-Language': _language.value }),
-              },
-            },
-          })) as ResT
-        }
-
-        if (nuxt && cache)
-          nuxt.payload.data[key.value] = result
-
-        return result
-      }
-      catch (error) {
-        // Invalidate cache if request fails
-        if (nuxt)
-          nuxt.payload.data[key.value] = undefined
-
-        throw error
-      }
+      return $kql(_query.value, {
+        ...fetchOptions,
+        signal: controller.signal,
+        cache,
+        key: key.value,
+      })
     },
     asyncDataOptions,
   ) as AsyncData<ResT | undefined, NuxtError>

@@ -32,6 +32,12 @@ export type KirbyFetchOptions = Pick<
    * @default true
    */
   cache?: boolean
+  /**
+   * By default, a cache key will be generated from the request options.
+   * With this option, you can provide a custom cache key.
+   * @default undefined
+   */
+  key?: string
 }
 // #endregion options
 
@@ -42,12 +48,13 @@ export function $kirby<T = any>(
   const nuxt = useNuxtApp()
   const promiseMap = (nuxt._pendingRequests ||= new Map()) as Map<string, Promise<T>>
   const {
-    query,
     method,
     headers,
+    query,
     body,
     language,
     cache = true,
+    key,
     ...fetchOptions
   } = opts
   const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
@@ -55,19 +62,19 @@ export function $kirby<T = any>(
   if (language)
     path = joinURL(language, path)
 
-  const key = `$kirby${hash([
+  const _key = key || `$kirby${hash([
     path,
-    query,
     method,
+    query,
     body,
     language,
   ])}`
 
-  if ((nuxt.isHydrating || cache) && nuxt.payload.data[key])
-    return Promise.resolve(nuxt.payload.data[key])
+  if ((nuxt.isHydrating || cache) && nuxt.payload.data[_key])
+    return Promise.resolve(nuxt.payload.data[_key])
 
-  if (promiseMap.has(key))
-    return promiseMap.get(key)!
+  if (promiseMap.has(_key))
+    return promiseMap.get(_key)!
 
   const baseHeaders = headersToObject(headers)
 
@@ -94,24 +101,25 @@ export function $kirby<T = any>(
     body,
   }
 
-  const request = useRequestFetch()(kql.client ? path : getProxyPath(key), {
+  const request = useRequestFetch()(kql.client ? path : getProxyPath(_key), {
     ...fetchOptions,
     ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
   })
     .then((response) => {
       if (import.meta.server || cache)
-        nuxt.payload.data[key] = response
-      promiseMap.delete(key)
+        nuxt.payload.data[_key] = response
       return response
     })
-    // Invalidate cache if request fails
     .catch((error) => {
-      nuxt.payload.data[key] = undefined
-      promiseMap.delete(key)
+      // Invalidate cache if request fails
+      nuxt.payload.data[_key] = undefined
       throw error
+    })
+    .finally(() => {
+      promiseMap.delete(_key)
     }) as Promise<T>
 
-  promiseMap.set(key, request)
+  promiseMap.set(_key, request)
 
   return request
 }
