@@ -5,9 +5,7 @@ export interface ServerFetchOptions extends Pick<
   NitroFetchOptions<string>,
   'method' | 'headers' | 'query' | 'body'
 > {
-  // Either request a KQL query
-  query?: Partial<KirbyQueryRequest>
-  // … or a direct Kirby API path
-  path?: string
+  query?: Partial<KirbyQueryRequest> // Either a KQL query
+  path?: string // Or a Kirby path
   cache?: boolean
 }
