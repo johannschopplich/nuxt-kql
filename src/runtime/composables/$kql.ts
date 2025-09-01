@@ -62,7 +62,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   if (promiseMap.has(_key))
     return promiseMap.get(_key)!
 
-  const baseHeaders = {
+  const sharedHeaders = {
     ...headersToObject(headers),
     ...(language && { 'X-Language': language }),
   }
@@ -70,8 +70,8 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const _serverFetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
     body: {
-      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
       query,
+      headers: sharedHeaders,
       cache,
     } satisfies ServerFetchOptions,
   }
@@ -79,11 +79,11 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const _clientFetchOptions: NitroFetchOptions<string> = {
     baseURL: kql.url,
     method: 'POST',
-    body: query,
     headers: {
-      ...baseHeaders,
+      ...sharedHeaders,
       ...createAuthHeader(kql),
     },
+    body: query,
   }
 
   const request = useRequestFetch()(kql.client ? kql.prefix : buildApiProxyPath(_key), {

@@ -76,7 +76,7 @@ export function $kirby<T = any>(
   if (promiseMap.has(_key))
     return promiseMap.get(_key)!
 
-  const baseHeaders = headersToObject(headers)
+  const sharedHeaders = headersToObject(headers)
 
   const _serverFetchOptions: NitroFetchOptions<string> = {
     method: 'POST',
@@ -85,7 +85,7 @@ export function $kirby<T = any>(
       method,
       query,
       body,
-      headers: Object.keys(baseHeaders).length ? baseHeaders : undefined,
+      headers: sharedHeaders,
       cache,
     } satisfies ServerFetchOptions,
   }
@@ -94,11 +94,11 @@ export function $kirby<T = any>(
     baseURL: kql.url,
     query,
     method,
-    body,
     headers: {
-      ...baseHeaders,
+      ...sharedHeaders,
       ...createAuthHeader(kql),
     },
+    body,
   }
 
   const request = useRequestFetch()(kql.client ? path : buildApiProxyPath(_key), {

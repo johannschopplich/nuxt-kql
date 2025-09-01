@@ -26,6 +26,7 @@ export type KqlFetchOptions = Pick<
   | 'retryDelay'
   | 'retryStatusCodes'
   | 'timeout'
+  | 'signal'
 > & {
   /**
    * Language code to fetch data for in multi-language Kirby setups.
