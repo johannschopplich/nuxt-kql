@@ -2,6 +2,7 @@ import type { KirbyQueryResponse } from 'kirby-types'
 import type { FetchError } from 'ofetch'
 import type { ModuleOptions } from './module'
 import { ofetch } from 'ofetch'
+import { pascalCase } from 'scule'
 import { logger } from './kit'
 import { createAuthHeader } from './runtime/utils'
 
@@ -16,6 +17,13 @@ export async function prefetchQueries(
   if (!options.url) {
     logger.error('Skipping KQL prefetch, since no Kirby base URL is provided')
     return results
+  }
+
+  // Validate prefetch query keys to prevent naming conflicts
+  for (const key of Object.keys(options.prefetch)) {
+    if (key === pascalCase(key)) {
+      logger.error(`Prefetch query key "${key}" conflicts with its PascalCase type name. Please use a different key (e.g., "${key.charAt(0).toLowerCase() + key.slice(1)}")`)
+    }
   }
 
   const start = Date.now()
