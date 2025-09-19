@@ -178,6 +178,8 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const moduleName = name
 
+    logger.warn('`nuxt-kql` has been renamed to `nuxt-kirby`. Please update your dependencies!')
+
     // Make sure Kirby URL and KQL endpoint are set
     if (!options.url)
       logger.error('Missing `KIRBY_BASE_URL` environment variable')
