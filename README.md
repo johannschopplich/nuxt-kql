@@ -2,7 +2,7 @@
 
 # Nuxt Kirby
 
-[Nuxt](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
+[Nuxt](https://nuxt.com) module to interact with [Kirby CMS](https://getkirby.com) with support for [Kirby's Query Language](https://github.com/getkirby/kql) API.
 
 - [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kirby/releases)
 - [📖 &nbsp;Read the documentation](https://nuxt-kirby.byjohann.dev)
@@ -11,10 +11,10 @@
 
 - 🔒 Protected Kirby credentials when sending queries
 - 🪢 Supports token-based authentication with the [Kirby Headless plugin](https://kirby.tools/docs/headless/getting-started/) (recommended)
-- 🤹 No CORS issues!
 - 🍱 Handle request just like with the [`useFetch`](https://nuxt.com/docs/getting-started/data-fetching/#usefetch) composable
-- 🗃 Cached query responses
 - 🦦 [Multiple starter kits](https://nuxt-kirby.byjohann.dev/essentials/starter-kits) available
+- 🗃 Cached query responses
+- 🤹 No CORS issues!
 - 🦾 Strongly typed
 
 ## Setup
