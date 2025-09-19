@@ -39,17 +39,17 @@ export function $kirby<T = any>(
   opts: KirbyFetchOptions = {},
 ): Promise<T> {
   const { headers, language, ...fetchOptions } = opts
-  const kql = useRuntimeConfig().kql as Required<ModuleOptions>
+  const kirby = useRuntimeConfig().kirby as Required<ModuleOptions>
 
   if (language)
     path = joinURL(language, path)
 
   return globalThis.$fetch<T, string>(path, {
     ...fetchOptions,
-    baseURL: kql.url,
+    baseURL: kirby.url,
     headers: {
       ...headersToObject(headers),
-      ...createAuthHeader(kql),
+      ...createAuthHeader(kirby),
     },
   }) as Promise<T>
 }
@@ -59,16 +59,16 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   opts: KqlFetchOptions = {},
 ): Promise<T> {
   const { headers, language, ...fetchOptions } = opts
-  const kql = useRuntimeConfig().kql as Required<ModuleOptions>
+  const kirby = useRuntimeConfig().kirby as Required<ModuleOptions>
 
-  return globalThis.$fetch<T, string>(kql.prefix, {
+  return globalThis.$fetch<T, string>(kirby.prefix, {
     ...fetchOptions,
-    baseURL: kql.url,
+    baseURL: kirby.url,
     method: 'POST',
     body: query,
     headers: {
       ...headersToObject(headers),
-      ...createAuthHeader(kql),
+      ...createAuthHeader(kirby),
       ...(language && { 'X-Language': language }),
     },
   }) as Promise<T>

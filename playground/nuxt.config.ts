@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-01',
 
-  kql: {
+  kirby: {
     // Enable token-based authentication
     auth: 'bearer',
 

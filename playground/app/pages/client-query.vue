@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KirbyQueryRequest } from '#nuxt-kql'
+import type { KirbyQueryRequest } from '#nuxt-kirby'
 import { ref, useKql } from '#imports'
 
 const refreshIndex = ref(0)

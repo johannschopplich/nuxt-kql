@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`nuxt-kql > can prefetch KQL queries 1`] = `
+exports[`nuxt-kirby > can prefetch KQL queries 1`] = `
 {
   "children": [
     {
@@ -38,7 +38,7 @@ exports[`nuxt-kql > can prefetch KQL queries 1`] = `
 }
 `;
 
-exports[`nuxt-kql > fetches Kirby data useKirbyData 1`] = `
+exports[`nuxt-kirby > fetches Kirby data useKirbyData 1`] = `
 {
   "code": 201,
   "result": {
@@ -80,7 +80,7 @@ exports[`nuxt-kql > fetches Kirby data useKirbyData 1`] = `
 }
 `;
 
-exports[`nuxt-kql > fetches queries with $kql 1`] = `
+exports[`nuxt-kirby > fetches queries with $kql 1`] = `
 {
   "code": 200,
   "result": {

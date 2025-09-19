@@ -1,5 +1,5 @@
 name: 🚀 Feature request
-description: Suggest a feature that will improve Nuxt KQL
+description: Suggest a feature that will improve Nuxt Kirby
 labels: [pending triage]
 body:
   - type: markdown
@@ -12,7 +12,7 @@ body:
     id: feature-description
     attributes:
       label: Describe the feature
-      description: A clear and concise description of what you think would be a helpful addition to Nuxt KQL, including the possible use cases and alternatives you have considered.
+      description: A clear and concise description of what you think would be a helpful addition to Nuxt Kirby, including the possible use cases and alternatives you have considered.
       placeholder: Feature description
     validations:
       required: true
@@ -30,5 +30,5 @@ body:
       label: Final checks
       description: 'Before submitting, please make sure you do the following:'
       options:
-        - label: Check existing [issues](https://github.com/johannschopplich/nuxt-kql/issues).
+        - label: Check existing [issues](https://github.com/johannschopplich/nuxt-kirby/issues).
           required: true

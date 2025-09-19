@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { useServerHead } from '#imports'
+import { useHead } from '#imports'
 
-useServerHead({
-  title: 'Nuxt KQL',
-  link: [
-    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css' },
-  ],
-})
+if (import.meta.server) {
+  useHead({
+    title: 'Nuxt Kirby',
+    link: [
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css' },
+    ],
+  })
+}
 </script>
 
 <template>

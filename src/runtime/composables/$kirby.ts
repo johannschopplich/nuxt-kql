@@ -57,7 +57,7 @@ export function $kirby<T = any>(
     key,
     ...fetchOptions
   } = opts
-  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
+  const kirby = useRuntimeConfig().public.kirby as Required<ModuleOptions>
 
   if (language)
     path = joinURL(language, path)
@@ -91,19 +91,19 @@ export function $kirby<T = any>(
   }
 
   const _clientFetchOptions: NitroFetchOptions<string> = {
-    baseURL: kql.url,
+    baseURL: kirby.url,
     query,
     method,
     headers: {
       ...sharedHeaders,
-      ...createAuthHeader(kql),
+      ...createAuthHeader(kirby),
     },
     body,
   }
 
-  const request = useRequestFetch()(kql.client ? path : buildApiProxyPath(_key), {
+  const request = useRequestFetch()(kirby.client ? path : buildApiProxyPath(_key), {
     ...fetchOptions,
-    ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
+    ...(kirby.client ? _clientFetchOptions : _serverFetchOptions),
   })
     .then((response) => {
       if (import.meta.server || cache)

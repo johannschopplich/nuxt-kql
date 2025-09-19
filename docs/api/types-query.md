@@ -1,64 +1,35 @@
-# `KirbyQueryRequest`
-
-Importable from `#nuxt-kql`.
-
-```ts
-import type { KirbyQueryRequest } from '#nuxt-kql'
-```
-
-## Type Declarations
+# Query Types
 
 ::: info
-Types are re-exported from the [`kirby-types`](https://github.com/johannschopplich/kirby-types) package.
+Types are re-exported from the [`kirby-types`](https://github.com/johannschopplich/kirby-types) package and available globally in your Nuxt project via the `#nuxt-kirby` path alias.
 :::
 
-```ts
-/**
- * Represents all supported model names in Kirby Query Language.
- *
- * This type includes all built-in Kirby models that can be used as the starting point
- * for queries, plus any custom models you define.
- *
- * Built-in models include:
- * - `site` - The site object
- * - `page` - A page object
- * - `user` - A user object
- * - `file` - A file object
- * - `collection` - A collection object
- * - `kirby` - The Kirby instance
- * - `content` - Content field data
- * - `item` - Generic item in collections
- * - `arrayItem` - An item in an array
- * - `structureItem` - An item in a structure field
- * - `block` - A block in the blocks field
- *
- * @example
- * ```ts
- * // Using built-in models
- * const siteModel: KirbyQueryModel = "site";
- * const pageModel: KirbyQueryModel = "page";
- *
- * // Using with custom models
- * type CustomModels = "product" | "category";
- * const customModel: KirbyQueryModel<CustomModels> = "product";
- * ```
- *
- * @template CustomModel - Additional custom model names to include
- */
-type KirbyQueryModel<CustomModel extends string = never>
-  = | 'collection'
-    | 'kirby'
-    | 'site'
-    | 'page'
-    | 'user'
-    | 'file'
-    | 'content'
-    | 'item'
-    | 'arrayItem'
-    | 'structureItem'
-    | 'block'
-    | CustomModel
+### `KirbyQuery`
 
+Represents any valid Kirby Query Language (KQL) string.
+
+**Examples:**
+
+```ts
+// Simple model queries
+const site: KirbyQuery = 'site'
+const page: KirbyQuery = 'page'
+
+// Property chains
+const children: KirbyQuery = 'page.children'
+const published: KirbyQuery = 'page.children.published'
+
+// Method calls
+const specific: KirbyQuery = 'page("about")'
+const filtered: KirbyQuery = 'page.children.filterBy("status", "published")'
+
+// Complex queries
+const complex: KirbyQuery = 'site("home").children.sortBy("date", "desc").limit(10)'
+```
+
+**Type Declaration:**
+
+```ts
 /**
  * Helper type for dot notation queries (e.g., `model.property.method`).
  * @internal
@@ -101,7 +72,7 @@ type FunctionNotationQuery<M extends string = never>
  *
  * @template M - Optional custom model names to include in validation
  */
-type KirbyQueryChain<M extends string = never>
+export type KirbyQueryChain<M extends string = never>
   = | DotNotationQuery<M>
     | FunctionNotationQuery<M>
 
@@ -135,24 +106,61 @@ type KirbyQueryChain<M extends string = never>
  *
  * @template CustomModel - Optional custom model names to include alongside built-in models
  */
-type KirbyQuery<CustomModel extends string = never>
+export type KirbyQuery<CustomModel extends string = never>
   = | KirbyQueryModel<CustomModel>
     | (string extends KirbyQueryChain<CustomModel>
       ? never
       : KirbyQueryChain<CustomModel>)
+```
 
-interface KirbyQuerySchema {
-  query: KirbyQuery
-  select?:
-    | string[]
-    | Record<string, string | number | boolean | KirbyQuerySchema>
-}
+### `KirbyQueryModel`
 
-interface KirbyQueryRequest extends KirbyQuerySchema {
-  pagination?: {
-    /** @default 100 */
-    limit?: number
-    page?: number
-  }
-}
+Represents all supported model names in Kirby Query Language.
+
+```ts
+/**
+ * Represents all supported model names in Kirby Query Language.
+ *
+ * This type includes all built-in Kirby models that can be used as the starting point
+ * for queries, plus any custom models you define.
+ *
+ * Built-in models include:
+ * - `site` - The site object
+ * - `page` - A page object
+ * - `user` - A user object
+ * - `file` - A file object
+ * - `collection` - A collection object
+ * - `kirby` - The Kirby instance
+ * - `content` - Content field data
+ * - `item` - Generic item in collections
+ * - `arrayItem` - An item in an array
+ * - `structureItem` - An item in a structure field
+ * - `block` - A block in the blocks field
+ *
+ * @example
+ * ```ts
+ * // Using built-in models
+ * const siteModel: KirbyQueryModel = "site";
+ * const pageModel: KirbyQueryModel = "page";
+ *
+ * // Using with custom models
+ * type CustomModels = "product" | "category";
+ * const customModel: KirbyQueryModel<CustomModels> = "product";
+ * ```
+ *
+ * @template CustomModel - Additional custom model names to include
+ */
+export type KirbyQueryModel<CustomModel extends string = never>
+  = | 'collection'
+    | 'kirby'
+    | 'site'
+    | 'page'
+    | 'user'
+    | 'file'
+    | 'content'
+    | 'item'
+    | 'arrayItem'
+    | 'structureItem'
+    | 'block'
+    | CustomModel
 ```

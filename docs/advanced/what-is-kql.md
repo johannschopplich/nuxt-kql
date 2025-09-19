@@ -6,9 +6,9 @@ You may visit the [KQL documentation](https://github.com/getkirby/kql) for a com
 
 Kirby's Query Language API combines the flexibility of Kirby's data structures, the power of GraphQL and the simplicity of REST.
 
-The Kirby QL API takes POST requests with standard JSON objects and returns highly customized results that fit your application.
+The Kirby Query Language API takes POST requests with standard JSON objects and returns highly customized results that fit your application.
 
-Example request to the `/api/query` endpoint:
+By default, the official KQL API endpoint is located at `/api/query`. An example request might look like this:
 
 ```json
 {
@@ -68,3 +68,7 @@ Example request to the `/api/query` endpoint:
   }
 }
 ```
+
+::: tip
+Nuxt Kirby provides a custom API endpoint for KQL requests `/api/kql` that enables bearer token authentication. Check out the [Authentication guide](/essentials/authentication) for more information.
+:::

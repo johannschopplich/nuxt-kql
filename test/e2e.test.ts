@@ -3,7 +3,7 @@ import { $fetch, setup } from '@nuxt/test-utils/e2e'
 import { destr } from 'destr'
 import { describe, expect, it } from 'vitest'
 
-describe('nuxt-kql', async () => {
+describe('nuxt-kirby', async () => {
   await setup({
     server: true,
     rootDir: fileURLToPath(new URL('./fixture', import.meta.url)),

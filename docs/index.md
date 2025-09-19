@@ -1,43 +1,43 @@
 ---
 layout: home
-titleTemplate: Kirby's Query Language API for Nuxt
+titleTemplate: Complete Kirby CMS Integration for Nuxt
 hero:
-  name: Nuxt KQL
-  text: Kirby's Query Language API for Nuxt
-  tagline: Fetch Kirby CMS data with KQL queries
+  name: Nuxt Kirby
+  text: Kirby CMS Integration for Nuxt
+  tagline: Fetch content with KQL queries or plain API requests to your Kirby CMS.
   image:
     src: /logo-shadow.svg
-    alt: Nuxt KQL Logo
+    alt: Nuxt Kirby Logo
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/what-is-nuxt-kql
+      link: /essentials/what-is-nuxt-kirby
     - theme: alt
-      text: API
+      text: API Reference
       link: /api/
     - theme: alt
       text: View on GitHub
-      link: https://github.com/johannschopplich/nuxt-kql
+      link: https://github.com/johannschopplich/nuxt-kirby
 
 features:
-  - title: Protected Kirby Credentials
+  - title: Multiple Data Fetching Methods
+    icon: 🔄
+    details: Choose between KQL for content queries or direct API access for custom endpoints.
+    link: /essentials/data-fetching-methods
+    linkText: Learn More
+  - title: Protected Credentials
     icon: 🔒
-    details: A Nuxt server route proxies your queries. No CORS issues!
-    link: /faq/how-does-it-work
+    details: Server-side proxy keeps your Kirby credentials safe. No CORS issues, no exposed tokens.
+    link: /troubleshooting/common-issues
     linkText: How It Works
-  - title: Authentication Methods
-    icon: 🪢
-    details: Bearer token or basic authentication with the Kirby Headless plugin.
-    link: /usage/authentication-methods
-    linkText: Authentication Methods
-  - title: Familiar Data Handling
+  - title: Familiar Developer Experience
     icon: 🤹
-    details: Handle query requests just like with Nuxt's <code>useFetch</code> composable. Caching included.
-    link: /api/use-kql
-    linkText: useKql
+    details: Handle requests just like Nuxt's <code>useFetch</code> composable. Fully typed with caching included.
+    link: /guides/fetching-kirby-data
+    linkText: Get Started
   - title: Multiple Starter Kits
     icon: 🦦
-    details: Not sure where to start? Choose from three starter kits.
-    link: /guide/starters
-    linkText: Starter Kits
+    details: Not sure where to start? Choose from multiple starter kits and deployment examples.
+    link: /essentials/starter-kits
+    linkText: Browse Kits
 ---

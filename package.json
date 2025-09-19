@@ -1,18 +1,18 @@
 {
-  "name": "nuxt-kql",
+  "name": "nuxt-kirby",
   "type": "module",
   "version": "2.1.2",
   "packageManager": "pnpm@10.14.0",
-  "description": "Kirby's Query Language API for Nuxt",
+  "description": "Kirby CMS Integration for Nuxt with KQL support",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
   "license": "MIT",
-  "homepage": "https://nuxt-kql.byjohann.dev",
+  "homepage": "https://nuxt-kirby.byjohann.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johannschopplich/nuxt-kql.git"
+    "url": "git+https://github.com/johannschopplich/nuxt-kirby.git"
   },
   "bugs": {
-    "url": "https://github.com/johannschopplich/nuxt-kql/issues"
+    "url": "https://github.com/johannschopplich/nuxt-kirby/issues"
   },
   "keywords": [
     "getkirby",

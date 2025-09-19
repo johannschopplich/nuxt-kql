@@ -1,42 +1,42 @@
-[![Nuxt KQL module](./docs/public/og.jpg)](https://nuxt-kql.byjohann.dev)
+[![Nuxt Kirby module](./docs/public/og.jpg)](https://nuxt-kirby.byjohann.dev)
 
-# Nuxt KQL
+# Nuxt Kirby
 
 [Nuxt](https://nuxt.com) module for [Kirby's Query Language](https://github.com/getkirby/kql) API.
 
-- [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kql/releases)
-- [📖 &nbsp;Read the documentation](https://nuxt-kql.byjohann.dev)
+- [✨ &nbsp;Release Notes](https://github.com/johannschopplich/nuxt-kirby/releases)
+- [📖 &nbsp;Read the documentation](https://nuxt-kirby.byjohann.dev)
 
 ## Features
 
 - 🔒 Protected Kirby credentials when sending queries
-- 🪢 Supports token-based authentication with the [Kirby Headless plugin](https://github.com/johannschopplich/kirby-headless) (recommended)
+- 🪢 Supports token-based authentication with the [Kirby Headless plugin](https://kirby.tools/docs/headless/getting-started/) (recommended)
 - 🤹 No CORS issues!
 - 🍱 Handle request just like with the [`useFetch`](https://nuxt.com/docs/getting-started/data-fetching/#usefetch) composable
 - 🗃 Cached query responses
-- 🦦 [Multiple starter kits](https://nuxt-kql.byjohann.dev/guide/starters) available
+- 🦦 [Multiple starter kits](https://nuxt-kirby.byjohann.dev/guide/starters) available
 - 🦾 Strongly typed
 
 ## Setup
 
 > [!TIP]
-> [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
+> [📖 Read the documentation](https://nuxt-kirby.byjohann.dev)
 
 ```bash
-npx nuxi@latest module add kql
+npx nuxi@latest module add kirby
 ```
 
 ## Basic Usage
 
 > [!TIP]
-> [📖 Read the documentation](https://nuxt-kql.byjohann.dev)
+> [📖 Read the documentation](https://nuxt-kirby.byjohann.dev)
 
-Add the Nuxt KQL module to your Nuxt config:
+Add the Nuxt Kirby module to your Nuxt config:
 
 ```ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['nuxt-kql']
+  modules: ['nuxt-kirby']
 })
 ```
 
