@@ -10,13 +10,13 @@ Please follow these steps to migrate your existing Nuxt KQL v2 project to Nuxt K
 
 1. Uninstall the `nuxt-kql` module and install the `nuxt-kirby` module instead:
    ```bash
-   npm uninstall nuxt-kql && npm install nuxt-kirby
+   npm uninstall nuxt-kql && npm install -D nuxt-kirby
 
    # pnpm
-   pnpm remove nuxt-kql && pnpm add nuxt-kirby
+   pnpm remove nuxt-kql && pnpm add -D nuxt-kirby
 
    # yarn
-   yarn remove nuxt-kql && yarn add nuxt-kirby
+   yarn remove nuxt-kql && yarn add -D nuxt-kirby
    ```
 
 2. Update your `nuxt.config.ts` file to replace all instances of `kql` with `kirby`. For example, change this:
