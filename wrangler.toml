@@ -1,6 +1,6 @@
-name = "nuxt-kql"
+name = "nuxt-kirby"
 compatibility_date = "2025-09-01"
-routes = [ { pattern = "nuxt-kql.byjohann.dev", custom_domain = true } ]
+routes = [ { pattern = "nuxt-kirby.byjohann.dev", custom_domain = true } ]
 
 [assets]
 directory = "./docs/.vitepress/dist/"

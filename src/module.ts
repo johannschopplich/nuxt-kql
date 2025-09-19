@@ -12,8 +12,8 @@ import { prefetchQueries } from './prefetch'
 const KIRBY_TYPES_PKG_EXPORT_NAMES = [
   'KirbyApiResponse',
   'KirbyBlock',
-  'KirbyDefaultBlockType',
   'KirbyDefaultBlocks',
+  'KirbyDefaultBlockType',
   'KirbyLayout',
   'KirbyLayoutColumn',
   'KirbyQuery',
@@ -72,7 +72,7 @@ export interface ModuleOptions {
    * Send client-side requests instead of using the server-side proxy
    *
    * @remarks
-   * By default, KQL data is fetched safely with a server-side proxy.
+   * By default, data from Kirby is fetched safely with a server-side proxy.
    * If enabled, query requests will be be sent directly from the client.
    * Note: This means your token or user credentials will be publicly visible.
    * If Nuxt SSR is disabled, this option is enabled by default.
@@ -85,7 +85,7 @@ export interface ModuleOptions {
    * Prefetch custom KQL queries at build-time
    *
    * @remarks
-   * The queries will be fully typed and importable from `#nuxt-kql`.
+   * The queries will be fully typed and importable from `#nuxt-kirby`.
    *
    * @default {}
    */
@@ -144,14 +144,14 @@ export interface ModuleOptions {
 
 declare module '@nuxt/schema' {
   interface RuntimeConfig {
-    kql: ModuleOptions
+    kirby: ModuleOptions
   }
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name,
-    configKey: 'kql',
+    configKey: 'kirby',
     compatibility: {
       nuxt: '>=4.0.0',
     },
@@ -199,7 +199,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (!nuxt.options.ssr) {
-      logger.info('KQL requests are client-only because SSR is disabled')
+      logger.info('Kirby requests are client-only because SSR is disabled')
       options.client = true
     }
 
@@ -210,14 +210,14 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Private runtime config
-    nuxt.options.runtimeConfig.kql = defu(
-      nuxt.options.runtimeConfig.kql,
+    nuxt.options.runtimeConfig.kirby = defu(
+      nuxt.options.runtimeConfig.kirby,
       options,
     )
 
     // Write data to public runtime config if client requests are enabled
-    nuxt.options.runtimeConfig.public.kql = defu(
-      nuxt.options.runtimeConfig.public.kql as Required<ModuleOptions>,
+    nuxt.options.runtimeConfig.public.kirby = defu(
+      nuxt.options.runtimeConfig.public.kirby as Required<ModuleOptions>,
       options.client
         ? options
         : { client: false },
@@ -227,14 +227,14 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('runtime'))
 
-    // Add KQL proxy endpoint to send queries server-side
+    // Add Kirby proxy endpoint to send queries server-side
     addServerHandler({
       route: '/api/__kirby__/:key',
       handler: resolve('runtime/server/handler'),
       method: 'post',
     })
 
-    // Add KQL composables
+    // Add Kirby composables
     addImports(
       ['$kirby', '$kql', 'useKirbyData', 'useKql'].map(name => ({
         name,
@@ -259,13 +259,15 @@ export default defineNuxtModule<ModuleOptions>({
       })
     })
 
-    // Add `#nuxt-kql` module alias
+    // Add `#nuxt-kirby` module alias
     nuxt.options.alias[`#${moduleName}`] = join(nuxt.options.buildDir, `module/${moduleName}`)
+    // TODO: Remove deprecated `#nuxt-kql` module alias
+    nuxt.options.alias['#nuxt-kql'] = join(nuxt.options.buildDir, `module/${moduleName}`)
 
     // Prefetch custom KQL queries at build-time
     const prefetchedQueries = await prefetchQueries(options)
 
-    // Add `#nuxt-kql` module templates
+    // Add `#nuxt-kirby` module templates
     // (1) Generate module entry point
     addTemplate({
       filename: `module/${moduleName}.mjs`,

@@ -48,9 +48,9 @@ To fetch data directly from your Kirby instance without the Nuxt proxy, set the 
 ```ts{6}
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['nuxt-kql'],
+  modules: ['nuxt-kirby'],
 
-  kql: {
+  kirby: {
     client: true
   }
 })

@@ -35,17 +35,16 @@ export default defineConfig({
     logo: '/logo.svg',
 
     editLink: {
-      pattern: 'https://github.com/johannschopplich/nuxt-kql/edit/main/docs/:path',
+      pattern: 'https://github.com/johannschopplich/nuxt-kirby/edit/main/docs/:path',
       text: 'Suggest changes to this page',
     },
 
     nav: nav(),
 
     sidebar: {
-      '/guide/': sidebarGuide(),
-      '/config/': sidebarGuide(),
-      '/usage/': sidebarGuide(),
-      '/faq/': sidebarGuide(),
+      '/essentials/': sidebarMain(),
+      '/guides/': sidebarMain(),
+      '/advanced/': sidebarMain(),
       '/api/': sidebarApi(),
     },
 
@@ -67,45 +66,45 @@ export default defineConfig({
 function nav(): DefaultTheme.NavItem[] {
   return [
     {
-      text: 'Guide',
-      activeMatch: '^/guide/',
+      text: 'Essentials',
+      activeMatch: '^/essentials/',
       items: [
-        { text: 'What is Nuxt KQL?', link: '/guide/what-is-nuxt-kql' },
-        { text: 'Getting Started', link: '/guide/getting-started' },
-        { text: 'Starter Kits', link: '/guide/starters' },
+        { text: 'What is Nuxt Kirby?', link: '/essentials/what-is-nuxt-kirby' },
+        { text: 'Getting Started', link: '/essentials/getting-started' },
+        { text: 'Data Fetching Methods', link: '/essentials/data-fetching-methods' },
+        { text: 'Authentication', link: '/essentials/authentication' },
+        { text: 'Starter Kits', link: '/essentials/starter-kits' },
       ],
     },
     {
-      text: 'Configuration',
-      link: '/config/',
-    },
-    {
-      text: 'Usage',
-      activeMatch: '^/usage/',
+      text: 'Guides',
+      activeMatch: '^/guides/',
       items: [
-        { text: 'Authentication', link: '/usage/authentication-methods' },
-        { text: 'Caching', link: '/usage/caching' },
-        { text: 'Error Handling', link: '/usage/error-handling' },
-        { text: 'Typed Responses', link: '/usage/typed-query-results' },
-        { text: 'Prefetching Queries', link: '/usage/prefetching-queries' },
-        { text: 'Multi-Language Sites', link: '/usage/multi-language-sites' },
-        { text: 'Batching Queries', link: '/usage/batching-queries' },
+        { text: 'Multi-Language Sites', link: '/guides/multi-language-sites' },
+        { text: 'Caching Strategies', link: '/guides/caching-strategies' },
+        { text: 'Error Handling', link: '/guides/error-handling' },
+        { text: 'Prefetching KQL Queries', link: '/guides/prefetching-kql-queries' },
+        { text: 'Batching KQL Queries', link: '/guides/batching-kql-queries' },
       ],
     },
     {
       text: 'API',
       activeMatch: '^/api/',
       items: [
+        { text: 'Overview', link: '/api/' },
+        { text: 'Module Configuration', link: '/api/module-configuration' },
+        { text: 'Types', link: '/api/types' },
         {
-          text: 'Overview',
-          link: '/api/',
-        },
-        {
-          text: 'Composables',
+          text: 'KQL Queries',
           items: [
             { text: 'useKql', link: '/api/use-kql' },
-            { text: 'useKirbyData', link: '/api/use-kirby-data' },
             { text: '$kql', link: '/api/kql' },
+          ],
+        },
+        {
+          text: 'Kirby API',
+          items: [
+            { text: 'useKirbyData', link: '/api/use-kirby-data' },
             { text: '$kirby', link: '/api/kirby' },
           ],
         },
@@ -123,40 +122,34 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
-function sidebarGuide(): DefaultTheme.SidebarItem[] {
+function sidebarMain(): DefaultTheme.SidebarItem[] {
   return [
+    {
+      text: 'Essentials',
+      items: [
+        { text: 'What is Nuxt Kirby?', link: '/essentials/what-is-nuxt-kirby' },
+        { text: 'Getting Started', link: '/essentials/getting-started' },
+        { text: 'Data Fetching Methods', link: '/essentials/data-fetching-methods' },
+        { text: 'Authentication', link: '/essentials/authentication' },
+        { text: 'Starter Kits', link: '/essentials/starter-kits' },
+      ],
+    },
     {
       text: 'Guides',
       items: [
-        { text: 'What is Nuxt KQL?', link: '/guide/what-is-nuxt-kql' },
-        { text: 'Getting Started', link: '/guide/getting-started' },
-        { text: 'Starter Kits', link: '/guide/starters' },
+        { text: 'Multi-Language Sites', link: '/guides/multi-language-sites' },
+        { text: 'Caching Strategies', link: '/guides/caching-strategies' },
+        { text: 'Error Handling', link: '/guides/error-handling' },
+        { text: 'Prefetching KQL Queries', link: '/guides/prefetching-kql-queries' },
+        { text: 'Batching KQL Queries', link: '/guides/batching-kql-queries' },
       ],
     },
     {
-      text: 'Configuration',
+      text: 'Digging Deeper',
       items: [
-        { text: 'Module', link: '/config/' },
-      ],
-    },
-    {
-      text: 'Usage',
-      items: [
-        { text: 'Authentication', link: '/usage/authentication-methods' },
-        { text: 'Caching', link: '/usage/caching' },
-        { text: 'Error Handling', link: '/usage/error-handling' },
-        { text: 'Typed Responses', link: '/usage/typed-query-results' },
-        { text: 'Prefetching Queries', link: '/usage/prefetching-queries' },
-        { text: 'Multi-Language Sites', link: '/usage/multi-language-sites' },
-        { text: 'Batching Queries', link: '/usage/batching-queries' },
-      ],
-    },
-    {
-      text: 'FAQ',
-      items: [
-        { text: 'How Does It Work?', link: '/faq/how-does-it-work' },
-        { text: 'What Is KQL?', link: '/faq/what-is-kql' },
-        { text: 'Can I Encounter CORS Issues?', link: '/faq/cors-issues' },
+        { text: 'CORS Issues', link: '/advanced/cors-issues' },
+        { text: 'What is KQL?', link: '/advanced/what-is-kql' },
+        { text: 'How does it work?', link: '/advanced/how-does-it-work' },
       ],
     },
   ]
@@ -164,24 +157,29 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 
 function sidebarApi(): DefaultTheme.SidebarItem[] {
   return [
+    { text: 'Overview', link: '/api/' },
+    { text: 'Module Configuration', link: '/api/module-configuration' },
     {
-      text: 'Overview',
-      link: '/api/',
-    },
-    {
-      text: 'Composables',
+      text: 'KQL Queries',
       items: [
         { text: 'useKql', link: '/api/use-kql' },
-        { text: 'useKirbyData', link: '/api/use-kirby-data' },
         { text: '$kql', link: '/api/kql' },
+      ],
+    },
+    {
+      text: 'Kirby API',
+      items: [
+        { text: 'useKirbyData', link: '/api/use-kirby-data' },
         { text: '$kirby', link: '/api/kirby' },
       ],
     },
     {
-      text: 'Type Declarations',
+      text: 'Types',
       items: [
-        { text: 'KirbyQueryRequest', link: '/api/types-query-request' },
-        { text: 'KirbyQueryResponse', link: '/api/types-query-response' },
+        { text: 'Using Types', link: '/api/types' },
+        { text: 'Query Types', link: '/api/types-query' },
+        { text: 'Request Types', link: '/api/types-request' },
+        { text: 'Response Types', link: '/api/types-response' },
       ],
     },
   ]

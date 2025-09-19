@@ -19,7 +19,7 @@ const EXCLUDED_HEADERS = new Set([
 ])
 
 export default defineEventHandler(async (event) => {
-  const kql = useRuntimeConfig(event).kql as Required<ModuleOptions>
+  const kirby = useRuntimeConfig(event).kirby as Required<ModuleOptions>
   const body = await readBody<ServerFetchOptions>(event)
   const key = decodeURIComponent(getRouterParam(event, 'key')!)
   const isQueryRequest = key.startsWith('$kql')
@@ -36,10 +36,10 @@ export default defineEventHandler(async (event) => {
   }: { key: string } & ServerFetchOptions) => {
     const isQueryRequest = key.startsWith('$kql')
 
-    const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kql.prefix : path!, {
+    const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kirby.prefix : path!, {
       responseType: 'arrayBuffer',
       ignoreResponseError: true,
-      baseURL: kql.url,
+      baseURL: kirby.url,
       ...(isQueryRequest
         ? {
             method: 'POST',
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
           }),
       headers: {
         ...headers,
-        ...createAuthHeader(kql),
+        ...createAuthHeader(kirby),
       },
     })
 
@@ -69,10 +69,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const cachedFetcher = defineCachedFunction(fetcher, {
-    name: 'nuxt-kql',
-    base: kql.server.storage,
-    swr: kql.server.swr,
-    maxAge: kql.server.maxAge,
+    name: 'nuxt-kirby',
+    base: kirby.server.storage,
+    swr: kirby.server.swr,
+    maxAge: kirby.server.maxAge,
     getKey: (event: H3Event, { key }: { key: string } & ServerFetchOptions) => key,
   })
 
@@ -95,7 +95,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const response = kql.server.cache && body.cache
+    const response = kirby.server.cache && body.cache
       ? await cachedFetcher(event, { key, ...body })
       : await fetcher(event, { key, ...body })
 
@@ -106,7 +106,7 @@ export default defineEventHandler(async (event) => {
         consola.error(`Failed KQL query "${body.query?.query}" (...) with status code ${response.status}:\n`, destr(
           uint8ArrayToString(dataArray),
         ))
-        if (kql.server.verboseErrors)
+        if (kirby.server.verboseErrors)
           consola.log('Full KQL query request:', body.query)
       }
       else {

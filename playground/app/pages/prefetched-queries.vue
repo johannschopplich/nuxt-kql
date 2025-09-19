@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { site } from '#nuxt-kql'
+import { site } from '#nuxt-kirby'
 </script>
 
 <template>

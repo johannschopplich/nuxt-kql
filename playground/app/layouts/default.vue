@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <h2>nuxt-kql</h2>
+      <h2>nuxt-kirby</h2>
 
       <NuxtLink to="/">
         Index

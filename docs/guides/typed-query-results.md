@@ -2,7 +2,7 @@
 
 For the best TypeScript experience, you may want to define your own response types for [`useKql`](/api/use-kql), which will help catch errors in your template.
 
-The [`KirbyQueryResponse<T = any, Pagination extends boolean = false>`](/api/types-query-response) accepts the generic type parameter `T` used for the query result type.
+The [`KirbyQueryResponse<T = any, Pagination extends boolean = false>`](/api/types) accepts the generic type parameter `T` used for the query result type.
 
 ```ts
 // Extend the default response type with the result we expect from the query response
@@ -18,7 +18,7 @@ By creating a custom `KirbySite` type for the expected response result and passe
 
 ```vue
 <script setup lang="ts">
-import type { KirbyQueryResponse } from '#nuxt-kql'
+import type { KirbyQueryResponse } from '#nuxt-kirby'
 
 // Create an interface for the query result, respectively the data returned by the API
 export interface KirbySite {

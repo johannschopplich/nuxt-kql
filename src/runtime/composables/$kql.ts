@@ -44,7 +44,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
 ): Promise<T> {
   const nuxt = useNuxtApp()
   const promiseMap = (nuxt._pendingRequests ||= new Map()) as Map<string, Promise<T>>
-  const kql = useRuntimeConfig().public.kql as Required<ModuleOptions>
+  const kirby = useRuntimeConfig().public.kirby as Required<ModuleOptions>
 
   const {
     headers,
@@ -77,18 +77,18 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   }
 
   const _clientFetchOptions: NitroFetchOptions<string> = {
-    baseURL: kql.url,
+    baseURL: kirby.url,
     method: 'POST',
     headers: {
       ...sharedHeaders,
-      ...createAuthHeader(kql),
+      ...createAuthHeader(kirby),
     },
     body: query,
   }
 
-  const request = useRequestFetch()(kql.client ? kql.prefix : buildApiProxyPath(_key), {
+  const request = useRequestFetch()(kirby.client ? kirby.prefix : buildApiProxyPath(_key), {
     ...fetchOptions,
-    ...(kql.client ? _clientFetchOptions : _serverFetchOptions),
+    ...(kirby.client ? _clientFetchOptions : _serverFetchOptions),
   })
     .then((response) => {
       if (import.meta.server || cache)
