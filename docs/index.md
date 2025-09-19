@@ -28,12 +28,12 @@ features:
   - title: Protected Credentials
     icon: 🔒
     details: Server-side proxy keeps your Kirby credentials safe. No CORS issues, no exposed tokens.
-    link: /troubleshooting/common-issues
+    link: /essentials/what-is-nuxt-kirby
     linkText: How It Works
   - title: Familiar Developer Experience
     icon: 🤹
     details: Handle requests just like Nuxt's <code>useFetch</code> composable. Fully typed with caching included.
-    link: /guides/fetching-kirby-data
+    link: /api/
     linkText: Get Started
   - title: Multiple Starter Kits
     icon: 🦦
