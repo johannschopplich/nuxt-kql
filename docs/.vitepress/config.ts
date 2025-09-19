@@ -113,10 +113,8 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: `v${version}`,
       items: [
-        {
-          text: 'Release Notes ',
-          link: releases,
-        },
+        { text: 'Release Notes ', link: releases },
+        { text: 'Migration Guide', link: '/advanced/migration' },
       ],
     },
   ]
@@ -152,6 +150,7 @@ function sidebarMain(): DefaultTheme.SidebarItem[] {
         { text: 'How does it work?', link: '/advanced/how-does-it-work' },
       ],
     },
+    { text: 'Migration', link: '/advanced/migration' },
   ]
 }
 
