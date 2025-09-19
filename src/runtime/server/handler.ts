@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
   }: { key: string } & ServerFetchOptions) => {
     const isQueryRequest = key.startsWith('$kql')
 
-    const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kirby.prefix : path!, {
+    const response = await globalThis.$fetch.raw<ArrayBuffer>(isQueryRequest ? kirby.kqlPath : path!, {
       responseType: 'arrayBuffer',
       ignoreResponseError: true,
       baseURL: kirby.url,

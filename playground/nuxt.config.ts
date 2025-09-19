@@ -10,9 +10,6 @@ export default defineNuxtConfig({
     // Enable token-based authentication
     auth: 'bearer',
 
-    // Send client-side query requests to Kirby instead of the KQL proxy
-    // client: true,
-
     // Prefetch queries at build-time
     prefetch: {
       site: {

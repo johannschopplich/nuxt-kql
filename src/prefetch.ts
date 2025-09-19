@@ -39,7 +39,7 @@ export async function prefetchQueries(
     try {
       results.set(
         key,
-        await ofetch<KirbyQueryResponse>(options.prefix!, {
+        await ofetch<KirbyQueryResponse>(options.kqlPath!, {
           baseURL: options.url,
           method: 'POST',
           body: language ? query.query : query,

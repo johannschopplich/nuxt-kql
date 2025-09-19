@@ -34,8 +34,17 @@ export interface ModuleOptions {
   url?: string
 
   /**
+   * Kirby KQL API endpoint path
+   *
+   * @default 'api/query' // for `basic` authentication
+   * @default 'api/kql' // for `bearer` authentication
+   */
+  kqlPath?: string
+
+  /**
    * Kirby KQL API route path
    *
+   * @deprecated Use `kqlPath` instead
    * @default 'api/query' // for `basic` authentication
    * @default 'api/kql' // for `bearer` authentication
    */
@@ -158,6 +167,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   defaults: {
     url: process.env.KIRBY_BASE_URL || '',
+    kqlPath: '',
     prefix: '',
     auth: 'basic',
     token: process.env.KIRBY_API_TOKEN || '',
@@ -189,11 +199,17 @@ export default defineNuxtModule<ModuleOptions>({
     if (options.auth === 'bearer' && !options.token)
       logger.error('Missing `KIRBY_API_TOKEN` environment variable for bearer authentication')
 
-    if (!options.prefix) {
+    // Handle deprecated `prefix` option and prefer `kqlPath`
+    if (options.prefix && !options.kqlPath) {
+      logger.warn('The `prefix` option is deprecated. Please use `kqlPath` instead.')
+      options.kqlPath = options.prefix
+    }
+
+    if (!options.kqlPath) {
       if (options.auth === 'basic')
-        options.prefix = 'api/query'
+        options.kqlPath = 'api/query'
       else if (options.auth === 'bearer')
-        options.prefix = 'api/kql'
+        options.kqlPath = 'api/kql'
     }
 
     if (!nuxt.options.ssr) {

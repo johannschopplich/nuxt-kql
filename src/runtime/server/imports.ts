@@ -61,7 +61,7 @@ export function $kql<T extends KirbyQueryResponse<any, boolean> = KirbyQueryResp
   const { headers, language, ...fetchOptions } = opts
   const kirby = useRuntimeConfig().kirby as Required<ModuleOptions>
 
-  return globalThis.$fetch<T, string>(kirby.prefix, {
+  return globalThis.$fetch<T, string>(kirby.kqlPath, {
     ...fetchOptions,
     baseURL: kirby.url,
     method: 'POST',
