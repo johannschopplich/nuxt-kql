@@ -1,7 +1,7 @@
 {
   "name": "nuxt-kirby",
   "type": "module",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "packageManager": "pnpm@10.17.0",
   "description": "Kirby CMS Integration for Nuxt with KQL support",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
