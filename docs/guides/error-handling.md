@@ -1,6 +1,6 @@
 # Error Handling
 
-Nuxt Kirby provides comprehensive error handling that preserves error details from your Kirby API while keeping your credentials secure through the [server proxy](/troubleshooting/common-issues#cors-issues).
+Nuxt Kirby provides comprehensive error handling that preserves error details from your Kirby API while keeping your credentials secure through the [server proxy](/troubleshooting/advanced/cors-issues).
 
 ## Error Types
 

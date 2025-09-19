@@ -12,7 +12,7 @@ On the server, the request is forwarded to the Kirby instance, and the response 
 
 When enabling `client: true` in your Nuxt Kirby configuration, requests are sent directly from the browser to Kirby, which may encounter CORS issues depending on your Kirby setup.
 
-If you have followed the [Getting Started guide](essentials/getting-started.html#step-3-set-up-your-kirby-backend), your Kirby instance should already be configured with the [Kirby Headless plugin](https://kirby.tools/docs/headless/getting-started/). It includes default CORS settings that allow requests from any origin.
+If you have followed the [Getting Started guide](/essentials/getting-started#step-3-set-up-your-kirby-backend), your Kirby instance should already be configured with the [Kirby Headless plugin](https://kirby.tools/docs/headless/getting-started/). It includes default CORS settings that allow requests from any origin.
 
 ```php
 // site/config/config.php
