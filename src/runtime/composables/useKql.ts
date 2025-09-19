@@ -84,6 +84,7 @@ export function useKql<
       return $kql(_query.value, {
         ...fetchOptions,
         signal: controller.signal,
+        language: _language.value,
         cache,
         key: key.value,
       })
